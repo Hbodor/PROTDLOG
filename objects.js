@@ -38,6 +38,37 @@ class Plant
     }
 }
 
+
+class Sun{
+	constructor(x,y,player){
+		this.player=player;
+		this.x=x;
+		this.y=y;
+		this.dx=0;
+		this.dy=0;
+		this.value=50;
+	}
+	evolve(){
+		this.x+=this.dx;
+		this.y+=this.dy;
+	}
+	//document.addEventListener("click", sun.is_clicked);
+	is_clicked(event){
+		if (event.clientX==this.x && event.clientY==this.y){
+			this.player.money+=this.value;
+		}
+	}
+}
+
+class Player{
+	constructor{side=0){
+		this.money=100;
+		this.plants=[];
+		this.side=side;
+	}
+}
+
+
 var z1 = new Zombie();
 var p1 = new Plant();
 var G = new Grid(3,3)
