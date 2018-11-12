@@ -1,1 +1,1 @@
-This project consist on coding a simple version of a game callled "Plants&Zombies"
+This project consists on coding a simple version of a game called "Plants&Zombies"
