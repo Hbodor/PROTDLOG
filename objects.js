@@ -67,36 +67,46 @@ class Plant extends GameObject
 
 class Grid
 {
-    constructor(nRows, nColomns)
+    constructor(nRows, nColumns)
     {
-        // test if nRows, nColomns > 0 
+        // test if nRows, nColumns > 0 
         this.nRows = nRows;
-        this.nColomns = nColomns;
-        this.body = [for (i of range(1,nRows)) []]; // a list of the diffrent elements on the grid
+        this.nColumns = nColumns;
+        this.body = new Array(nRows); // a list of the diffrent elements on the grid
         for(let i = 0; i<nRows; i++)
         {
-            for(let j = 0; j<nColomns; j++0)
+			this.body[i]=[];
+            for(let j = 0; j<nColumns; j++)
             {
-                this.body[i].push(new GameObject())
+                this.body[i].push(new GameObject(1,i,j));
             }
         }
+		document.getElementById("grid").style.gridTemplateColumns="repeat("+this.nColumns+",auto)";
+		document.getElementById("grid").style.gridTemplateRows="repeat("+this.nRows+",auto)";
+
+
     }
     show()
     {
-        for(let i = 0; i<this.nLRows; i++)
+		let container=document.createElement("div");
+		container.style
+		console.log("showing");
+        for(let i = 0; i<this.nRows; i++)
         {
-            for(let j = 0; j<this.nColomns)
+            for(let j = 0; j<this.nColumns;j++)
             {
+				console.log("oui");
                 //css grid ?
                 let element = document.createElement("div");
-                element.style.position = "absolute";
-                element.style.left = (i * 80) + "px";
-                let node = document.createTextNode(this.body[i][j].face);
-                document.body.appendChild(node);
+				element.className='grid-item';
+                element.innerHTML=this.body[i][j].face;
+                document.getElementById('grid').appendChild(element);
             }
-            document.write("<br>");
         }
     }
 
 
 }
+
+var grid=new Grid(5,10)
+grid.show()
