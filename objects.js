@@ -27,12 +27,12 @@ class GameObject
 
 class Zombie extends GameObject
 {
-    constructor()
+    constructor(level, r, c, s)
     {
-        super();
+        super(level, r, c);
         this.name = "Zombie";
         this.face = "Z";
-        this.speed = 0;
+        this.speed = s;
     }
     move()
     {
@@ -42,13 +42,13 @@ class Zombie extends GameObject
 
 class Plant extends GameObject
 {
-    constructor()
+    constructor(level, r, c, p)
     {
         super();
         this.name = "Plant";
         this.face = "P";
         this.moves = [[0,0]]; // list of all possible moves
-        this.price = 0;
+        this.price = p;
     }
 
     showMoves()
