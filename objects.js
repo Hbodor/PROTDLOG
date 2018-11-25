@@ -1,78 +1,102 @@
+class GameObject
+{
+    constructor(level, r, c)
+    {
+        // 1<= level <= 5
+        this.name = "GameObject";
+        this.face = "O";
+        this.position = [r,c]; //(row,colmum)
+        this.level = level;
+        // à discuter
+        this.offence = 6*level;
+        this.defence = level;
+        this.life = 10*level;
+    }
+
+    put(G)
+    {
+        G.body[this.position[0]][this.position[1]]=this;
+    }
+
+    erase(G)
+    {
+        G.body[this.position[0]][this.position[1]]=new GameObject();
+    }
+     
+}
+
+class Zombie extends GameObject
+{
+    constructor()
+    {
+        super();
+        this.name = "Zombie";
+        this.face = "Z";
+        this.speed = 0;
+    }
+    move()
+    {
+
+    }
+}
+
+class Plant extends GameObject
+{
+    constructor()
+    {
+        super();
+        this.name = "Plant";
+        this.face = "P";
+        this.moves = [[0,0]]; // list of all possible moves
+        this.price = 0;
+    }
+
+    showMoves()
+    {
+
+    }
+
+    move()
+    {
+
+    }
+}
+
+
+
+
 class Grid
 {
-    constructor(nLignes, nColomns)
+    constructor(nRows, nColomns)
     {
-        // test if nLignes, nColomns > 0 
-        this.nLignes = nLignes;
+        // test if nRows, nColomns > 0 
+        this.nRows = nRows;
         this.nColomns = nColomns;
+        this.body = [for (i of range(1,nRows)) []]; // a list of the diffrent elements on the grid
+        for(let i = 0; i<nRows; i++)
+        {
+            for(let j = 0; j<nColomns; j++0)
+            {
+                this.body[i].push(new GameObject())
+            }
+        }
     }
-
-}
-
-
-class Zombie
-{
-    constructor()
+    show()
     {
-        this.name = "";
-        this.position = [0,0]; //(x,y)
-        this.speed = 0;
-        this.level = 0;
-        this.offence = 0;
-        this.defence = 0;
-        this.life = 0;
+        for(let i = 0; i<this.nLRows; i++)
+        {
+            for(let j = 0; j<this.nColomns)
+            {
+                //css grid ?
+                let element = document.createElement("div");
+                element.style.position = "absolute";
+                element.style.left = (i * 80) + "px";
+                let node = document.createTextNode(this.body[i][j].face);
+                document.body.appendChild(node);
+            }
+            document.write("<br>");
+        }
     }
 
+
 }
-
-class Plant
-{
-    constructor()
-    {
-        this.name = "";
-        this.position = [0,0]; //(x,y)
-        this.moves = [[0,0]]; // the set of all possible [dx,dy] couples on the Grid
-        this.offence = 0;
-        this.defence = 0;
-        this.life = 0;
-    }
-}
-
-
-class Sun{
-	constructor(x,y,player){
-		this.player=player;
-		this.x=x;
-		this.y=y;
-		this.dx=0;
-		this.dy=0;
-		this.value=50;
-	}
-	evolve(){
-		this.x+=this.dx;
-		this.y+=this.dy;
-	}
-	//document.addEventListener("click", sun.is_clicked);
-	is_clicked(event){
-		if (event.clientX==this.x && event.clientY==this.y){
-			this.player.money+=this.value;
-		}
-	}
-}
-
-class Player{
-	constructor{side=0){
-		this.money=100;
-		this.plants=[];
-		this.side=side;
-	}
-}
-
-
-var z1 = new Zombie();
-var p1 = new Plant();
-var G = new Grid(3,3)
-
-document.write(z1.position + "<br>");
-document.write(p1.moves + "<br>");
-document.write(G.nColomns);
