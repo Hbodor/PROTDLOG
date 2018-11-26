@@ -12,3 +12,71 @@
   font-size: 30px;
   text-align: center;
 }
+body {
+	background-color : #688271 ;
+}
+#head_section {
+	height : 80px ;
+	width : 100% ;
+}
+#north_west {
+	width : 14.66% ;
+	position : absolute ;
+	left : 1% ;
+}
+#north_center{
+	width : 64.66% ;
+	position : absolute ;
+	left : 17.66% ;
+	top : 1% ;
+}
+#north_east{
+	width : 14.66% ;
+	position : absolute ;
+	right : 1% ;
+	top : 1% ;
+}
+#body_section {
+	width : 100% ;
+}
+#west {
+	background-color : #FFFFFF ;
+	width : 14.66% ;
+	position : relative ;
+	left : 1% ;
+	top : 80px + 1% ;
+}
+#center{
+	width : 64.66% ;
+	position : absolute ;
+	left : 17.66% ;
+	top : 80px + 1%;
+}
+#east{
+	width : 14.66% ;
+	position : absolute ;
+	right : 1% ;
+	top : 80px ;
+}
+#foot_section {
+	height : 80px ;
+	width : 100% ;
+}
+#south_west {
+	width : 14.66% ;
+	position : absolute ;
+	left : 1% ;
+	bottom : 1%;
+}
+#south_center{
+	width : 64.66% ;
+	position : absolute ;
+	left : 17.66% ;
+	bottom : 1% ;
+}
+#south_east{
+	width : 14.66% ;
+	position : absolute ;
+	right : 1% ;
+	bottom : 1% ;
+}
