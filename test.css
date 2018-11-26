@@ -42,7 +42,7 @@ body {
 #west {
 	background-color : #FFFFFF ;
 	width : 14.66% ;
-	position : relative ;
+	position : absolute ;
 	left : 1% ;
 	top : 80px + 1% ;
 }
