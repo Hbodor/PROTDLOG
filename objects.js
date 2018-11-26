@@ -4,7 +4,7 @@ class GameObject
     {
         // 1<= level <= 5
         this.name = "GameObject";
-        this.face = "O";
+        this.face = "Object";
         this.position = [r,c]; //(row,colmum)
         this.level = level;
         // à discuter
@@ -108,5 +108,29 @@ class Grid
 
 }
 
-var grid=new Grid(5,10)
+var grid=new Grid(10,10)
 grid.show()
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
+var guy = document.getElementById("guy");
+var container = document.getElementById("container");
+var guyLeft = 0;
+var y = 0;
+function anim(e) {
+    if (e.keyCode == 39) {
+        guyLeft += 2; guy.style.left = guyLeft + "px";
+    }
+    else if (e.keyCode == 37) {
+        guyLeft -= 2; guy.style.left = guyLeft + "px";
+    }
+    else if (e.keyCode == 40) {
+        y += 2; guy.style.top = y + "px";
+    }
+    else if (e.keyCode == 38) {
+        y -= 2; guy.style.top = y + "px";
+    }
+
+} document.onkeydown = anim;
