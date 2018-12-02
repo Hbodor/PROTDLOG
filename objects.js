@@ -57,8 +57,8 @@ class Grid
         this.face.className = "grid-container";//related to css style
         this.face.style.gridTemplateColumns="repeat("+this.nColumns+",auto)";
         this.face.style.gridTemplateRows="repeat("+this.nRows+",auto)";
-        this.face.style.width = 60*this.nColumns+"px";
-        this.face.style.height = 60*this.nRows+"px";
+        //this.face.style.width = 60*this.nColumns+"px";
+        //this.face.style.height = 60*this.nRows+"px";
 
         for(let i = 0; i<nRows; i++)
         {
@@ -116,7 +116,7 @@ class status_bar
         this.face.appendChild(this.stat);
 
         // contains all the plants and their price
-        this.shop = createElement("div");
+        this.shop = document.createElement("div");
         this.shop.className = "shop";
 
         //putting all pictures in the shop div
@@ -124,7 +124,7 @@ class status_bar
         {
             let img = document.createElement("div");
             img.className = "img";
-            img.style.backgroundImage = "url("+pieces[i+1]+")";
+            img.innerHTML = "<img src = 'King.png' width = '20%' height = auto/>";
             this.shop.appendChild(img);
         }
 
@@ -162,12 +162,19 @@ function erase(object, grid)
     put(new GameObject(1, object.position[0], object.position[1]), grid);  
 }
 
+function make_game_zone(bar, grid)
+{
+    game = document.createElement("div");
+    game.className = "game-zone" ;
+    game.appendChild(bar.face);
+    game.appendChild(grid.face);
+    document.body.appendChild(game);
+}
 
 //testing
 var grid=new Grid(4,10);
-//var s = new status_bar(100,100);
-//s.show();
-grid.show();
+var s = new status_bar(100,100);
+make_game_zone(s,grid);
 
 
 
