@@ -1,6 +1,6 @@
 // Game Constants are defined here 
-let Pieces = ['Pawn.png', 'Knight.png', 'Bishop.png', 
-'Rook.png', 'Queen.png', 'King.png'];
+let Pieces = ['pieces/King.png', 'pieces/Queen.png', 'pieces/Rook.png',
+'pieces/Bishop.png', 'pieces/Knight.png', 'pieces/Pawn.png']
 let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
 let Attacks = [1, 2, 3, 4, 5, 2];
 let Lives = [1, 3, 4, 4, 5, 5];
@@ -13,5 +13,5 @@ let Moves_C = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
 //Hamza a toi de jouer avec les parametres..
 let nRows0 = 8;
 let nColumns0 = 8;
-let GridItemSize = "50px";
+let GridItemSize = "80px";
 //....
