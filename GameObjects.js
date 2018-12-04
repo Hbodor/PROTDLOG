@@ -62,7 +62,7 @@ class Pawn extends Plant
 
 class Knight extends Plant
 {
-    constructor()
+    constructor(r,c)
     {
         super(1,r,c);
     }
