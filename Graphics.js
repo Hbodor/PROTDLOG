@@ -25,6 +25,8 @@ class Grid {
                 //creating html elements
                 let element = document.createElement("div");
                 element.className = "grid-item";
+                element.style.width = GridItemSize;
+                element.style.height = GridItemSize;
                 element.innerHTML = this.body[i][j].face;
                 this.face.appendChild(element);
 
@@ -44,10 +46,10 @@ class status_bar {
         // the apperence of the bar 
         this.face = document.createElement("div");
         this.face.className = "stat-bar";
+        //this.face.gridTemplateRows = 
 
         // a block div that contains the players current money and the timer
-        this.stat = document.createElement("div").appendChild(document
-            .createElement("ul"));
+        this.stat = document.createElement("div").appendChild(document.createElement("ul"));
 
         // the playes's money
         this.money = m;
@@ -68,18 +70,22 @@ class status_bar {
         // contains all the plants and their price
         this.shop = document.createElement("div");
         this.shop.className = "shop";
+        this.shop.style.gridTemplateRows = GridItemSize + " " + ButtonHeight;
+        this.shop.style.gridTemplateColumns = "repeat(" + 6 +","+GridItemSize+")";
 
         //putting all pictures in the shop div
         for (let i = 0; i < Pieces.length ; i++) {
             let img = document.createElement("div");
             img.className = "img";
-            img.innerHTML = "<img src ="+ Pieces[i] +" width = '20%' height = '20%' />";
+            img.innerHTML = "<img src ="+ Pieces[i] +" width ="+GridItemSize+"height ="+ GridItemSize +"/>";
             this.shop.appendChild(img);
         }
+    
 
         for (let i = 0; i < Pieces.length ; i++) {
             var button = document.createElement("button");
             button.className = "button";
+            button.style.height = ButtonHeight;
             button.innerHTML = (i + 1) * 10;
             this.shop.appendChild(button);
 
@@ -110,12 +116,15 @@ function put(object, grid) {
     grid.body[object.r][object.c] = object;
 
     //updating the grid face (for showing)
-    grid.face.childNodes[object.r * grid.nColumns + object.c].innerHTML = object.face;
-
+    grid.face.childNodes[object.r * grid.nColumns + object.c].innerHTML = "<img src ="+ object.face +
+    " width = "+ GridItemSize+" height ="+ GridItemSize+"/>";
+    
 }
 
 function erase(object, grid) {
-    put(new GameObject(object.r, object.c), grid);
+    o = new GameObject(object.r, object.c);
+    grid.body[object.r][object.c] = o;
+    grid.face.childNodes[object.r * grid.nColumns + object.c].innerHTML = o.face;
 }
 
 function make_game_zone(bar, grid) {
