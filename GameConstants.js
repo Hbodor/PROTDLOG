@@ -1,6 +1,6 @@
 // Game Constants are defined here 
-let Pieces = ['pieces/King.png', 'pieces/Queen.png', 'pieces/Rook.png',
-'pieces/Bishop.png', 'pieces/Knight.png', 'pieces/Pawn.png']
+let Pieces = ['pieces/Pawn.png', 'pieces/Knight.png', 'pieces/Rook.png',
+'pieces/Bishop.png','pieces/King.png','pieces/Queen.png' ]
 let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
 let Attacks = [1, 2, 3, 4, 5, 2];
 let Lives = [1, 3, 4, 4, 5, 5];
