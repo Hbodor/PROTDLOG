@@ -39,7 +39,9 @@
 .img{
   border: solid;
   display: block;
-  margin:  auto;
+  margin-left: '20px';
+  margin-right: '20px';
+  align="middle";
 }
 
 .game-zone{
