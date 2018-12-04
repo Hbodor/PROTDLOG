@@ -49,7 +49,7 @@ class Pawn extends Plant
     }
     moves(G)
     {
-        if(this.c+1>=0 && this.c+1<G.nColumns)
+        if(this.c+1>=0 && this.c+1<G.nColumns && G.body[this.r][this.c+1].name == "GameObject")
         {
             return ([[this.r,this.c+1]]);
         }
@@ -69,11 +69,11 @@ class Knight extends Plant
     moves(G)
     {
         let L =[];
-        for(let m in Moves_L)
+        for(let i = 0; i< Moves_L.length ; i++)
         {
-            let r = this.r+m[0];
-            let c = this.c+m[1];
-            if(r>=0 && r<G.nRows && c>=0 && c<G.nColumns)
+            let r = this.r+Moves_L[i][0];
+            let c = this.c+Moves_L[i][1];
+            if(r>=0 && r<G.nRows && c>=0 && c<G.nColumns && G.body[r][c].name == "GameObject")
             {
                 L.push([r,c]);
             }
@@ -92,27 +92,52 @@ class Bishop extends Plant
     moves(G)
     {
         let L = [];
+        let direction1 = true;
+        let direction2 = true;
+        let direction3 = true;
+        let direction4 = true;
+
         for(let i = 1; i<G.nColumns && i<G.nRows ; i++)
         {
             let r1 = this.r+i;
             let r2 = this.r-i;
             let c1 = this.c+i;
             let c2 = this.c-i;
-            if(r1>=0 && r1<G.nRows && c1>=0 && c1<G.nColumns)
+
+            if(direction1 && r1>=0 && r1<G.nRows && c1>=0 && c1<G.nColumns && G.body[r1][c1].name == "GameObject")
             {
                 L.push([r1,c1]);
             }
-            if(r1>=0 && r1<G.nRows && c2>=0 && c2<G.nColumns)
+            else
+            {
+                direction1 = false;
+            }
+
+            if(direction2 && r1>=0 && r1<G.nRows && c2>=0 && c2<G.nColumns && G.body[r1][c2].name == "GameObject")
             {
                 L.push([r1,c2]);
             }
-            if(r2>=0 && r2<G.nRows && c1>=0 && c1<G.nColumns)
+            else
+            {
+                direction2 = false;
+            }
+
+            if(direction3 && r2>=0 && r2<G.nRows && c1>=0 && c1<G.nColumns && G.body[r2][c1].name == "GameObject")
             {
                 L.push([r2,c1]);
             }
-            if(r2>=0 && r2<G.nRows && c2>=0 && c2<G.nColumns)
+            else
+            {
+                direction3 = false;
+            }
+
+            if(direction4 && r2>=0 && r2<G.nRows && c2>=0 && c2<G.nColumns && G.body[r2][c2].name == "GameObject")
             {
                 L.push([r2,c2]);
+            }
+            else
+            {
+                direction4 = false;
             }
         }
         return(L);
@@ -128,27 +153,51 @@ class Rook extends Plant
     moves(G)
     {
         let L = [];
+        let direction1 = true;
+        let direction2 = true;
+        let direction3 = true;
+        let direction4 = true;
+
         for(let i = 1; i<G.nColumns || i<G.nRows ; i++)
         {
             let r1 = this.r+i;
             let r2 = this.r-i;
             let c1 = this.c+i;
             let c2 = this.c-i;
-            if(r1>=0 && r1<G.nRows )
+            if(direction1 && r1>=0 && r1<G.nRows && G.body[r1][this.c].name == "GameObject")
             {
                 L.push([r1,this.c]);
             }
-            if(r2>=0 && r2<G.nRows)
+            else
+            {
+                direction1 = false;
+            }
+
+            if(direction2 && r2>=0 && r2<G.nRows && G.body[r2][this.c].name == "GameObject")
             {
                 L.push([r2,this.c]);
             }
-            if(c1>=0 && c1<G.nColumns)
+            else
+            {
+                direction2 = false;
+            }
+
+            if(direction3 && c1>=0 && c1<G.nColumns && G.body[this.r][c1].name == "GameObject")
             {
                 L.push([this.r,c1]);
             }
-            if(c2>=0 && c2<G.nColumns)
+            else
+            {
+                direction3 = false;
+            }
+
+            if(direction4 && c2>=0 && c2<G.nColumns && G.body[this.r][c2].name == "GameObject")
             {
                 L.push([this.r,c2]);
+            }
+            else
+            {
+                direction4 = false;
             }
         }
         return(L);
@@ -177,19 +226,17 @@ class King extends Plant
     }
     moves(G)
     {
-        for(let m in Moves_C)
+        let L = [];
+        for(let i = 0 ; i< Moves_C.length ; i++)
         {
-            let L = [];
-            let r = this.r + m[0];
-            let c = this.c + m[1];
-            if(r>=0 && r<G.nRows && c>=0 && c<G.nColumns)
+            let r = this.r + Moves_C[i][0];
+            let c = this.c + Moves_C[i][1];
+            if(r>=0 && r<G.nRows && c>=0 && c<G.nColumns && G.body[r][c].name == "GameObject")
             {
-                L.push([r,c])
-
+                L.push([r,c]);
             }
-
         }
+        return(L);
     }
-
 }
 
