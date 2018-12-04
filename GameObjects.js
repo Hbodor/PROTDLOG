@@ -5,7 +5,7 @@ class GameObject
     constructor(r, c)
     {
         this.name = "GameObject";
-        this.face = "O";
+        this.face = "";
         this.r = r; //row
         this.c = c; //colmum
     }     
