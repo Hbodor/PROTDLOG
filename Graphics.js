@@ -46,21 +46,21 @@ class status_bar {
         // the apperence of the bar 
         this.face = document.createElement("div");
         this.face.className = "stat-bar";
-        //this.face.gridTemplateRows = 
+        this.face.gridTemplateRows = StatusBarHeight;
 
         // a block div that contains the players current money and the timer
-        this.stat = document.createElement("div").appendChild(document.createElement("ul"));
+        this.stat = document.createElement("div");
 
         // the playes's money
         this.money = m;
-        let Money = document.createElement("li");
+        let Money = document.createElement("div");
         Money.className = "text";
         Money.innerHTML = "Money : " + this.money;
         this.stat.appendChild(Money);
 
         // the game timer 
         this.timer = t;
-        let Timer = document.createElement("li");
+        let Timer = document.createElement("div");
         Timer.className = "text";
         Timer.innerHTML = "Timer : " + this.timer;
         this.stat.appendChild(Timer);
@@ -86,16 +86,16 @@ class status_bar {
             var button = document.createElement("button");
             button.className = "button";
             button.style.height = ButtonHeight;
-            button.innerHTML = (i + 1) * 10;
+            button.innerHTML = Prices[i];
             this.shop.appendChild(button);
 
             button.addEventListener("click", function () {
-                if (m - (i + 1) * 10 >= 0) {
-                    m -= (i + 1) * 10;
+                if (m - Prices[i]  >= 0) {
+                    m -= Prices[i];
                     Money.innerHTML = "Money : " + m;
                 }
                 else {
-                    alert("Solde insuffisant!");
+                    alert("Sorry! Not enough money!");
                 }
 
             });
@@ -133,4 +133,13 @@ function make_game_zone(bar, grid) {
     game.appendChild(bar.face);
     game.appendChild(grid.face);
     document.body.appendChild(game);
+}
+
+function show_moves(object, grid)
+{
+    let L = object.moves(grid);
+    for(let i = 0; i<L.length; i++)
+    {
+        grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = "rgb(150,150,150)";
+    }
 }
