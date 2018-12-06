@@ -15,3 +15,4 @@ let nColumns0 = 8;
 let GridItemSize = '60px';
 let ButtonHeight = '30px';
 let StatusBarHeight = '100px';
+let gridItemColor = 'rgb(28, 82, 4)';
