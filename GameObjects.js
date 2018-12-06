@@ -239,4 +239,3 @@ class King extends Plant
         return(L);
     }
 }
-
