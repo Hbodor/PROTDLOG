@@ -73,7 +73,7 @@ class status_bar {
         for (let i = 0; i < Pieces.length ; i++) {
             let img = document.createElement("div");
             img.className = "img";
-            img.innerHTML = "<img src ="+ Pieces[i] +" width = '20%' height = '20%' />";
+            img.innerHTML = "<img src ="+ Pieces[i] +" width = '100%' height = '100%' />";
             this.shop.appendChild(img);
         }
 

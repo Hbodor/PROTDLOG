@@ -39,14 +39,12 @@
 .img{
   border: solid;
   display: block;
-  margin-left: '20px';
-  margin-right: '20px';
-  align="middle";
+  margin:  auto;
 }
 
 .game-zone{
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 700px;
   grid-template-rows: auto auto;
 }
 .button {
