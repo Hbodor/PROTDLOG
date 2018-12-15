@@ -50,8 +50,8 @@ function show_moves(object, grid, color, add,m=0,rect=0)
                 let r=object.r;
                 let c=object.c;
                 erase(object,grid);
-                object=new Plant(type,r,c);
-                put(object,grid);
+                o=new Plant(type,r,c);
+                put(o,grid);
                 m -= Prices[type];
                 console.log(Prices[type]);
                 rect.innerHTML = m;

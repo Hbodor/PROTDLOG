@@ -208,7 +208,7 @@ class King extends Plant {
 
 class FakePlant extends Plant {
     constructor(r, c) {
-        super(5, r, c);
+        super(6, r, c);
     }
     moves(G) {
         let L = [];
