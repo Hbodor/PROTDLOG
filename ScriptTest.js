@@ -5,4 +5,3 @@ put(p, grid);
 put(b, grid);
 console.log(p.moves(grid));
 console.log(b.moves(grid));
-show_moves(b, grid, 'rgb(160,160,160)');

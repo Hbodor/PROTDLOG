@@ -37,7 +37,22 @@ class Plant extends GameObject
         this.life = Lives[level];
         this.attack = Attacks[level];
     }
-
+	move(action,G)
+	{
+		
+		var temp_moves=this.moves(G);
+		var i;
+		for (i=0;i<temp_moves.length;i++ ){
+			if (action[0]==temp_moves[i][0] && action[1]==temp_moves[i][1]){
+				erase(this,G);
+				this.r=action[0];
+				this.c=action[1];
+				put(this,G);
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 //Game Basic plant pieces
