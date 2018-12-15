@@ -10,7 +10,10 @@ function put(object, grid) {
     " width = "+ GridItemSize+" height ="+ GridItemSize+"/>";
 	grid.face.childNodes[object.r * grid.nColumns + object.c].onclick=function _show(){
 		show_moves(object,grid,"white",true);
-		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick="";
+		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick=function _reset(){
+			hide_moves(object,grid);
+			grid.face.childNodes[object.r * grid.nColumns + object.c].onclick=_show;
+		};
 	};
     
 }
@@ -32,6 +35,7 @@ function make_game_zone(bar, grid) {
 function show_moves(object, grid, color, add)
 {
     let L = object.moves(grid);
+
     for(let i = 0; i<L.length; i++)
     {
         grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
