@@ -12,6 +12,7 @@ class Grid {
         //we have to make a function tha does this and take the size in pixels as an argument
         this.face = document.createElement("div");// building the html element 
         this.face.className = "grid-container";//related to css style
+		this.face.id="grid";
         this.face.style.gridTemplateColumns = "repeat(" + this.nColumns + ","+GridItemSize+")";
         this.face.style.gridTemplateRows = "repeat(" + this.nRows +","+GridItemSize+")";
 

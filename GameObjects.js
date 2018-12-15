@@ -8,7 +8,8 @@ class GameObject
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
-    }     
+		
+    }
 }
 
 class Zombie extends GameObject
@@ -40,14 +41,29 @@ class Plant extends GameObject
 	move(action,G)
 	{
 		
-		var temp_moves=this.moves(G);
+		var temp_moves=this.moves(grid);
 		var i;
+		//we check if the move is allowed (we don't have to since the only possible moves are the ones shown)
 		for (i=0;i<temp_moves.length;i++ ){
 			if (action[0]==temp_moves[i][0] && action[1]==temp_moves[i][1]){
-				erase(this,G);
+				//Emptying the old cell
+				let o = new GameObject(this.r, this.c);
+				grid.body[this.r][this.c] = o;
+				
 				this.r=action[0];
 				this.c=action[1];
-				put(this,G);
+				grid.body[this.r][this.c] = this;
+				//Changing the coordinates to the new location
+				this.x=grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft;
+				this.y=grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop;
+				//updating the id and position
+				this.element.id=this.name+this.r+'x'+this.c;
+				this.element.style.left=this.x+'px';
+				this.element.style.top=this.y+'px';
+			
+				
+					
+	
 				return true;
 			}
 		}
