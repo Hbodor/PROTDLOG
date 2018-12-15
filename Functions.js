@@ -8,7 +8,10 @@ function put(object, grid) {
     //updating the grid face (for showing)
     grid.face.childNodes[object.r * grid.nColumns + object.c].innerHTML = "<img src ="+ object.face +
     " width = "+ GridItemSize+" height ="+ GridItemSize+"/>";
-	grid.face.childNodes[object.r * grid.nColumns + object.c].addEventListener('click',function() {show_moves(object,grid,"white",true)});
+	grid.face.childNodes[object.r * grid.nColumns + object.c].onclick=function _show(){
+		show_moves(object,grid,"white",true);
+		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick="";
+	};
     
 }
 
@@ -33,10 +36,12 @@ function show_moves(object, grid, color, add)
     {
         grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
 		if (add){
-		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].addEventListener('click',function() {
+		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick=function _move(){
 			hide_moves(object,grid);
 			object.move(L[i],grid);
-			})
+			};
+		}else{
+			grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick=""
 		}
     }
 }
