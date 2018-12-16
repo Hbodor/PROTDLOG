@@ -94,16 +94,18 @@ class status_bar {
             this.shop.appendChild(button);
 
             button.addEventListener("click", function () {
-                if (m - Prices[i]  >= 0) {
+                if (rect.innerHTML - Prices[i]  >= 0) {
                     let p = new FakePlant(0,0);
                     if(action===1){
                         //put(p, grid);
                         action=2;
-                        show_moves(p,grid,"#EC8A8A",true,m,rect);
+                        show_moves(p,grid,"#EC8A8A",true);
+						rect.innerHTML -= Prices[i];
                         type=i;
                     }
                     else{
                         hide_moves(p,grid);
+						rect.innerHTML -= -Prices[type];
                         action=1;
                         type=0;
                     }

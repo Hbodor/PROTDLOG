@@ -32,7 +32,7 @@ function make_game_zone(bar, grid) {
     document.body.appendChild(game);
 }
 
-function show_moves(object, grid, color, add,m=0,rect=0)
+function show_moves(object, grid, color, add)
 {
     let L = object.moves(grid);
 
@@ -52,9 +52,6 @@ function show_moves(object, grid, color, add,m=0,rect=0)
                 erase(object,grid);
                 o=new Plant(type,r,c);
                 put(o,grid);
-                m -= Prices[type];
-                console.log(Prices[type]);
-                rect.innerHTML = m;
                 action=1;
             }			
 			};
