@@ -54,15 +54,14 @@ function show_moves(object, grid, color, add)
     {
         grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
 		if (add){
+		//clicking on cases
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick=function _move(){
-            hide_moves(object,grid);
-            if(action===1){
-                object.move(L[i],grid);
-            }
-            else{
-                object.move(L[i],grid);
-                let r=object.r;
-                let c=object.c;
+
+
+			if(action!=1){
+				hide_moves(object,grid);
+                let r=L[i][0];
+                let c=L[i][1];
                 erase(object,grid);
                 if(type==0){o=new Pawn(r,c);}
                 else if(type==1){o=new Knight(r,c);}
@@ -71,7 +70,20 @@ function show_moves(object, grid, color, add)
                 else{o=new Queen(r,c);}
                 put(o,grid);
                 action=1;
-            }			
+            }	
+			else{
+				hide_moves(object,grid);
+				object.move(L[i],grid);
+				//refresh the onclick of the object since we don't need to wait for reset
+				object.element.onclick=function _show(){
+					show_moves(object,grid,"white",true);
+					object.element.onclick=function _reset(){
+						hide_moves(object,grid);
+						object.element.onclick=_show;
+					};
+				};
+			}
+
 			};
 		}else{
 			grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick=""

@@ -12,9 +12,8 @@ class Grid {
         //we have to make a function tha does this and take the size in pixels as an argument
         this.face = document.createElement("div");// building the html element 
         this.face.className = "grid-container";//related to css style
-		this.face.id="grid";
-        this.face.style.gridTemplateColumns = "repeat(" + this.nColumns + ","+GridItemSize+")";
-        this.face.style.gridTemplateRows = "repeat(" + this.nRows +","+GridItemSize+")";
+        this.face.style.gridTemplateColumns = "repeat(" + this.nColumns + "," + GridItemSize + ")";
+        this.face.style.gridTemplateRows = "repeat(" + this.nRows + "," + GridItemSize + ")";
 
 
         for (let i = 0; i < nRows; i++) {
@@ -49,7 +48,7 @@ class status_bar {
         this.face.className = "stat-bar";
         this.face.gridTemplateRows = StatusBarHeight;
 
-        
+
         // the playes's money
         this.money = document.createElement("div");
         this.money.className = "Money";
@@ -58,7 +57,7 @@ class status_bar {
 
         let img = document.createElement("div");
         img.className = "img";
-        img.innerHTML = "<img src ='Pieces/Money.png' width="+GridItemSize+" />";
+        img.innerHTML = "<img src ='Pieces/Money.png' width=" + GridItemSize + " />";
         this.money.appendChild(img);
 
         let rect = document.createElement("div");
@@ -67,27 +66,27 @@ class status_bar {
         rect.style.height = ButtonHeight;
         rect.style.verticalAlign = "middle";
         rect.innerHTML = m;
-        
+
         this.money.appendChild(rect);
-        
+
         this.face.appendChild(this.money);
 
         // contains all the plants and their price
         this.shop = document.createElement("div");
         this.shop.className = "shop";
         this.shop.style.gridTemplateRows = GridItemSize + " " + ButtonHeight;
-        this.shop.style.gridTemplateColumns = "repeat(" + 6 +","+GridItemSize+")";
+        this.shop.style.gridTemplateColumns = "repeat(" + 6 + "," + GridItemSize + ")";
 
         //putting all pictures in the shop div
-        for (let i = 0; i < Pieces.length ; i++) {
+        for (let i = 0; i < Pieces.length; i++) {
             let img = document.createElement("div");
             img.className = "img";
-            img.innerHTML = "<img src ="+ Pieces[i] +" width="+GridItemSize+" />";
+            img.innerHTML = "<img src =" + Pieces[i] + " width=" + GridItemSize + " />";
             this.shop.appendChild(img);
         }
-    
 
-        for (let i = 0; i < Pieces.length ; i++) {
+
+        for (let i = 0; i < Pieces.length; i++) {
             var button = document.createElement("button");
             button.className = "button";
             button.style.height = ButtonHeight;
@@ -114,15 +113,14 @@ class status_bar {
                 else {
                     alert("Sorry! Not enough money!");
                 }
-
             });
-        }
+    }
         this.face.appendChild(this.shop);
 
     }
 
-    show() {
-        document.body.appendChild(this.face);
-    }
+show() {
+    document.body.appendChild(this.face);
+}
 
 }

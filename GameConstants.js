@@ -1,7 +1,7 @@
 // Game Constants are defined here 
 let Pieces = ['pieces/Pawn.png', 'pieces/Knight.png','pieces/Bishop.png',
  'pieces/Rook.png','pieces/Queen.png', 'pieces/King.png' ]
-let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
+let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King","FakePlant"]
 let Attacks = [1, 2, 3, 4, 5, 2];
 let Lives = [1, 3, 4, 4, 5, 5];
 let Prices = [10, 20, 30, 40, 50, Infinity];
@@ -12,9 +12,17 @@ let action=1;
 let type=0;
 
 
+
 let nRows0 = 8;
 let nColumns0 = 8;
-let GridItemSize = '60px';
-let ButtonHeight = '30px';
-let StatusBarHeight = '100px';
+let usableheight = window.innerHeight-document.getElementById("start").offsetTop;
+let size=0;
+if (usableheight>innerWidth){
+	size=window.innerWidth/(nColumns0+4);
+}else{
+	size=usableheight/(nRows0+4);
+}
+let GridItemSize = size+"px";
+let ButtonHeight = size/2+"px";
+let StatusBarHeight = size+"px";
 let gridItemColor = 'rgb(28, 82, 4)';
