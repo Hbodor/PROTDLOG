@@ -50,7 +50,11 @@ function show_moves(object, grid, color, add)
                 let r=object.r;
                 let c=object.c;
                 erase(object,grid);
-                o=new Plant(type,r,c);
+                if(type==0){o=new Pawn(r,c);}
+                else if(type==1){o=new Knight(r,c);}
+                else if(type==2){o=new Bishop(r,c);}
+                else if(type==3){o=new Rook(r,c);}
+                else{o=new Queen(r,c);}
                 put(o,grid);
                 action=1;
             }			
