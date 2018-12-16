@@ -30,7 +30,6 @@
 .text{
   background-color: rgb(0, 151, 13);
   font-family: cursive;
-  font-size: 10px;
   text-align: center;
 }
 .shop{
@@ -62,7 +61,6 @@
   text-decoration: none;
   display: inline-block;
   font-family: cursive;
-  font-size: 10px;
   transition-duration: 0.4s;
   cursor: pointer;
 }

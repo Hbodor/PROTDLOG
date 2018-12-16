@@ -13,16 +13,19 @@ let type=0;
 
 
 
+//Changing the dimensions of the items depending on the initial dimensions of the window
+
+let rowGap=10;
+let columnGap=10;
+
 let nRows0 = 8;
 let nColumns0 = 8;
-let usableheight = window.innerHeight-document.getElementById("start").offsetTop;
-let size=0;
-if (usableheight>innerWidth){
-	size=window.innerWidth/(nColumns0+4);
-}else{
-	size=usableheight/(nRows0+4);
-}
+let usableheight = window.innerHeight-document.getElementById("start").offsetTop-(nRows0+6)*rowGap;
+let usablewidth = window.innerWidth-document.getElementById("start").offsetLeft-(nColumns0+1)*columnGap;
+let size=Math.min(usablewidth/nColumns0,usableheight/(nRows0+1.5));
+
 let GridItemSize = size+"px";
 let ButtonHeight = size/2+"px";
 let StatusBarHeight = size+"px";
 let gridItemColor = 'rgb(28, 82, 4)';
+
