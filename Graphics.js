@@ -12,6 +12,7 @@ class Grid {
         //we have to make a function tha does this and take the size in pixels as an argument
         this.face = document.createElement("div");// building the html element 
         this.face.className = "grid-container";//related to css style
+		this.face.id="grid";
         this.face.style.gridTemplateColumns = "repeat(" + this.nColumns + ","+GridItemSize+")";
         this.face.style.gridTemplateRows = "repeat(" + this.nRows +","+GridItemSize+")";
 
@@ -94,11 +95,22 @@ class status_bar {
             this.shop.appendChild(button);
 
             button.addEventListener("click", function () {
-                
-                if (m - Prices[i]  >= 0) {
-                    m -= Prices[i];
-                    rect.innerHTML = m;
+                let p = new FakePlant(0, 0);
+                if (action===1 && rect.innerHTML - Prices[i] >= 0) {
+                    //put(p, grid);
+                    action = 2;
+                    show_moves(p, grid, "#EC8A8A", true);
+                    rect.innerHTML -= Prices[i];
+                    type = i;
                 }
+                else if(action===2) {
+                        hide_moves(p, grid);
+                        rect.innerHTML -= -Prices[type];
+                        action = 1;
+                        type = 0;
+                }
+
+               
                 else {
                     alert("Sorry! Not enough money!");
                 }
