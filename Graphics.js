@@ -64,7 +64,8 @@ class status_bar {
         rect.className = "text";
         rect.style.width = GridItemSize;
         rect.style.height = ButtonHeight;
-        rect.style.verticalAlign = "middle";
+		rect.style.fontSize=font_size+"px"
+        rect.style.verticalAlign = "center";
         rect.innerHTML = m;
 
         this.money.appendChild(rect);
@@ -90,6 +91,7 @@ class status_bar {
             var button = document.createElement("button");
             button.className = "button";
             button.style.height = ButtonHeight;
+			button.style.fontSize=font_size+"px"
             button.innerHTML = Prices[i];
             this.shop.appendChild(button);
 

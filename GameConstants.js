@@ -28,4 +28,4 @@ let GridItemSize = size+"px";
 let ButtonHeight = size/2+"px";
 let StatusBarHeight = size+"px";
 let gridItemColor = 'rgb(28, 82, 4)';
-
+let font_size= 28*size/120;
