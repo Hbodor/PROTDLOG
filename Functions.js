@@ -12,9 +12,12 @@ function put(object, grid) {
 	grid.body[object.r][object.c] = object;
 	//updating the grid's  face
 	grid.face.childNodes[object.r * grid.nColumns + object.c].appendChild(object.face);
+	
+	object.x=grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft+effectiveBorder;
+	object.y=grid.face.childNodes[object.r * grid.nColumns + object.c].offsetTop+effectiveBorder;
 
-	object.face.style.top = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetTop + 'px';
-	object.face.style.left = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft + 'px';
+	object.face.style.top = object.y + 'px';
+	object.face.style.left = object.x + 'px';
 
 	if (Names.includes(object.name)) {
 		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid);

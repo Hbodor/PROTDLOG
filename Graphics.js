@@ -24,6 +24,7 @@ class Grid {
                 //creating html elements
                 let element = document.createElement("div");
                 element.style.backgroundColor = gridItemColor;
+				element.style.border=(border+"px ")+"solid rgba(0, 0, 0, 0.8)";
                 element.style.width = GridItemSize;
                 element.style.height = GridItemSize;
                 this.face.appendChild(element);
