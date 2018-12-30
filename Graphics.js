@@ -126,6 +126,7 @@ function buy(i, bar, grid) {
             }
             else {
                 alert("Sorry ... Not enough money !");
+                onlyOneButtonShouldBeClicked = true;
             }
         }
         else {
