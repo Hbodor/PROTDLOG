@@ -12,9 +12,12 @@ function put(object, grid) {
 	grid.body[object.r][object.c] = object;
 	//updating the grid's  face
 	grid.face.childNodes[object.r * grid.nColumns + object.c].appendChild(object.face);
-        //transition
-	object.face.style.top = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetTop+effectiveBorder + 'px';
-	object.face.style.left = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft+effectiveBorder + 'px';
+	
+	object.x=grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft+effectiveBorder;
+	object.y=grid.face.childNodes[object.r * grid.nColumns + object.c].offsetTop+effectiveBorder;
+
+	object.face.style.top = object.y + 'px';
+	object.face.style.left = object.x + 'px';
 
 	if (Names.includes(object.name)) {
 		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid);
@@ -87,3 +90,22 @@ function animateZombie(zombie, king, grid) {
 
 	setInterval(function () { if (!pause) { zombie.moveOneStep(king, grid); } }, zombie.speed * 1000);
 }
+
+
+
+
+// refreshing the positions (CSS) of all the objects on the grid
+function refreshPositions(G){
+	for (let r=0;r<G.nRows;r++){
+		for (let c=0;c<G.nColumns;c++){
+			G.body[r][c].x=G.body[r][c].face.offsetLeft;
+			G.body[r][c].y=G.body[r][c].face.offsetTop;
+			//refresh the bullet (maybe have a different list for bullets ? )
+			if (Names.indexOf(G.body[r][c].name) != -1){
+				G.body[r][c].bullet.x = G.body[r][c].bullet.face.offsetLeft;
+				G.body[r][c].bullet.y = G.body[r][c].bullet.face.offsetTop;
+			}
+		}
+	}
+}
+

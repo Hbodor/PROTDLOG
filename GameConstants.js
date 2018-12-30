@@ -2,6 +2,7 @@
 //For plants
 let Pieces = ['pieces/Pawn.png', 'pieces/Knight.png', 'pieces/Bishop.png',
     'pieces/Rook.png', 'pieces/Queen.png', 'pieces/King.png'];
+let Bullets = ['pieces/bullet1.png']
 let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King", "FakePlant"];
 let Attacks = [1, 2, 3, 4, 5, 2];
 let Lives = [1, 3, 4, 4, 5, 5];
@@ -44,3 +45,6 @@ let movesColor = 'rgb(3, 57, 128)';
 let waitingColor = 'rgb(128, 3, 3)';
 let onlyOneButtonShouldBeClicked = true;
 let pause = false; // to pause the movment of zombies when inserting and moving pieces
+
+
+let refreshRate=1000/120 // refreshing coordinates in ms

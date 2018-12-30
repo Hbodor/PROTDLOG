@@ -59,6 +59,48 @@ class Zombie extends GameObject {
     }
 }
 
+//Bullet class
+class Bullet {
+	constructor (level,x,y,dad){
+		this.x = x;
+		this.y = y;
+		this.dad=dad;
+		this.level = level;
+		this.attack=Attacks[level];
+		this.alive=true; //useless?
+		
+		// constructing face
+		this.face = document.createElement("img");
+		this.face.className = "BImage";
+		this.face.setAttribute('src',Bullets[0]);
+		this.face.style.maxWidth = size/2+"px";
+		this.face.style.left=this.x+size+"px";
+		this.face.style.top=this.y+size/2+"px";
+		
+	}
+	collision(zombies){
+		if (!this.alive){ return (false);}
+		for (let i=0;i<zombies.length;i++){
+			//collision with zombie is still unclear, the coordinates are sometimes not refreshed correctly?
+			if ( (zombies[i].x-this.x<=5 && zombies[i].x-this.x>=0) &&  (-size/2<=this.y - zombies[i].y<=size) ) {
+				zombies[i].life -= this.attack;
+				return (true);
+			}
+		}
+	}
+	refresh(grid,zombies){
+		//refreshing the bullet state, shooting another bullet directly after this one dies, maybe have a cooldown ? 
+		if (this.collision(zombies) || this.x == grid.face.clientWidth){
+			this.alive=false;
+			grid.face.removeChild(this.face);
+			console.log("either touched a zombie or went out of grid")
+			this.dad.can_shoot=true;
+			this.dad.shoot(grid);
+		}
+	}
+
+}
+
 class Plant extends GameObject {
     constructor(level, r, c) {
         super(r, c);
@@ -74,7 +116,20 @@ class Plant extends GameObject {
         this.face.setAttribute('src', Pieces[level]);
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
+		//bullet
+		this.can_shoot=true;
     }
+	shoot(G){
+		//creating and shooting the straight bullet
+		if (this.can_shoot){
+			
+			this.bullet=new Bullet(this.level,this.x,this.y,this);
+			G.face.appendChild(this.bullet.face);
+			this.bullet.face.style.left = G.face.clientWidth+'px';
+			this.can_shoot=false;
+		}
+	}
+	
 
 }
 
