@@ -120,6 +120,7 @@ function buy(i, bar, grid) {
         if (onlyOneButtonShouldBeClicked) {
             onlyOneButtonShouldBeClicked = false;
             if (m - Prices[i] >= 0) {
+                pause = true;
                 bar.updateMoney(m - Prices[i]);
                 selectedPosition(i, grid);
             }
@@ -130,7 +131,6 @@ function buy(i, bar, grid) {
         else {
             alert("You need to put the piece you have just bought on the grid first ! ")
         }
-
     }
     return clicked;
 }

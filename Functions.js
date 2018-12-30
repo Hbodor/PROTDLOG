@@ -41,11 +41,8 @@ function show_moves(object, grid, color) {
 	}
 }
 
-function hide_moves(object, grid) {
-	show_moves(object, grid, gridItemColor);
-}
-
 function clear_grid(G) {
+
 	for (let r = 0; r < G.nRows; r++) {
 		for (let c = 0; c < G.nColumns; c++) {
 			if (G.body[r][c].name == "GameObject") {
@@ -57,12 +54,13 @@ function clear_grid(G) {
 			}
 		}
 	}
-
+	pause = false;
 }
 
 function clicked(object, grid) {
 	function click1() {
 		clear_grid(grid);
+		pause = true; //pausing zombies
 		show_moves(object, grid, movesColor);
 		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
 			clear_grid(grid);
@@ -87,6 +85,5 @@ function randInt(n) {
 
 function animateZombie(zombie, king, grid) {
 
-	setInterval(function (){zombie.moveOneStep(king, grid);}, zombie.speed * 1000);
-
+	setInterval(function () { if (!pause) { zombie.moveOneStep(king, grid); } }, zombie.speed * 1000);
 }

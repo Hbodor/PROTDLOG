@@ -36,3 +36,4 @@ let movesColor = 'rgb(3, 57, 128)';
 let waitingColor = 'rgb(128, 3, 3)';
 let font_size = 28 * size / 120;
 let onlyOneButtonShouldBeClicked = true;
+let pause = false; // to pause the movment of zombies when inserting and moving pieces
