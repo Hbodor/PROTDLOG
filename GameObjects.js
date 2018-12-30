@@ -6,18 +6,56 @@ class GameObject {
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
+    }
 
+    moveto(r, c, G) {
+        //only works for plants and zombies
+        erase(this, G);
+        this.r = r;
+        this.c = c;
+        put(this, G);
     }
 }
 
 class Zombie extends GameObject {
-    constructor(level, r, c, s) {
-        // 0 <= level <= 5
+    constructor(level, r, c) {
+        // 0 <= level <= 2
         super(r, c);
-        this.name = "Zombie";
-        this.face = "Z";
         this.level = level;
-        this.speed = s;
+        this.name = ZNames[level];
+        this.speed = ZSpeed[level];
+        this.life = ZLives[level];
+        this.attack = ZAttacks[level];
+
+        // constructing the face tag 
+        this.face = document.createElement("img");
+        this.face.className = "ZImage";
+        this.face.setAttribute('src', ZPieces[level]);
+        this.face.setAttribute('height', GridItemSize);
+        this.face.setAttribute('width', GridItemSize);
+    }
+
+    stepToKing(king) {
+
+        let c = 0;
+        let r = 0;
+
+        if (king.c != this.c) {
+            c = this.c + sign(king.c - this.c);
+            r = this.r
+        }
+        else if (king.r != this.r) {
+            c = this.c;
+            r = this.r + sign(king.r - this.r);
+        }
+        return [r, c];
+    }
+
+    moveOneStep(king, grid) {
+        let nextStep = this.stepToKing(king);
+        if (grid.body[nextStep[0]][nextStep[1]].name == "GameObject") {
+            this.moveto(nextStep[0], nextStep[1], grid);
+        }
     }
 }
 
@@ -37,13 +75,7 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-    moveto(r,c,G) 
-    {
-        erase(this,G);
-        this.r = r;
-        this.c = c;
-        put(this,G);
-    }
+
 }
 
 //Game Basic plant pieces
