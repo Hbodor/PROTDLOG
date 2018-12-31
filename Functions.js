@@ -21,7 +21,11 @@ function put(object, grid) {
 
 	if (Names.includes(object.name)) {
 		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid);
+		//shoot bullet
+		object.shoot(grid);
+		
 	}
+	
 }
 
 function erase(object, grid) {
@@ -95,7 +99,7 @@ function animateZombie(zombie, king, grid) {
 
 
 // refreshing the positions (CSS) of all the objects on the grid
-function refreshPositions(G){
+function refreshPositions(G,zombies){
 	for (let r=0;r<G.nRows;r++){
 		for (let c=0;c<G.nColumns;c++){
 			G.body[r][c].x=G.body[r][c].face.offsetLeft;
@@ -104,6 +108,9 @@ function refreshPositions(G){
 			if (Names.indexOf(G.body[r][c].name) != -1){
 				G.body[r][c].bullet.x = G.body[r][c].bullet.face.offsetLeft;
 				G.body[r][c].bullet.y = G.body[r][c].bullet.face.offsetTop;
+				if (G.body[r][c].bullet.alive) {
+					G.body[r][c].bullet.refresh(grid,zombies);
+				}
 			}
 		}
 	}

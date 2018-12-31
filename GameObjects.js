@@ -82,8 +82,11 @@ class Bullet {
 		if (!this.alive){ return (false);}
 		for (let i=0;i<zombies.length;i++){
 			//collision with zombie is still unclear, the coordinates are sometimes not refreshed correctly?
-			if ( (zombies[i].x-this.x<=5 && zombies[i].x-this.x>=0) &&  (-size/2<=this.y - zombies[i].y<=size) ) {
+			
+			if ( (zombies[i].x-this.x<=size/6 && zombies[i].x-this.x>=-size/2) &&  (this.y - zombies[i].y<=size && this.y - zombies[i].y>=-size/2) ) {
+				//temp fix, hitbox in x is bigger (even if the bullet goes through the zombie by size/2, we count it as a hit)
 				zombies[i].life -= this.attack;
+				console.log("hit zombie "+i)
 				return (true);
 			}
 		}
@@ -93,7 +96,6 @@ class Bullet {
 		if (this.collision(zombies) || this.x == grid.face.clientWidth){
 			this.alive=false;
 			grid.face.removeChild(this.face);
-			console.log("either touched a zombie or went out of grid")
 			this.dad.can_shoot=true;
 			this.dad.shoot(grid);
 		}

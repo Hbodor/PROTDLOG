@@ -47,4 +47,4 @@ let onlyOneButtonShouldBeClicked = true;
 let pause = false; // to pause the movment of zombies when inserting and moving pieces
 
 
-let refreshRate=1000/120 // refreshing coordinates in ms
+let refreshRate=1000/60 // refreshing coordinates in ms
