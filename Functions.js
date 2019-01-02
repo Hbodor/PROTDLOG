@@ -1,3 +1,17 @@
+// To test This file we uncomment the following block, otherwwise, it should be strictly commented
+
+
+// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names} = require ("./TestConstants");
+// var GameObject = require ("./GameObjects.js");
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 // this file contains all all class separated functions
 function make_game_zone(bar, grid) {
 	game = document.createElement("div");
@@ -109,8 +123,5 @@ function refreshPositions(G){
 	}
 }
 
-function sum(a, b){ 
-	return a+b; }
 
-
-module.exports = {sign}
+module.exports = {sign,put,erase,clear_grid,show_moves}

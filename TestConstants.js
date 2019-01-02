@@ -31,14 +31,14 @@ if (typeof InstallTrigger !== 'undefined'){ //firefox
 
 let nRows0 = 8;
 let nColumns0 = 25;
-let usableheight = window.innerHeight-document.getElementById("start").offsetTop-(nRows0+6)*rowGap;
-let usablewidth = window.innerWidth-document.getElementById("start").offsetLeft-(nColumns0+1)*columnGap;
-let size=Math.min(usablewidth/nColumns0,usableheight/(nRows0+1.5));
+let usableheight = 1080;
+let usablewidth = 728;
+let size=81.44;
 
-let GridItemSize = size+"px";
+let GridItemSize = "81.44px";
 let ButtonHeight = size/2+"px";
 let StatusBarHeight = size+"px";
-let gridItemColor = 'rgb(28, 82, 4)';
+var gridItemColor = 'rgb(28, 82, 4)';
 let font_size= 28*size/120;
 
 let movesColor = 'rgb(3, 57, 128)';
@@ -51,4 +51,4 @@ let refreshRate=1000/120 // refreshing coordinates in ms
 
 
 
-module.exports={GridItemSize,gridItemColor,size}
+module.exports={GridItemSize,gridItemColor,ZNames,nRows0,nColumns0,border,effectiveBorder,Names,size};

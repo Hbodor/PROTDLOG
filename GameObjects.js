@@ -292,6 +292,10 @@ class King extends Plant {
 }
 
 
-module.exports= Plant;
-module.exports= Zombie;
+module.exports= {Plant,Zombie};
+module.exports= {King,Pawn,Queen,Bishop,Knight,Rook};
+module.exports= Bullet;
 module.exports= GameObject;
+
+
+
