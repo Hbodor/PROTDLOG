@@ -18,8 +18,5 @@ animateZombie(z2, k, grid);
 setInterval(function(){refreshPositions(grid,zombies);},refreshRate);
 let zombies = [z,z1,z2];
 
-k.shoot(grid);
-
-
 
 //setInterval(function(){console.log(z1.x+','+z1.face.offsetLeft);},refreshRate);

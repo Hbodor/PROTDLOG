@@ -17,6 +17,8 @@ let ZAttacks = [1, 3, 5];
 let ZLives = [1, 3, 5];
 let ZSpeed = [3, 4, 5]; //number of seconds in every step the zombie makes
 
+let cooldown=5000;
+
 
 //Changing the dimensions of the items depending on the initial dimensions of the window
 

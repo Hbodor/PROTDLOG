@@ -6,6 +6,7 @@ class GameObject {
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
+		this.alive=true;
     }
 
     moveto(r, c, G) {
@@ -15,6 +16,11 @@ class GameObject {
         this.c = c;
         put(this, G);
     }
+	die(G){
+		this.alive=false;
+		erase(this,grid);
+	}
+
 }
 
 class Zombie extends GameObject {
@@ -61,10 +67,9 @@ class Zombie extends GameObject {
 
 //Bullet class
 class Bullet {
-	constructor (level,x,y,dad){
+	constructor (level,x,y){
 		this.x = x;
 		this.y = y;
-		this.dad=dad;
 		this.level = level;
 		this.attack=Attacks[level];
 		this.alive=true; //useless?
@@ -82,22 +87,22 @@ class Bullet {
 		if (!this.alive){ return (false);}
 		for (let i=0;i<zombies.length;i++){
 			//collision with zombie is still unclear, the coordinates are sometimes not refreshed correctly?
-			
-			if ( (zombies[i].x-this.x<=size/6 && zombies[i].x-this.x>=-size/2) &&  (this.y - zombies[i].y<=size && this.y - zombies[i].y>=-size/2) ) {
+
+			if ( zombies[i].alive && (zombies[i].x-this.x<=size/6 && zombies[i].x-this.x>=-size/2) &&  (this.y - zombies[i].y<=size && this.y - zombies[i].y>=-size/2) ) {
 				//temp fix, hitbox in x is bigger (even if the bullet goes through the zombie by size/2, we count it as a hit)
 				zombies[i].life -= this.attack;
 				console.log("hit zombie "+i)
 				return (true);
 			}
 		}
+		
 	}
-	refresh(grid,zombies){
+	refresh(grid,piece,zombies){
 		//refreshing the bullet state, shooting another bullet directly after this one dies, maybe have a cooldown ? 
 		if (this.collision(zombies) || this.x == grid.face.clientWidth){
 			this.alive=false;
 			grid.face.removeChild(this.face);
-			this.dad.can_shoot=true;
-			this.dad.shoot(grid);
+			piece.can_shoot=true;
 		}
 	}
 
@@ -120,17 +125,19 @@ class Plant extends GameObject {
         this.face.setAttribute('width', GridItemSize);
 		//bullet
 		this.can_shoot=true;
+		this.cooldown=0; //cooldown before next shot
     }
 	shoot(G){
 		//creating and shooting the straight bullet
-		if (this.can_shoot){
-			
-			this.bullet=new Bullet(this.level,this.x,this.y,this);
+		if (this.can_shoot && this.cooldown <=0){
+			this.bullet=new Bullet(this.level,this.x,this.y);
 			G.face.appendChild(this.bullet.face);
 			this.bullet.face.style.left = G.face.clientWidth+'px';
 			this.can_shoot=false;
+			this.cooldown=cooldown; //refresh the cooldown
 		}
 	}
+
 	
 
 }

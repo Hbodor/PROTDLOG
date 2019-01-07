@@ -92,7 +92,7 @@ function randInt(n) {
 
 function animateZombie(zombie, king, grid) {
 
-	setInterval(function () { if (!pause) { zombie.moveOneStep(king, grid); } }, zombie.speed * 1000);
+	setInterval(function () { if (!pause && zombie.alive) { zombie.moveOneStep(king, grid); } }, zombie.speed * 1000);
 }
 
 
@@ -104,12 +104,18 @@ function refreshPositions(G,zombies){
 		for (let c=0;c<G.nColumns;c++){
 			G.body[r][c].x=G.body[r][c].face.offsetLeft;
 			G.body[r][c].y=G.body[r][c].face.offsetTop;
+			
+			if (G.body[r][c].life<=0){
+				G.body[r][c].die(G);
+			}
 			//refresh the bullet (maybe have a different list for bullets ? )
 			if (Names.indexOf(G.body[r][c].name) != -1){
 				G.body[r][c].bullet.x = G.body[r][c].bullet.face.offsetLeft;
-				G.body[r][c].bullet.y = G.body[r][c].bullet.face.offsetTop;
+				G.body[r][c].bullet.y = G.body[r][c].bullet.face.offsetTop; //refresh bullet position
+				G.body[r][c].cooldown-=refreshRate; //refresh the shot cooldown
+				G.body[r][c].shoot(G); 
 				if (G.body[r][c].bullet.alive) {
-					G.body[r][c].bullet.refresh(grid,zombies);
+					G.body[r][c].bullet.refresh(grid,G.body[r][c],zombies);
 				}
 			}
 		}
