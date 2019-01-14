@@ -4,7 +4,8 @@ function make_game_zone(bar, grid) {
 	game.className = "game-zone";
 	game.appendChild(bar.face);
 	game.appendChild(grid.face);
-	document.body.appendChild(game);
+	var center = document.getElementById("center");
+	center.appendChild(game);
 }
 
 function put(object, grid) {

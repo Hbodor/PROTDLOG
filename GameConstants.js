@@ -31,11 +31,13 @@ if (typeof InstallTrigger !== 'undefined'){ //firefox
 	effectiveBorder=border/2;
 }
 
-let nRows0 = 8;
-let nColumns0 = 25;
+let nRows0 = 6;
+let nColumns0 = 15;
 let usableheight = window.innerHeight-document.getElementById("start").offsetTop-(nRows0+6)*rowGap;
 let usablewidth = window.innerWidth-document.getElementById("start").offsetLeft-(nColumns0+1)*columnGap;
-let size=Math.min(usablewidth/nColumns0,usableheight/(nRows0+1.5));
+//let size = usablewidth/nColumns0 ;
+let size=Math.min((0.66*usablewidth - columnGap)/nColumns0 - columnGap ,usableheight/(nRows0+1.5));
+
 
 let GridItemSize = size+"px";
 let ButtonHeight = size/2+"px";
