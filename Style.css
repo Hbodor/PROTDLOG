@@ -3,22 +3,37 @@
   background-color: rgb(0, 0, 0);
   column-gap: 10px;
   row-gap: 10px;
+  
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+  /*
+  width: max-content;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: -o-max-content;
   width: -ms-max-content;
+  */
+  width: 66.66% ;
+
   height: -moz-max-content;
   height: -webkit-max-content;
   height: -o-max-content;
   height: -ms-max-content;
+  
+  	
+	position : absolute ;
+	left : 0px ;
+	top : 91px;
+	z-index: 1;
 }
 
 
 .stat-bar{
   display: grid;
-  background-color: rgb(0, 98, 122);
+  background-image: linear-gradient(to right , #044852, #0f304e);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
   grid-template-columns: 1fr 6fr  ;
   padding: 10px;
+  width : -max-content ;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: -o-max-content;
@@ -27,12 +42,16 @@
   height: -webkit-max-content;
   height: -o-max-content;
   height: -ms-max-content;
+  position: absolute ;
+  left: 0px;
+  top: 0px;
 }
 
 .Money{
   display: grid;
   background-color: rgb(0, 0, 0);
   padding: 10px;
+  width: max-content;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: -o-max-content;
@@ -53,6 +72,7 @@
   background-color: rgb(0, 0, 0);
   padding: 10px;
   column-gap: 10px;
+  width: max-content;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: -o-max-content;
@@ -61,6 +81,10 @@
   height: -webkit-max-content;
   height: -o-max-content;
   height: -ms-max-content;
+  
+  position: absolute;
+  top : 10px;
+  left :100px;
 }
 
 .img{
@@ -72,14 +96,23 @@
   grid-template-columns: auto;
   grid-template-rows: auto auto;
   row-gap: 10px;
+  width: 66.66%;
+  /*
+    width: max-content;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: -o-max-content;
   width: -ms-max-content;
+  */
+  width: 64.66%;
   height: -moz-max-content;
   height: -webkit-max-content;
   height: -o-max-content;
   height: -ms-max-content;
+	position : absolute ;
+	left : 17.66% ;
+	top : 101px;
+	z-index: 1;
 
 }
 .button {
@@ -111,5 +144,114 @@
   position: absolute;
   transition: all 2s ease-in-out;
 }
+// design
+#foot_section {
 
+  
+}
+body {
+	background-color : #374446 ;
+	/*background-image: linear-gradient(gray, white);*/
+	background-position: center bottom; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	height: 1000px;
+}
+#head_section {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height : 80px ;
+	width : 100% ;
+	background-image: linear-gradient(to right , #045241, rgba(4,72,82));
+	background-position: center bottom; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+	z-index: 2;
 
+	
+}
+#north_west {
+	width : 16.66% ;
+	position : absolute ;
+	left : 0px ;
+	height : 80px
+}
+#main_title_image{
+	width : 100% ;
+}
+#north_center{
+	width : 66.66% ;
+	position : absolute ;
+	left : 16.66% ;
+}
+#north_east{
+	width : 16.66% ;
+	position : absolute ;
+	right : 0% ;
+	top : 0% ;
+}
+#body_section {
+	width : 100% ;
+	
+	/*background-image: url("grid_vs.png");*/
+	background-position: center bottom; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	height: 1000px;
+}
+#west {
+	width : 16.66% ;
+	position : absolute ;
+	left : 0% ;
+	top : 80px + 0% ;
+}
+
+#center{
+	width : 66.66% ;
+	position : absolute ;
+	left : 16.66% ;
+	top : 81px;
+	z-index: 1;
+	
+	
+}
+#east{
+	width : 16.66% ;
+	position : absolute ;
+	right : 0% ;
+	top : 80px ;
+}
+#foot_section {
+	position: -webkit-sticky; /* Safari */
+	position: fixed;
+	bottom : 0px ;
+	left : 0px;
+	height : 80px ;
+	width : 100% ;
+	background-image: url("lower band grid blue.png");
+	background-position: center bottom; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+	z-index: 3;
+}
+#south_west {
+	width : 16.66% ;
+	position : absolute ;
+	left : 0px ;
+	bottom : 0px;
+}
+#south_center{
+	width : 66.66% ;
+	position : absolute ;
+	left : 16.66% ;
+	bottom : 0px ;
+}
+#south_east{
+	width : 16.66% ;
+	position : absolute ;
+	right : 0px ;
+	bottom : 0px ;
+}
