@@ -1,23 +1,27 @@
 // all the test should be in this file
-var {sign,put,erase,clear_grid} = require("./Functions.js");
+var {sign,put,erase,clear_grid,show_moves,clicked} = require("./Functions.js");
 //var GameObject = require ("./GameObjects.js")
 const {GridItemSize,gridItemColor,size,ZNames} = require ("./TestConstants");
-var Zombie = require ("./GameObjects.js");
-var Plant = require ("./GameObjects.js");
-var GameObject = require ("./GameObjects.js");
-var Grid = require ("./Graphics.js");
+var {Zombie} = require ("./GameObjects.js");
+var {Plant} = require ("./GameObjects.js");
+var {GameObject, init_Functions} = require ("./GameObjects.js");
+var {Grid} = require ("./Graphics.js");
 var {generateNewPiece,selectedPosition,buy} = require ("./Graphics.js");
 var status_bar = require ("./Graphics.js");
-var Bullet = require ("./Graphics.js");
-var {King,Pawn,Queen,Bishop,Knight,Rook} = require ("./GameObjects.js");
+var {Bullet, King} = require ("./GameObjects.js");
+var {Pawn} = require ("./GameObjects.js");
 //var {generateNewPiece,selectedPosition,buy} = require ("./Graphics.js");
 
+init_Functions();
 
-
-var z=new Zombie(0, 2, 5);
+var z=new Zombie(1,2,4);
+z.face=document.createElement('Zombie'); // just to avoid Img which works in navigator
 var B=new Bullet(1,1,1,1);
-var p= new Plant(2,1);
-var grid = new Grid(5,5);
+var K= new King(1,1);
+var p= new Plant(1,2,3);
+p.face=document.createElement('Plant'); // just to avoid Img which works in navigator
+var grid = new Grid(7,7);
+var P= new Pawn(1,2);
 
 
 
@@ -28,11 +32,11 @@ test("sign of the number", () => {
   })
 
   test("make sure zombie is in the appropriate place", () => {
-    expect(z.c).toBe(2)
+    expect(z.c).toBe(4);
   })
 
   test("make sure Plant is in the appropriate place", () => {
-    expect(p.r==2 && p.c==1).toBeTruthy()
+    expect(p.r==2 && p.c==3).toBeTruthy();
   })
 
   test("Test fonctionalities of put ( function that puts the object in the grid) ", () => {
@@ -42,7 +46,7 @@ test("sign of the number", () => {
 
   })
 
-  test("Test fonctionalities of eras ( function that delete the object from the grid) ", () => {
+  test("Test fonctionalities of erase ( function that delete the object from the grid) ", () => {
     z.face=document.createElement('Zombie'); // just to avoid Img which works in navigator
     put(z,grid);
     erase(z,grid);
@@ -50,26 +54,37 @@ test("sign of the number", () => {
     expect(grid.body[z.r][z.c]).toEqual(o);
   })
 
+  // test("make sure Plant is in the appropriate place", () => {
+  //   z.moveto(1,2,grid);
+  // })
   
 
 
 
 //Integration Tests
 
-test("Test moveto that uses put and erease ", () => {
-  p.face=document.createElement('Plant'); // just to avoid Img which works in navigator
-  var o = new GameObject(p.r, p.c);
-  put(p,grid);
-  expect(grid.body[p.r][p.c]).toBe(p);
-  erase(p, grid);
-  //moving plant to (4,4)
-  p.r = 4;
-  p.c = 4;
-  put(p, grid);
+
+test("Test moveto that uses put and erease", () => {
+  put(z,grid);
+  let previousr=z.r;
+  let previousc=z.c;
+  let o = new GameObject(previousr,previousc);
+  z.moveto(4,4,grid);
+  z.face=document.createElement('Zombie');
+  expect(z.r==4 && z.c==4).toBeTruthy();
   expect(grid.body[o.r][o.c]).toEqual(o);
-  expect(grid.body[p.r][p.c]).toBe(p);
+  expect(grid.body[z.r][z.c]).toBe(z);
+
+
 })
 
+test("Test clear_gridthat clears the grid from any clicked button (colored elemens of the grid) ", () => {
+})
+
+
+test("Test collision between bullet and zombie ", () => {
+  
+})
 
 
 

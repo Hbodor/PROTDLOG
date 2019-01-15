@@ -51,4 +51,5 @@ let refreshRate=1000/120 // refreshing coordinates in ms
 
 
 
-module.exports={GridItemSize,gridItemColor,ZNames,nRows0,nColumns0,border,effectiveBorder,Names,size};
+module.exports={GridItemSize,gridItemColor,ZNames,nRows0,nColumns0,border,effectiveBorder,Names,size,ZSpeed,ZLives,ZAttacks,
+    ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces};

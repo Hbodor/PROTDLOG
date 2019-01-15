@@ -1,12 +1,10 @@
-// To test This file we uncomment the following block, otherwwise, it should be strictly commented
+//To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
 
-// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names} = require ("./TestConstants");
-// var GameObject = require ("./GameObjects.js");
+var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names} = require ("./TestConstants");
+var {GameObject} = require ("./GameObjects.js");
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -124,4 +122,4 @@ function refreshPositions(G){
 }
 
 
-module.exports = {sign,put,erase,clear_grid,show_moves}
+module.exports = {sign,put,erase,clear_grid,show_moves,clicked}
