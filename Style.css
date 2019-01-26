@@ -1,0 +1,150 @@
+body {
+	background-color : rgb(105, 105, 105) ;
+	background-position: center bottom; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+  height: 1000px;
+}
+
+#head_section {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height : 80px ;
+	width : 100% ;
+	background-image: linear-gradient(to right , rgb(29, 77, 1), rgb(0, 98, 122));
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+	box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.5),0px  10px 30px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.grid-container {
+  display: grid;
+  background-color: rgb(29, 77, 1);
+  padding: 10px;
+  column-gap: 10px;
+  row-gap: 10px;
+  width: max-content;
+  height: max-content;
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2), -5px 10px 20px 0px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.grid-item {
+  display: block;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 1),-5px -5px 20px 0px rgba(0, 0, 0, 0.5);
+  transition-duration: 0.5s;
+}
+
+
+.stat-bar{
+  display: grid;
+  background-color: rgb(0, 98, 122);
+  grid-template-columns: 1fr 4fr 2fr  ;
+  padding: 10px;
+  column-gap: 10px;
+  height: max-content;
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2), -5px 10px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.Money{
+  display: grid;
+  box-shadow:5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: max-content;
+  height: max-content;
+}
+
+.text{
+  background-color: rgb(0, 128, 11);
+  font-family: cursive;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+}
+.shop{
+  display: grid;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  column-gap: 10px;
+  width: max-content;
+  height: max-content;
+}
+
+.img{
+  background-color:  rgba(150, 150, 150, 0.747);
+  
+}
+
+.game-zone{
+  position: relative;
+  top: 100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  row-gap: 20px;
+  width: max-content;
+  height: max-content;
+}
+.button {
+  background-color: rgb(192, 0, 0); 
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: cursive;
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgb(0, 128, 11);
+  padding-left: 30px;
+}
+
+.game-button{
+  background-color: rgb(0, 98, 122);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 0px;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.5s;
+}
+
+.game-button:hover{
+  background-color: rgb(0, 128, 11);
+  padding-left: 50px;
+}
+
+.controls{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  row-gap: 10px;
+}
+
+.Image{
+  position: absolute;
+  transition: all 2s cubic-bezier(0.39, -0.52, 0.57, 1.35);
+}
+
+
+.ZImage{
+  position: absolute;
+  transition: all 1s ease-in-out;
+}
+
+.Bullet{
+  position: absolute;
+  transition: all 0.5s;
+  z-index: 2;
+}
+
