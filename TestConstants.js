@@ -20,26 +20,26 @@ let ZSpeed = [3, 4, 5]; //number of seconds in every step the zombie makes
 
 //Changing the dimensions of the items depending on the initial dimensions of the window
 
-let rowGap=10;
-let columnGap=10;
-let border=10;
-let effectiveBorder=border;
+let rowGap = 10;
+let columnGap = 10;
+let border = 10;
+let effectiveBorder = border;
 // Border of cells isn't displayed the same way in firefox and chrome
-if (typeof InstallTrigger !== 'undefined'){ //firefox
-	effectiveBorder=border/2;
+if (typeof InstallTrigger !== 'undefined') { //firefox
+    effectiveBorder = border / 2;
 }
 
 let nRows0 = 8;
 let nColumns0 = 25;
 let usableheight = 1080;
 let usablewidth = 728;
-let size=81.44;
+let size = 81.44;
 
 let GridItemSize = "81.44px";
-let ButtonHeight = size/2+"px";
-let StatusBarHeight = size+"px";
+let ButtonHeight = size / 2 + "px";
+let StatusBarHeight = size + "px";
 var gridItemColor = 'rgb(28, 82, 4)';
-let font_size= 28*size/120;
+let font_size = 28 * size / 120;
 
 let movesColor = 'rgb(3, 57, 128)';
 let waitingColor = 'rgb(128, 3, 3)';
@@ -47,9 +47,11 @@ let onlyOneButtonShouldBeClicked = true;
 let pause = false; // to pause the movment of zombies when inserting and moving pieces
 
 
-let refreshRate=1000/120 // refreshing coordinates in ms
+let refreshRate = 1000 / 120 // refreshing coordinates in ms
 
 
 
-module.exports={GridItemSize,gridItemColor,ZNames,nRows0,nColumns0,border,effectiveBorder,Names,size,ZSpeed,ZLives,ZAttacks,
-    ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces};
+module.exports = {
+    GridItemSize, gridItemColor, ZNames, nRows0, nColumns0, border, effectiveBorder, Names, size, ZSpeed, ZLives, ZAttacks,
+    ZPieces, Attacks, Bullets, Names, Prices, Lives, Pieces, movesColor
+};

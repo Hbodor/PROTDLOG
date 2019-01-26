@@ -1,7 +1,7 @@
 //To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
 
-var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names} = require ("./TestConstants");
+var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names,movesColor} = require ("./TestConstants");
 var {GameObject} = require ("./GameObjects.js");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
