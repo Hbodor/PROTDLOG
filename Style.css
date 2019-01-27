@@ -3,7 +3,7 @@ body {
 	background-position: center bottom; 
 	background-repeat: no-repeat; 
 	background-size: cover; 
-  height: 1000px;
+  height: max-content;
 }
 
 #head_section {
@@ -11,7 +11,10 @@ body {
 	top: 0px;
 	left: 0px;
 	height : 80px ;
-	width : 100% ;
+  width : 100% ;
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  grid-template-rows: auto;
 	background-image: linear-gradient(to right , rgb(29, 77, 1), rgb(0, 98, 122));
 	background-position: center; 
 	background-repeat: no-repeat; 
@@ -59,10 +62,11 @@ body {
 
 .text{
   background-color: rgb(0, 128, 11);
-  font-family: cursive;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   text-align: center;
   font-weight: bold;
-  display: inline-block;
+
+
 }
 .shop{
   display: grid;
@@ -80,7 +84,7 @@ body {
 
 .game-zone{
   position: relative;
-  top: 100px;
+  top: 150px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto;
@@ -148,3 +152,90 @@ body {
   z-index: 2;
 }
 
+/* Game Description Style */
+.description-container1{
+  display: none;
+  transition: all 1s;
+}
+
+.description-container2{
+  position: relative;
+  top: 100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows:auto auto;
+  row-gap: 20px;
+  width: max-content;
+  height: max-content;
+  transition: all 1s;
+}
+
+.rules-button {
+  background-color: rgb(0, 98, 122);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 0px;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.5s;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+
+}
+.rules-button:hover {
+  
+  background-color: rgb(0, 128, 11);
+}
+
+.rules{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  font-weight: 10px;
+  font-size: 15px;
+  display: inline-block;
+  background-color: rgb(121, 121, 121);
+  width: 100%;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+}
+.card-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows:auto auto auto;
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+
+.card{
+  position: relative;
+  height: 200px;
+  width: 200px;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.card-img{
+  width: 100%;
+  height: 100%;
+}
+
+.description{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: left;
+  font-size: 15px;
+  display: inline-block;
+  position: absolute;
+  background-color: rgb(155, 155, 155);
+  bottom: 0;
+  width: 100%;
+  top:175px;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+
+.description:hover{
+  top: 70px;
+}

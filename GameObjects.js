@@ -108,7 +108,7 @@ class Plant extends GameObject {
                     bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size/2 - 5 + 'px';
                     bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size/2 - 5 + 'px';
                     setTimeout(function(plant) {
-                        grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(grid.face.childNodes[plant.r * grid.nColumns + plant.c].lastChild);
+                        grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(bullet);
                         grid.body[r][c].life -= 1;
                         if (grid.body[r][c].life==0) {
                             statBar.updateMoney(statBar.getMoney()+grid.body[r][c].reward);

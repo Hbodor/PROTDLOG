@@ -25,7 +25,7 @@ function erase(object, grid) {
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
-	delete object;
+	//delete object;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
 }
 
@@ -105,6 +105,17 @@ function GenerateNewZombie(king, grid) {
 	}
 }
 
-function AutoAttack(plant, grid, statBar){
+function AutoAttack(plant, grid, statBar) {
 	plant.mind = setInterval(function () { if (!GameIsPaused) { plant.hit(grid, statBar); } }, plant.attack * 1000)
+}
+
+
+function showRules() {
+	let dc = document.getElementById('dc');
+	if (dc.className == 'description-container1') {
+		dc.className = 'description-container2';
+	}
+	else {
+		dc.className = 'description-container1';
+	}
 }

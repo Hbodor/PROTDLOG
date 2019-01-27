@@ -12,7 +12,7 @@ let Moves_C = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, 
 //For Zombies
 let ZPieces = ['pieces/Zombie1.png', 'pieces/Zombie2.png', 'pieces/Zombie3.png'];
 let ZNames = ['Zombie1', 'Zombie2', 'Zombie3'];
-let ZAttacks = [1, 3, 5];
+let ZAttacks = [2, 3, 5];
 let ZRewards = [10,20,30];
 let ZLives = [3, 5, 7];
 let ZSpeed = [3, 5, 7]; //number of seconds in every step the zombie makes
