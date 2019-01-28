@@ -106,7 +106,7 @@ function GenerateNewZombie(king, grid) {
 }
 
 function AutoAttack(plant, grid, statBar) {
-	plant.mind = setInterval(function () { if (!GameIsPaused) { plant.hit(grid, statBar); } }, plant.attack * 1000)
+	plant.mind = setInterval(function () { if (!GameIsPaused && !pause) { plant.hit(grid, statBar); } }, plant.attack * 1000)
 }
 
 
