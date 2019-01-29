@@ -92,8 +92,18 @@ function randInt(n) {
 }
 
 function animateZombie(zombie, king, grid) {
+	let counter = 0;
 
-	zombie.mind = setInterval(function () { if (!pause) { zombie.moveOneStep(king, grid); } }, zombie.speed * 1000);
+	zombie.mind = setInterval(function () {
+		counter += 1;
+		if (counter % zombie.speed == 0 && !pause) {
+			zombie.moveOneStep(king, grid);
+		}
+		if (counter % zombie.attack == 0 && !GameIsPaused && !pause) {
+			zombie.hit(grid);
+		}
+
+	}, 1000);
 }
 
 function GenerateNewZombie(king, grid) {
@@ -106,7 +116,7 @@ function GenerateNewZombie(king, grid) {
 }
 
 function AutoAttack(plant, grid, statBar) {
-	plant.mind = setInterval(function () { if (!GameIsPaused) { plant.hit(grid, statBar); } }, plant.attack * 1000)
+	plant.mind = setInterval(function () { if (!GameIsPaused && !pause) { plant.hit(grid, statBar); } }, plant.attack * 1000)
 }
 
 

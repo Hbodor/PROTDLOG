@@ -61,11 +61,54 @@ class Zombie extends GameObject {
         }
     }
 
-    range(grid)
-    {
-        
+    range(grid) {
+        let L0 = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+        let L1 = [[1, 1], [1, -1], [-1, -1], [-1, 1]].concat(L0);
+        let L2 = [[2, 0], [0, 2], [-2, 0], [0, -2]].concat(L1);
+        let L = [L0, L1, L2];
+        let R = [];
+
+        for (let i = 0; i < L[this.level].length; i++) {
+            let r = this.r + L[this.level][i][0];
+            let c = this.c + L[this.level][i][1];
+            if (r >= 0 && r < grid.nRows && c >= 0 && c < grid.nColumns) {
+                R.push([r, c]);
+            }
+        }
+        return (R);
     }
+
     hit(grid) {
+        let R = this.range(grid);
+        if (R.length != 0) {
+            for (let i = 0; i < R.length; i++) {
+                let r = R[i][0];
+                let c = R[i][1];
+                if (Names.includes(grid.body[r][c].name)) {
+
+                    grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
+                    grid.body[r][c].life -= 1;
+                    if (grid.body[r][c].life == 0) {
+
+                        if (grid.body[r][c].name == "King") {
+                            EndGame();
+                        }
+                        else {
+                            clearInterval(grid.body[r][c].mind);
+                            erase(grid.body[r][c], grid);
+                        }
+
+                    }
+
+                    setTimeout(function () {
+                        grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = gridItemColor;
+                    }, 500)
+
+
+                }
+            }
+
+        }
 
     }
 }
@@ -87,35 +130,35 @@ class Plant extends GameObject {
         this.face.setAttribute('width', GridItemSize);
     }
 
-    hit(grid,statBar) {
-        
+    hit(grid, statBar) {
+
         let R = this.range(grid);
-        if(R.length !=0){
-            for(let i =0; i<R.length ; i++) {
+        if (R.length != 0) {
+            for (let i = 0; i < R.length; i++) {
                 let r = R[i][0];
                 let c = R[i][1];
-                if(ZNames.includes(grid.body[r][c].name)) {
+                if (ZNames.includes(grid.body[r][c].name)) {
                     //animation
                     let bullet = document.createElement("img");
                     bullet.className = "Bullet";
                     bullet.setAttribute('src', 'pieces/Bullet.png');
-                    bullet.setAttribute('height',  "10px");
+                    bullet.setAttribute('height', "10px");
                     bullet.setAttribute('width', "10px");
                     grid.face.childNodes[this.r * grid.nColumns + this.c].appendChild(bullet);
-                    bullet.style.top = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop + size/2 + 'px';
-                    bullet.style.left = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft + size/2  + 'px';
+                    bullet.style.top = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop + size / 2 + 'px';
+                    bullet.style.left = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft + size / 2 + 'px';
                     //transition
-                    bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size/2 - 5 + 'px';
-                    bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size/2 - 5 + 'px';
-                    setTimeout(function(plant) {
+                    bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size / 2 - 5 + 'px';
+                    bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size / 2 - 5 + 'px';
+                    setTimeout(function (plant) {
                         grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(bullet);
                         grid.body[r][c].life -= 1;
-                        if (grid.body[r][c].life==0) {
-                            statBar.updateMoney(statBar.getMoney()+grid.body[r][c].reward);
+                        if (grid.body[r][c].life == 0) {
+                            statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c],grid); 
+                            erase(grid.body[r][c], grid);
                         }
-                        
+
                     }, 500, this);
                 }
             }
@@ -234,39 +277,39 @@ class Bishop extends Plant {
     range(G) {
         let L = [];
 
-        let r = this.r ;
-        let c = this.c ;
-        while (r+1 < G.nRows &&  c+1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+        let r = this.r;
+        let c = this.c;
+        while (r + 1 < G.nRows && c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
             r += 1;
             c += 1;
         }
-        if(r!=this.r || c!=this.c) {L.push([r, c]);};
+        if (r != this.r || c != this.c) { L.push([r, c]); };
 
-        r = this.r ;
-        c = this.c ;
-        while (r-1 >= 0  && c+1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+        r = this.r;
+        c = this.c;
+        while (r - 1 >= 0 && c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
             r -= 1;
             c += 1;
         }
-        if(r!=this.r || c!=this.c) {L.push([r, c]);};
+        if (r != this.r || c != this.c) { L.push([r, c]); };
 
-        r = this.r ;
-        c = this.c ;
-        while (r-1 >= 0 && c-1 >= 0  && !ZNames.includes(G.body[r][c].name)) {
+        r = this.r;
+        c = this.c;
+        while (r - 1 >= 0 && c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
             r -= 1;
             c -= 1;
         }
-        if(r!=this.r || c!=this.c) {L.push([r, c]);};
+        if (r != this.r || c != this.c) { L.push([r, c]); };
 
-        r = this.r ;
-        c = this.c ;
-        while ( r+1 < G.nRows && c-1 >= 0  && !ZNames.includes(G.body[r][c].name)) {
+        r = this.r;
+        c = this.c;
+        while (r + 1 < G.nRows && c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
             r += 1;
             c -= 1;
         }
-        if(r!=this.r || c!=this.c) {L.push([r, c]);};
+        if (r != this.r || c != this.c) { L.push([r, c]); };
 
-        return(L);
+        return (L);
     }
 }
 
@@ -320,32 +363,32 @@ class Rook extends Plant {
     range(G) {
         let L = [];
 
-        let r = this.r ;
-        let c = this.c ;
-        while (r+1 < G.nRows && !ZNames.includes(G.body[r][c].name)) {
+        let r = this.r;
+        let c = this.c;
+        while (r + 1 < G.nRows && !ZNames.includes(G.body[r][c].name)) {
             r += 1;
         }
-        if(r!=this.r) {L.push([r, c]);};
+        if (r != this.r) { L.push([r, c]); };
 
-        r = this.r ;
-        while (r-1 >= 0  && !ZNames.includes(G.body[r][c].name)) {
+        r = this.r;
+        while (r - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
             r -= 1;
         }
-        if(r!=this.r ) {L.push([r, c]);};
+        if (r != this.r) { L.push([r, c]); };
 
-        r = this.r ;
-        while (c-1 >= 0  && !ZNames.includes(G.body[r][c].name)) {
+        r = this.r;
+        while (c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
             c -= 1;
         }
-        if(c!=this.c) {L.push([r, c]);};
+        if (c != this.c) { L.push([r, c]); };
 
-        c = this.c ;
-        while ( c+1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+        c = this.c;
+        while (c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
             c += 1;
         }
-        if(c!=this.c) {L.push([r, c]);};
+        if (c != this.c) { L.push([r, c]); };
 
-        return(L);
+        return (L);
     }
 }
 
@@ -375,7 +418,7 @@ class King extends Plant {
         for (let i = 0; i < Moves_C.length; i++) {
             let r = this.r + Moves_C[i][0];
             let c = this.c + Moves_C[i][1];
-            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns && G.body[r][c].name == "GameObject" ) {
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns && G.body[r][c].name == "GameObject") {
                 L.push([r, c]);
             }
         }
@@ -387,7 +430,7 @@ class King extends Plant {
         for (let i = 0; i < Moves_C.length; i++) {
             let r = this.r + Moves_C[i][0];
             let c = this.c + Moves_C[i][1];
-            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns ) {
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns) {
                 L.push([r, c]);
             }
         }
