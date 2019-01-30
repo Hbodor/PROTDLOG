@@ -36,6 +36,10 @@ function erase(object, grid) {
 }
 
 function show_moves(object, grid, color) {
+	//don't show moves when you can't move
+	if (!object.can_move)
+		return
+	
 	let L = object.moves(grid);
 	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
 	grid.statBar.sellButton.disabled=false;
@@ -85,13 +89,15 @@ function clicked(object, grid) {
 		if (!GameIsPaused) {
 			clear_grid(grid);
 			pause = true; //pausing zombies
-			show_moves(object, grid, movesColor);
-			grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
-				if (!GameIsPaused) {
-					clear_grid(grid);
-					grid.statBar.sellButton.disabled=true;
-					grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
-					grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
+			if (object.can_move){
+				show_moves(object, grid, movesColor);
+				grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
+					if (!GameIsPaused) {
+						clear_grid(grid);
+						grid.statBar.sellButton.disabled=true;
+						grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
+					}
 				}
 			}
 		}
