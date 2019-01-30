@@ -23,9 +23,7 @@ function put(object, grid) {
 }
 
 function erase(object, grid) {
-	
-	window.clearInterval(object.mind) // deleting the shooting interval
-	
+		
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
@@ -157,6 +155,7 @@ function showRules() {
 function sellPlant(plant, grid, statBar) {
 	if (plant.price!=Infinity){
 		statBar.updateMoney(statBar.getMoney() + plant.price * sellingFactor);
+		window.clearInterval(plant.mind) // deleting the shooting interval
 		erase(plant,grid);
 	}else{
 		alert("You can't sell this piece");
