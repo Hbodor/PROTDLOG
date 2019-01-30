@@ -129,7 +129,7 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-
+	
     hit(grid, statBar) {
 
         let R = this.range(grid);

@@ -135,14 +135,24 @@ class status_bar {
         this.GameButtons.className = 'controls';
 
         this.GameButtons.appendChild(StartButton);
-        this.GameButtons.appendChild(PauseButton);
-
+        this.GameButtons.appendChild(PauseButton);		
+		
         this.face.appendChild(this.GameButtons);
 
         this.timer = document.createElement("div");
         this.timer.innerHTML = "timer : 0"
         
-        this.face.appendChild(this.GameButtons);
+       
+		
+		this.sellButton = document.createElement("button");
+		this.sellButton.className = 'sell-button';
+		this.sellButton.innerHTML = 'Sell';
+		this.sellButton.style.backgroundColor='rgb(220,220,220)'
+		this.sellButton.disabled=true;
+		this.face.appendChild(this.sellButton);
+		
+
+		
         
     }
 

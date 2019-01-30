@@ -5,6 +5,7 @@ function make_game_zone(bar, grid) {
 	game.appendChild(bar.face);
 	game.appendChild(grid.face);
 	document.body.appendChild(game);
+	grid.statBar=bar;
 }
 
 function put(object, grid) {
@@ -22,16 +23,33 @@ function put(object, grid) {
 }
 
 function erase(object, grid) {
+	
+	window.clearInterval(object.mind) // deleting the shooting interval
+	
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
 	//delete object;
+	clear_grid(grid); //clearing the grid in case the object is clicked on
+	
+	
+	
 	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
 }
 
 function show_moves(object, grid, color) {
 	let L = object.moves(grid);
-
+	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
+	grid.statBar.sellButton.disabled=false;
+	grid.statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)'
+	grid.statBar.sellButton.onclick=function(){
+		if (onlyOneButtonShouldBeClicked){
+			sellPlant(object,grid,grid.statBar);
+		}
+		grid.statBar.sellButton.disabled=true;
+		grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+	}
+	
 	for (let i = 0; i < L.length; i++) {
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick =
@@ -39,9 +57,13 @@ function show_moves(object, grid, color) {
 				if (!GameIsPaused) {
 					clear_grid(grid);
 					object.moveto(L[i][0], L[i][1], grid);
+					grid.statBar.sellButton.disabled=true;
+					grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
 				}
 			}
 	}
+	
+	//showing the sell button and 
 }
 
 function clear_grid(G) {
@@ -69,6 +91,8 @@ function clicked(object, grid) {
 			grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
 				if (!GameIsPaused) {
 					clear_grid(grid);
+					grid.statBar.sellButton.disabled=true;
+					grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
 					grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
 				}
 			}
@@ -127,5 +151,14 @@ function showRules() {
 	}
 	else {
 		dc.className = 'description-container1';
+	}
+}
+
+function sellPlant(plant, grid, statBar) {
+	if (plant.price!=Infinity){
+		statBar.updateMoney(statBar.getMoney() + plant.price * sellingFactor);
+		erase(plant,grid);
+	}else{
+		alert("You can't sell this piece");
 	}
 }
