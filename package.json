@@ -1,0 +1,23 @@
+{
+  "name": "PROTDLOG",
+  "version": "1.0.0",
+  "description": "This project consists on coding a simple version of a game called \"Plants&Zombies\"",
+  "main": "Functions.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hbodor/PROTDLOG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hbodor/PROTDLOG/issues"
+  },
+  "homepage": "https://github.com/Hbodor/PROTDLOG#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}

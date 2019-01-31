@@ -2,6 +2,16 @@
 // this file should be as general as possible 
 // keep all specified construction/style in the game engine file
 
+
+// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
+
+// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder} = require ("./TestConstants");
+// var {GameObject} = require ("./GameObjects.js");
+// var {King,Pawn,Queen,Bishop,Knight,Rook,Plants,Zombie,Bullet} = require ("./GameObjects.js");
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 class Grid {
     constructor(nRows, nColumns) {
         // test if nRows, nColumns > 0 
@@ -235,3 +245,6 @@ function generateNewPiece(i, r, c) {
         return new Queen(r, c);
     }
 }
+
+
+module.exports= {generateNewPiece,selectedPosition,buy,Grid};

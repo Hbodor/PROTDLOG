@@ -1,4 +1,16 @@
 // this file contains all all class separated functions
+
+
+
+// //To test This file we uncomment the following block, otherwwise, it should be strictly commented
+
+
+// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names,movesColor} = require ("./TestConstants");
+// var {GameObject} = require ("./GameObjects.js");
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function make_game_zone(bar, grid) {
 	game = document.createElement("div");
 	game.className = "game-zone";
@@ -167,3 +179,6 @@ function sellPlant(plant, grid, statBar) {
 		alert("You can't sell this piece");
 	}
 }
+
+
+module.exports = {sign,put,erase,clear_grid,show_moves,clicked}

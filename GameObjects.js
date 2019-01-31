@@ -1,5 +1,29 @@
 //diffrent objects used in the game are defined here
 
+
+
+// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
+// var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces} = require ("./TestConstants");
+
+// let put, erase;
+
+// function init_Functions() {
+//   let _put, _erase;
+//   function aux() {
+//     var {put,erase} = require("./Functions.js");
+//     _put = put;
+//     _erase = erase;
+//   }
+//   aux();
+//   put = _put;
+//   erase = _erase;
+// }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 class GameObject {
     constructor(r, c) {
         this.name = "GameObject";
@@ -447,4 +471,6 @@ class King extends Plant {
         return (L);
     }
 }
+
+module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
 
