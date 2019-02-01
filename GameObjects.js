@@ -1,5 +1,29 @@
 //diffrent objects used in the game are defined here
 
+
+
+// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
+// var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces} = require ("./TestConstants");
+
+// let put, erase;
+
+// function init_Functions() {
+//   let _put, _erase;
+//   function aux() {
+//     var {put,erase} = require("./Functions.js");
+//     _put = put;
+//     _erase = erase;
+//   }
+//   aux();
+//   put = _put;
+//   erase = _erase;
+// }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 class GameObject {
     constructor(r, c) {
         this.name = "GameObject";
@@ -7,17 +31,27 @@ class GameObject {
         this.r = r; //row
         this.c = c; //colmum
         this.mind = 0 // to store the intervals when animated 
+		this.can_move=true;
     }
 
     moveto(r, c, G) {
         //only works for plants and zombies
-        erase(this, G);
-        this.r = r;
-        this.c = c;
-        put(this, G);
-    }
-}
+		//can't move unless the animation is finished
+		if (this.can_move){
+			this.can_move=false;
+			erase(this, G);
+			this.r = r;
+			this.c = c;
+			put(this, G);
+			setTimeout(make_move.bind(null,this), 2000);
+		}
 
+    }
+	
+}
+function make_move(object){
+		object.can_move=true;
+}
 class Zombie extends GameObject {
     constructor(level, r, c) {
         // 0 <= level <= 2
@@ -88,6 +122,9 @@ class Zombie extends GameObject {
 
                     grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
                     grid.body[r][c].life -= 1;
+                    if (grid.body[r][c].name == "King") {
+                        healthBarRefresh(grid);
+                    }
                     if (grid.body[r][c].life == 0) {
 
                         if (grid.body[r][c].name == "King") {
@@ -129,7 +166,7 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-
+	
     hit(grid, statBar) {
 
         let R = this.range(grid);
@@ -437,4 +474,6 @@ class King extends Plant {
         return (L);
     }
 }
+
+module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
 

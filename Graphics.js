@@ -2,6 +2,16 @@
 // this file should be as general as possible 
 // keep all specified construction/style in the game engine file
 
+
+// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
+
+// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder} = require ("./TestConstants");
+// var {GameObject} = require ("./GameObjects.js");
+// var {King,Pawn,Queen,Bishop,Knight,Rook,Plants,Zombie,Bullet} = require ("./GameObjects.js");
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 class Grid {
     constructor(nRows, nColumns) {
         // test if nRows, nColumns > 0 
@@ -135,14 +145,35 @@ class status_bar {
         this.GameButtons.className = 'controls';
 
         this.GameButtons.appendChild(StartButton);
-        this.GameButtons.appendChild(PauseButton);
-
+        this.GameButtons.appendChild(PauseButton);		
+		
         this.face.appendChild(this.GameButtons);
 
         this.timer = document.createElement("div");
         this.timer.innerHTML = "timer : 0"
         
-        this.face.appendChild(this.GameButtons);
+       
+		
+		this.sellButton = document.createElement("button");
+		this.sellButton.className = 'sell-button';
+		this.sellButton.innerHTML = 'Sell';
+		this.sellButton.style.backgroundColor='rgb(220,220,220)'
+		this.sellButton.disabled=true;
+        this.face.appendChild(this.sellButton);
+        
+        this.healthBar = document.createElement("div");
+        this.healthBar.className = 'health-bar';
+        //this.healthBar.id = 'kingBar';
+        this.healthBar.bar = document.createElement("div");
+        this.healthBar.bar.className = 'bar';
+        this.healthBar.bar.hit = document.createElement("div");
+        this.healthBar.bar.hit.className = 'hit';
+        this.healthBar.life = Lives[5]; //it concerns our King 8)
+        this.healthBar.bar.appendChild(this.healthBar.bar.hit);
+        this.healthBar.appendChild(this.healthBar.bar);  
+		this.face.appendChild(this.healthBar);
+
+		
         
     }
 
@@ -225,3 +256,6 @@ function generateNewPiece(i, r, c) {
         return new Queen(r, c);
     }
 }
+
+
+module.exports= {generateNewPiece,selectedPosition,buy,Grid};
