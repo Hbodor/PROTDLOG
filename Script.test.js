@@ -95,16 +95,16 @@ test("Test clear_gridthat clears the grid from any clicked button (colored eleme
 })
 
 
-test("Test collision between bullet and zombie ", () => {
-  let zlife = z.life;
-  B.collision([z]);
-  expect(z.life).toEqual(zlife);
-  z.x = B.x + 3; //3<=5 and 5 is the chosen value as an extremal
-  z.y = B.y;
-  B.collision([z]);
-  expect(z.life).toEqual(zlife - B.attack);
+// test("Test collision between bullet and zombie ", () => {
+//   let zlife = z.life;
+//   B.collision([z]);
+//   expect(z.life).toEqual(zlife);
+//   z.x = B.x + 3; //3<=5 and 5 is the chosen value as an extremal
+//   z.y = B.y;
+//   B.collision([z]);
+//   expect(z.life).toEqual(zlife - B.attack);
 
-})
+// })
 
 
 

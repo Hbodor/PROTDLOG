@@ -122,6 +122,9 @@ class Zombie extends GameObject {
 
                     grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
                     grid.body[r][c].life -= 1;
+                    if (grid.body[r][c].name == "King") {
+                        healthBarRefresh(grid);
+                    }
                     if (grid.body[r][c].life == 0) {
 
                         if (grid.body[r][c].name == "King") {

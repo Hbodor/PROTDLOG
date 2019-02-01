@@ -159,8 +159,19 @@ class status_bar {
 		this.sellButton.innerHTML = 'Sell';
 		this.sellButton.style.backgroundColor='rgb(220,220,220)'
 		this.sellButton.disabled=true;
-		this.face.appendChild(this.sellButton);
-		
+        this.face.appendChild(this.sellButton);
+        
+        this.healthBar = document.createElement("div");
+        this.healthBar.className = 'health-bar';
+        //this.healthBar.id = 'kingBar';
+        this.healthBar.bar = document.createElement("div");
+        this.healthBar.bar.className = 'bar';
+        this.healthBar.bar.hit = document.createElement("div");
+        this.healthBar.bar.hit.className = 'hit';
+        this.healthBar.life = Lives[5]; //it concerns our King 8)
+        this.healthBar.bar.appendChild(this.healthBar.bar.hit);
+        this.healthBar.appendChild(this.healthBar.bar);  
+		this.face.appendChild(this.healthBar);
 
 		
         

@@ -55,7 +55,7 @@ function show_moves(object, grid, color) {
 	let L = object.moves(grid);
 	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
 	grid.statBar.sellButton.disabled=false;
-	grid.statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)'
+	grid.statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)';
 	grid.statBar.sellButton.onclick=function(){
 		if (onlyOneButtonShouldBeClicked){
 			sellPlant(object,grid,grid.statBar);
@@ -107,7 +107,7 @@ function clicked(object, grid) {
 					if (!GameIsPaused) {
 						clear_grid(grid);
 						grid.statBar.sellButton.disabled=true;
-						grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+						grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)';
 						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
 					}
 				}
@@ -178,6 +178,20 @@ function sellPlant(plant, grid, statBar) {
 	}else{
 		alert("You can't sell this piece");
 	}
+}
+
+function healthBarRefresh(grid){
+	let percentage= 100/Lives[5];
+	grid.statBar.healthBar.life -= 1; //every hit causes 1 damage
+	let newPercentage = grid.statBar.healthBar.life * percentage
+	grid.statBar.healthBar.bar.style.width = newPercentage + "%";
+	grid.statBar.healthBar.bar.hit.style.width = percentage + "%";
+
+	setTimeout(function(){
+		grid.statBar.healthBar.bar.hit.style.width = "0%";
+		grid.statBar.healthBar.bar.style.width = newPercentage + "%";
+	  }, 500);
+
 }
 
 
