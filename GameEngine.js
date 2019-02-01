@@ -21,6 +21,7 @@ function StartGame(level) {
     pause = false;
     GameIsPaused = false;
     s.updateMoney(100);
+    grid.statBar.face.appendChild(grid.statBar.healthBar);
     k = new King(2, 0);
     put(k, grid);
     AutoAttack(k, grid, s)

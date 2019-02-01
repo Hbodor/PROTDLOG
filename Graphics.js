@@ -168,10 +168,9 @@ class status_bar {
         this.healthBar.bar.className = 'bar';
         this.healthBar.bar.hit = document.createElement("div");
         this.healthBar.bar.hit.className = 'hit';
-        this.healthBar.life = Lives[5]; //it concerns our King 8)
+        this.healthBar.life = Lives[5]; //
         this.healthBar.bar.appendChild(this.healthBar.bar.hit);
         this.healthBar.appendChild(this.healthBar.bar);  
-		this.face.appendChild(this.healthBar);
 
 		
         
