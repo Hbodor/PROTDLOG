@@ -21,37 +21,24 @@
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
 class GameObject {
     constructor(r, c) {
         this.name = "GameObject";
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
-        this.mind = 0 // to store the intervals when animated 
-		this.can_move=true;
+        this.mind = 0 ;// to store the intervals when animated 
     }
 
-    moveto(r, c, G, statBar) {
+    moveto(r, c, G) {
         //only works for plants and zombies
-		//can't move unless the animation is finished
-		if (this.can_move){
-			this.can_move=false;
-			erase(this, G, statBar);
-			this.r = r;
-			this.c = c;
-			put(this, G, statBar);
-			setTimeout(make_move.bind(null,this), 2000);
-		}
-
+        erase(this, G);
+        this.r = r;
+        this.c = c;
+        put(this, G);
     }
-	
 }
-function make_move(object){
-		object.can_move=true;
-}
+
 class Zombie extends GameObject {
     constructor(level, r, c) {
         // 0 <= level <= 2
@@ -88,10 +75,10 @@ class Zombie extends GameObject {
         return [r, c];
     }
 
-    moveOneStep(king, grid, statBar) {
+    moveOneStep(king, grid) {
         let nextStep = this.stepToKing(king);
         if (grid.body[nextStep[0]][nextStep[1]].name == "GameObject") {
-            this.moveto(nextStep[0], nextStep[1], grid, statBar);
+            this.moveto(nextStep[0], nextStep[1], grid);
         }
     }
 
@@ -112,7 +99,7 @@ class Zombie extends GameObject {
         return (R);
     }
 
-    hit(grid, statBar) {
+    hit(grid,statBar) {
         let R = this.range(grid);
         if (R.length != 0) {
             for (let i = 0; i < R.length; i++) {
@@ -122,9 +109,11 @@ class Zombie extends GameObject {
 
                     grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
                     grid.body[r][c].life -= 1;
+
                     if (grid.body[r][c].name == "King") {
-                        healthBarRefresh(grid,statBar);
+                        healthBarRefresh(statBar);
                     }
+
                     if (grid.body[r][c].life == 0) {
 
                         if (grid.body[r][c].name == "King") {
@@ -132,7 +121,7 @@ class Zombie extends GameObject {
                         }
                         else {
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid, statBar);
+                            erase(grid.body[r][c], grid);
                         }
 
                     }
@@ -166,7 +155,7 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-	
+
     hit(grid, statBar) {
 
         let R = this.range(grid);
@@ -193,7 +182,7 @@ class Plant extends GameObject {
                         if (grid.body[r][c].life == 0) {
                             statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid, statBar);
+                            erase(grid.body[r][c], grid);
                         }
 
                     }, 500, this);
@@ -475,5 +464,4 @@ class King extends Plant {
     }
 }
 
-module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
-
+//module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};

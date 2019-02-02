@@ -7,11 +7,14 @@ make_game_zone(s, grid);
 let zombieGenerater = 0 // to store the interval that generats zombies
 
 
+
+
 function PauseGame() {
     ButtonHaveEffect = false;
     pause = true;
     GameIsPaused = true;
 }
+
 
 function StartGame(level) {
     EndGame();
@@ -20,14 +23,18 @@ function StartGame(level) {
     onlyOneButtonShouldBeClicked = true;
     pause = false;
     GameIsPaused = false;
+
     s.updateMoney(100);
+
+    k = new King(2, 0);
+    put(k, grid);
+    AutoAttack(k, grid, s);
+
     s.healthBar.life=Lives[5];
     s.healthBar.bar.style.width = 100 + "%";
     s.face.appendChild(s.healthBar);
     
-    k = new King(2, 0);
-    put(k, grid, s);
-    AutoAttack(k, grid, s)
+
     zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1)*5) * 1000);
 }
 

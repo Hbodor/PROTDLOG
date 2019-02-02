@@ -10,7 +10,6 @@
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 function make_game_zone(bar, grid) {
 	game = document.createElement("div");
 	game.className = "game-zone";
@@ -19,7 +18,7 @@ function make_game_zone(bar, grid) {
 	document.body.appendChild(game);
 }
 
-function put(object, grid, statBar) {
+function put(object, grid) {
 	// updating the grid's body
 	grid.body[object.r][object.c] = object;
 	//updating the grid's  face
@@ -29,86 +28,60 @@ function put(object, grid, statBar) {
 	object.face.style.left = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft + 'px';
 
 	if (Names.includes(object.name)) {
-		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid, statBar);
+		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid);
 	}
 }
 
-function erase(object, grid, statBar) {
-		
+function erase(object, grid) {
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
 	//delete object;
-	clear_grid(grid, statBar); //clearing the grid in case the object is clicked on
-	
-	
-	
-	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid, statBar) } };
+	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
 }
 
-function show_moves(object, grid, color,statBar) {
-	//don't show moves when you can't move
-	if (!object.can_move)
-		return
-	
+function show_moves(object, grid, color) {
 	let L = object.moves(grid);
-	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
-	statBar.sellButton.disabled=false;
-	statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)';
-	statBar.sellButton.onclick=function(){
-		if (onlyOneButtonShouldBeClicked){
-			sellPlant(object,grid,statBar);
-		}
-		statBar.sellButton.disabled=true;
-		statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
-	}
-	
+
 	for (let i = 0; i < L.length; i++) {
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick =
 			function move_to() {
 				if (!GameIsPaused) {
-					clear_grid(grid, statBar);
-					object.moveto(L[i][0], L[i][1], grid, statBar);
-					statBar.sellButton.disabled=true;
-					statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+					clear_grid(grid);
+					object.moveto(L[i][0], L[i][1], grid);
 				}
 			}
 	}
-	
-	//showing the sell button and 
 }
 
-function clear_grid(G, statBar) {
+function clear_grid(G) {
 
 	for (let r = 0; r < G.nRows; r++) {
 		for (let c = 0; c < G.nColumns; c++) {
 			if (G.body[r][c].name == "GameObject" || ZNames.includes(G.body[r][c].name)) {
 				G.face.childNodes[r * G.nColumns + c].style.backgroundColor = gridItemColor;
-				G.face.childNodes[r * G.nColumns + c].onclick = function clear() { if (!GameIsPaused) { clear_grid(G, statBar) } };
+				G.face.childNodes[r * G.nColumns + c].onclick = function clear() { if (!GameIsPaused) { clear_grid(G) } };
 			}
 			else {
-				G.face.childNodes[r * G.nColumns + c].onclick = clicked(G.body[r][c], G, statBar);
+				G.face.childNodes[r * G.nColumns + c].style.backgroundColor = gridItemColor;
+				G.face.childNodes[r * G.nColumns + c].onclick = clicked(G.body[r][c], G);
 			}
 		}
 	}
 	pause = false;
 }
 
-function clicked(object, grid,statBar) {
+function clicked(object, grid) {
 	function click1() {
 		if (!GameIsPaused) {
-			clear_grid(grid, statBar);
+			clear_grid(grid);
 			pause = true; //pausing zombies
-			if (object.can_move){
-				show_moves(object, grid, movesColor,statBar);
-				grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
-					if (!GameIsPaused) {
-						clear_grid(grid, statBar);
-						statBar.sellButton.disabled=true;
-						statBar.sellButton.style.backgroundColor='rgb(220,220,220)';
-						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
-					}
+			show_moves(object, grid, movesColor);
+			grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
+				if (!GameIsPaused) {
+					clear_grid(grid);
+					grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
 				}
 			}
 		}
@@ -136,7 +109,7 @@ function animateZombie(zombie, king, grid, statBar) {
 	zombie.mind = setInterval(function () {
 		counter += 1;
 		if (counter % zombie.speed == 0 && !pause) {
-			zombie.moveOneStep(king, grid, statBar);
+			zombie.moveOneStep(king, grid);
 		}
 		if (counter % zombie.attack == 0 && !GameIsPaused && !pause) {
 			zombie.hit(grid,statBar);
@@ -149,7 +122,7 @@ function GenerateNewZombie(king, grid, statBar) {
 	let r = randInt(grid.nRows);
 	if (grid.body[r][grid.nColumns - 1].name == "GameObject") {
 		z = new Zombie(randInt(3), r, nColumns0 - 1);
-		put(z, grid, statBar);
+		put(z, grid);
 		animateZombie(z, king, grid, statBar);
 	}
 }
@@ -169,18 +142,9 @@ function showRules() {
 	}
 }
 
-function sellPlant(plant, grid, statBar) {
-	if (plant.price!=Infinity){
-		statBar.updateMoney(statBar.getMoney() + plant.price * sellingFactor);
-		window.clearInterval(plant.mind) // deleting the shooting interval
-		erase(plant,grid, statBar);
-	}else{
-		alert("You can't sell this piece");
-	}
-}
 
-function healthBarRefresh(grid,statBar){
-	let percentage= 100/Lives[5];
+function healthBarRefresh(statBar){
+	let percentage = 100/Lives[5];
 	statBar.healthBar.life -= 1; //every hit causes 1 damage
 	let newPercentage = statBar.healthBar.life * percentage
 	statBar.healthBar.bar.style.width = newPercentage + "%";
@@ -188,10 +152,10 @@ function healthBarRefresh(grid,statBar){
 
 	setTimeout(function(){
 		statBar.healthBar.bar.hit.style.width = "0%";
-		statBar.healthBar.bar.style.width = newPercentage + "%";
+		//statBar.healthBar.bar.style.width = newPercentage + "%";
 	  }, 500);
 
 }
 
 
-module.exports = {sign,put,erase,clear_grid,show_moves,clicked}
+//module.exports = {sign,put,erase,clear_grid,show_moves,clicked}

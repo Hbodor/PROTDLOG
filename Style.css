@@ -45,9 +45,11 @@ body {
 .stat-bar{
   display: grid;
   background-color: rgb(0, 98, 122);
-  grid-template-columns: 1fr 4fr 2fr;
+  grid-template-columns: auto auto auto 2fr;
+  grid-template-rows: auto auto;
   padding: 10px;
   column-gap: 10px;
+  row-gap: 10px;
   height: max-content;
   box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2), -5px 10px 20px 0px rgba(0, 0, 0, 0.2);
 }
@@ -128,6 +130,23 @@ body {
   padding-left: 50px;
 }
 
+.sell-button{
+  background-color: rgb(0, 98, 122);
+  border: none;
+  width : 100px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.5s;
+}
+
+.sell-button:hover{
+  background-color: rgb(90, 128, 0);
+}
+
 .controls{
   display: grid;
   grid-template-columns: auto;
@@ -151,6 +170,44 @@ body {
   transition: all 0.5s;
   z-index: 2;
 }
+
+
+
+
+.health-bar {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  height: 20px;
+  padding: 5px;
+  background: rgb(0, 98, 122);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  position: relative;
+  grid-column: 2;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 1),-5px -5px 20px 0px rgba(0, 0, 0, 0.5);
+}
+
+.bar {
+  background: rgb(0, 167, 14);
+  width: 100%;
+  height: 10px;
+  position: relative;
+  transition: width .5s linear;
+}
+
+.hit {
+  background: rgb(255, 0, 0); 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0px;
+  transition: width .5s linear;
+}
+
 
 /* Game Description Style */
 .description-container1{
@@ -240,46 +297,3 @@ body {
   top: 70px;
 }
 
-.sell-button{
-  background-color: rgb(255, 215, 0);
-  border: none;
-  color: black;
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  font-size: 15px;
-  border-radius: 0px;
-  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
-  transition-duration: 0.5s;
-}
-
-.health-bar {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 200px;
-  height: 40px;
-  padding: 5px;
-  background: #ddd;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  position: relative;
-}
-.bar {
-  background: #7CFC00;
-  width: 100%;
-  height: 30px;
-  position: relative;
-  transition: width .5s linear;
-}
-
-.hit {
-  background: rgb(255,98,98);
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 0px;
-  transition: width .5s linear;
-}
