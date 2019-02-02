@@ -21,10 +21,14 @@ function StartGame(level) {
     pause = false;
     GameIsPaused = false;
     s.updateMoney(100);
+    s.healthBar.life=Lives[5];
+    s.healthBar.bar.style.width = 100 + "%";
+    s.face.appendChild(s.healthBar);
+    
     k = new King(2, 0);
-    put(k, grid);
+    put(k, grid, s);
     AutoAttack(k, grid, s)
-    zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid) } }, (15 - (level - 1)*5) * 1000);
+    zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1)*5) * 1000);
 }
 
 function EndGame() {

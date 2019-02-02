@@ -168,10 +168,9 @@ class status_bar {
         this.healthBar.bar.className = 'bar';
         this.healthBar.bar.hit = document.createElement("div");
         this.healthBar.bar.hit.className = 'hit';
-        this.healthBar.life = Lives[5]; //it concerns our King 8)
+        this.healthBar.life = Lives[5]; //
         this.healthBar.bar.appendChild(this.healthBar.bar.hit);
         this.healthBar.appendChild(this.healthBar.bar);  
-		this.face.appendChild(this.healthBar);
 
 		
         
@@ -195,6 +194,10 @@ class status_bar {
 function buy(i, bar, grid) {
     function clicked() {
         if (ButtonHaveEffect) {
+			// We disable the sell button
+			bar.sellButton.style.backgroundColor='rgb(220,220,220)'
+			bar.sellButton.disabled=true;
+			
             m = bar.getMoney();
             if (onlyOneButtonShouldBeClicked) {
                 onlyOneButtonShouldBeClicked = false;
@@ -224,9 +227,9 @@ function selectedPosition(i, grid, bar) {
                 grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
                 grid.face.childNodes[r * grid.nColumns + c].onclick =
                     function clic() {
-                        clear_grid(grid);
+                        clear_grid(grid, bar);
                         let newPiece = generateNewPiece(i, r, c);
-                        put(newPiece, grid);
+                        put(newPiece, grid, bar);
                         AutoAttack(newPiece, grid, bar);
                         onlyOneButtonShouldBeClicked = true;
                     };

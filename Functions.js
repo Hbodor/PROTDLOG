@@ -17,10 +17,9 @@ function make_game_zone(bar, grid) {
 	game.appendChild(bar.face);
 	game.appendChild(grid.face);
 	document.body.appendChild(game);
-	grid.statBar=bar;
 }
 
-function put(object, grid) {
+function put(object, grid, statBar) {
 	// updating the grid's body
 	grid.body[object.r][object.c] = object;
 	//updating the grid's  face
@@ -30,38 +29,38 @@ function put(object, grid) {
 	object.face.style.left = grid.face.childNodes[object.r * grid.nColumns + object.c].offsetLeft + 'px';
 
 	if (Names.includes(object.name)) {
-		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid);
+		grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = clicked(object, grid, statBar);
 	}
 }
 
-function erase(object, grid) {
+function erase(object, grid, statBar) {
 		
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
 	//delete object;
-	clear_grid(grid); //clearing the grid in case the object is clicked on
+	clear_grid(grid, statBar); //clearing the grid in case the object is clicked on
 	
 	
 	
-	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
+	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid, statBar) } };
 }
 
-function show_moves(object, grid, color) {
+function show_moves(object, grid, color,statBar) {
 	//don't show moves when you can't move
 	if (!object.can_move)
 		return
 	
 	let L = object.moves(grid);
 	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
-	grid.statBar.sellButton.disabled=false;
-	grid.statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)';
-	grid.statBar.sellButton.onclick=function(){
+	statBar.sellButton.disabled=false;
+	statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)';
+	statBar.sellButton.onclick=function(){
 		if (onlyOneButtonShouldBeClicked){
-			sellPlant(object,grid,grid.statBar);
+			sellPlant(object,grid,statBar);
 		}
-		grid.statBar.sellButton.disabled=true;
-		grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+		statBar.sellButton.disabled=true;
+		statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
 	}
 	
 	for (let i = 0; i < L.length; i++) {
@@ -69,10 +68,10 @@ function show_moves(object, grid, color) {
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick =
 			function move_to() {
 				if (!GameIsPaused) {
-					clear_grid(grid);
-					object.moveto(L[i][0], L[i][1], grid);
-					grid.statBar.sellButton.disabled=true;
-					grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+					clear_grid(grid, statBar);
+					object.moveto(L[i][0], L[i][1], grid, statBar);
+					statBar.sellButton.disabled=true;
+					statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
 				}
 			}
 	}
@@ -80,34 +79,34 @@ function show_moves(object, grid, color) {
 	//showing the sell button and 
 }
 
-function clear_grid(G) {
+function clear_grid(G, statBar) {
 
 	for (let r = 0; r < G.nRows; r++) {
 		for (let c = 0; c < G.nColumns; c++) {
 			if (G.body[r][c].name == "GameObject" || ZNames.includes(G.body[r][c].name)) {
 				G.face.childNodes[r * G.nColumns + c].style.backgroundColor = gridItemColor;
-				G.face.childNodes[r * G.nColumns + c].onclick = function clear() { if (!GameIsPaused) { clear_grid(G) } };
+				G.face.childNodes[r * G.nColumns + c].onclick = function clear() { if (!GameIsPaused) { clear_grid(G, statBar) } };
 			}
 			else {
-				G.face.childNodes[r * G.nColumns + c].onclick = clicked(G.body[r][c], G);
+				G.face.childNodes[r * G.nColumns + c].onclick = clicked(G.body[r][c], G, statBar);
 			}
 		}
 	}
 	pause = false;
 }
 
-function clicked(object, grid) {
+function clicked(object, grid,statBar) {
 	function click1() {
 		if (!GameIsPaused) {
-			clear_grid(grid);
+			clear_grid(grid, statBar);
 			pause = true; //pausing zombies
 			if (object.can_move){
-				show_moves(object, grid, movesColor);
+				show_moves(object, grid, movesColor,statBar);
 				grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
 					if (!GameIsPaused) {
-						clear_grid(grid);
-						grid.statBar.sellButton.disabled=true;
-						grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)';
+						clear_grid(grid, statBar);
+						statBar.sellButton.disabled=true;
+						statBar.sellButton.style.backgroundColor='rgb(220,220,220)';
 						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
 					}
 				}
@@ -131,27 +130,27 @@ function randInt(n) {
 	return Math.floor(Math.random() * Math.floor(n));
 }
 
-function animateZombie(zombie, king, grid) {
+function animateZombie(zombie, king, grid, statBar) {
 	let counter = 0;
 
 	zombie.mind = setInterval(function () {
 		counter += 1;
 		if (counter % zombie.speed == 0 && !pause) {
-			zombie.moveOneStep(king, grid);
+			zombie.moveOneStep(king, grid, statBar);
 		}
 		if (counter % zombie.attack == 0 && !GameIsPaused && !pause) {
-			zombie.hit(grid);
+			zombie.hit(grid,statBar);
 		}
 
 	}, 1000);
 }
 
-function GenerateNewZombie(king, grid) {
+function GenerateNewZombie(king, grid, statBar) {
 	let r = randInt(grid.nRows);
 	if (grid.body[r][grid.nColumns - 1].name == "GameObject") {
 		z = new Zombie(randInt(3), r, nColumns0 - 1);
-		put(z, grid);
-		animateZombie(z, king, grid);
+		put(z, grid, statBar);
+		animateZombie(z, king, grid, statBar);
 	}
 }
 
@@ -174,22 +173,22 @@ function sellPlant(plant, grid, statBar) {
 	if (plant.price!=Infinity){
 		statBar.updateMoney(statBar.getMoney() + plant.price * sellingFactor);
 		window.clearInterval(plant.mind) // deleting the shooting interval
-		erase(plant,grid);
+		erase(plant,grid, statBar);
 	}else{
 		alert("You can't sell this piece");
 	}
 }
 
-function healthBarRefresh(grid){
+function healthBarRefresh(grid,statBar){
 	let percentage= 100/Lives[5];
-	grid.statBar.healthBar.life -= 1; //every hit causes 1 damage
-	let newPercentage = grid.statBar.healthBar.life * percentage
-	grid.statBar.healthBar.bar.style.width = newPercentage + "%";
-	grid.statBar.healthBar.bar.hit.style.width = percentage + "%";
+	statBar.healthBar.life -= 1; //every hit causes 1 damage
+	let newPercentage = statBar.healthBar.life * percentage
+	statBar.healthBar.bar.style.width = newPercentage + "%";
+	statBar.healthBar.bar.hit.style.width = percentage + "%";
 
 	setTimeout(function(){
-		grid.statBar.healthBar.bar.hit.style.width = "0%";
-		grid.statBar.healthBar.bar.style.width = newPercentage + "%";
+		statBar.healthBar.bar.hit.style.width = "0%";
+		statBar.healthBar.bar.style.width = newPercentage + "%";
 	  }, 500);
 
 }
