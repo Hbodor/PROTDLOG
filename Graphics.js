@@ -194,6 +194,10 @@ class status_bar {
 function buy(i, bar, grid) {
     function clicked() {
         if (ButtonHaveEffect) {
+			// We disable the sell button
+			bar.sellButton.style.backgroundColor='rgb(220,220,220)'
+			bar.sellButton.disabled=true;
+			
             m = bar.getMoney();
             if (onlyOneButtonShouldBeClicked) {
                 onlyOneButtonShouldBeClicked = false;
