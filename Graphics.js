@@ -227,9 +227,9 @@ function selectedPosition(i, grid, bar) {
                 grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
                 grid.face.childNodes[r * grid.nColumns + c].onclick =
                     function clic() {
-                        clear_grid(grid);
+                        clear_grid(grid, bar);
                         let newPiece = generateNewPiece(i, r, c);
-                        put(newPiece, grid);
+                        put(newPiece, grid, bar);
                         AutoAttack(newPiece, grid, bar);
                         onlyOneButtonShouldBeClicked = true;
                     };

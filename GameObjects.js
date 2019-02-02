@@ -34,15 +34,15 @@ class GameObject {
 		this.can_move=true;
     }
 
-    moveto(r, c, G) {
+    moveto(r, c, G, statBar) {
         //only works for plants and zombies
 		//can't move unless the animation is finished
 		if (this.can_move){
 			this.can_move=false;
-			erase(this, G);
+			erase(this, G, statBar);
 			this.r = r;
 			this.c = c;
-			put(this, G);
+			put(this, G, statBar);
 			setTimeout(make_move.bind(null,this), 2000);
 		}
 
@@ -88,10 +88,10 @@ class Zombie extends GameObject {
         return [r, c];
     }
 
-    moveOneStep(king, grid) {
+    moveOneStep(king, grid, statBar) {
         let nextStep = this.stepToKing(king);
         if (grid.body[nextStep[0]][nextStep[1]].name == "GameObject") {
-            this.moveto(nextStep[0], nextStep[1], grid);
+            this.moveto(nextStep[0], nextStep[1], grid, statBar);
         }
     }
 
@@ -112,7 +112,7 @@ class Zombie extends GameObject {
         return (R);
     }
 
-    hit(grid) {
+    hit(grid, statBar) {
         let R = this.range(grid);
         if (R.length != 0) {
             for (let i = 0; i < R.length; i++) {
@@ -123,7 +123,7 @@ class Zombie extends GameObject {
                     grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
                     grid.body[r][c].life -= 1;
                     if (grid.body[r][c].name == "King") {
-                        healthBarRefresh(grid);
+                        healthBarRefresh(grid,statBar);
                     }
                     if (grid.body[r][c].life == 0) {
 
@@ -132,7 +132,7 @@ class Zombie extends GameObject {
                         }
                         else {
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid);
+                            erase(grid.body[r][c], grid, statBar);
                         }
 
                     }
@@ -193,7 +193,7 @@ class Plant extends GameObject {
                         if (grid.body[r][c].life == 0) {
                             statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid);
+                            erase(grid.body[r][c], grid, statBar);
                         }
 
                     }, 500, this);
