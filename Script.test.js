@@ -1,13 +1,13 @@
 // all the test should be in this file
-var { sign, put, erase, clear_grid, show_moves, clicked } = require("./Functions.js");
+var { sign, put, erase, clear_grid, show_moves, clicked, sellPlant, GenerateNewZombie } = require("./Functions.js");
 //var GameObject = require ("./GameObjects.js")
-const { GridItemSize, gridItemColor, size, ZNames } = require("./TestConstants");
+const { GridItemSize, gridItemColor, size, ZNames, GameIsPaused, sellingFactor } = require("./TestConstants");
 var { Zombie } = require("./GameObjects.js");
 var { Plant } = require("./GameObjects.js");
 var { GameObject, init_Functions } = require("./GameObjects.js");
 var { Grid } = require("./Graphics.js");
 var { generateNewPiece, selectedPosition, buy } = require("./Graphics.js");
-var status_bar = require("./Graphics.js");
+var { status_bar } = require("./Graphics.js");
 var { Bullet, King } = require("./GameObjects.js");
 var { Pawn, Queen } = require("./GameObjects.js");
 //var {generateNewPiece,selectedPosition,buy} = require ("./Graphics.js");
@@ -16,14 +16,15 @@ init_Functions();
 
 var z = new Zombie(1, 2, 4);
 z.face = document.createElement('Zombie'); // just to avoid Img which works in navigator
-var B = new Bullet(1, 1, 1, 1);
 var K = new King(1, 1);
+K.face = document.createElement('King');
 var p = new Plant(1, 2, 3);
 p.face = document.createElement('Plant'); // just to avoid Img which works in navigator
 var grid = new Grid(7, 7);
 var P = new Pawn(1, 2);
 var Q = new Queen(3, 6);
-
+Q.face = document.createElement('Queen');
+var s = new status_bar(100, grid);
 
 
 
@@ -55,7 +56,7 @@ test("Test fonctionalities of erase ( function that delete the object from the g
   expect(grid.body[z.r][z.c]).toEqual(o);
 })
 
-test("Test clear", () => {
+test("Test clear_grid that clears all grids", () => {
   put(Q, grid);
   clicked(Q, grid);
   for (let r = 0; r < grid.nRows; r++) {
@@ -66,6 +67,22 @@ test("Test clear", () => {
     }
   }
 })
+
+
+test("Test gennerate new zombie", () => {
+  put(K, grid);
+  GenerateNewZombie(K, grid);
+  let test = false;
+  for (var r = 0; r < 7; r++) {
+    if (grid.body[r][6].name != "GameObject"){
+      test=true; // that means there exists a zombie in the grid at the last column
+    }
+    expect(test).toBeTruthy;
+}
+
+})
+
+
 
 
 
@@ -91,20 +108,54 @@ test("Test moveto that uses put and erease", () => {
 
 })
 
-test("Test clear_gridthat clears the grid from any clicked button (colored elemens of the grid) ", () => {
+
+
+test("Test hitting a zombie by a plant ", () => {
+  var Z = new Zombie(1, 3, 5); //near the pawn
+  Z.face = document.createElement('Zombie');
+  //expect(Z.c).toBe(3);
+  let zlife = Z.life;
+  expect(Z.life).toEqual(zlife);
+  put(Q, grid);
+  put(Z, grid);
+  Q.hit(grid, s);
+  expect(Z.life).toEqual(zlife - 1);
+
 })
 
 
-test("Test collision between bullet and zombie ", () => {
-  let zlife = z.life;
-  B.collision([z]);
-  expect(z.life).toEqual(zlife);
-  z.x = B.x + 3; //3<=5 and 5 is the chosen value as an extremal
-  z.y = B.y;
-  B.collision([z]);
-  expect(z.life).toEqual(zlife - B.attack);
+test("Test hitting a plant by a zombie ", () => {
+  var Z = new Zombie(1, 1, 3); //near the pawn
+  Z.face = document.createElement('Zombie');
+  let Plife = P.life;
+  expect(P.life).toEqual(Plife);
+  put(Q, grid);
+  put(Z, grid);
+  Z.hit(grid);
+  expect(P.life).toEqual(Plife - 1);
 
 })
+
+
+
+
+test("Test of sellPlant ", () => {
+  let q = new Queen(5, 6);
+  put(q, grid);
+  let price = q.price;
+  let money = s.money.childNodes[1].innerHTML;
+  sellPlant(q, grid, s);
+  let o = new GameObject(5, 6);
+  expect(grid.body[5][6]).toEqual(o); // the plant has been erased
+  expect(parseInt(s.money.childNodes[1].innerHTML)).toBe(parseInt(money) + price * sellingFactor); //the reward from selling tha plant has been gathered
+
+})
+
+
+
+
+
+
 
 
 

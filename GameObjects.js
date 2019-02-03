@@ -1,5 +1,9 @@
-// Test 
-var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces} = require ("./TestConstants");
+//diffrent objects used in the game are defined here
+
+
+
+// To test This file we uncomment the following block, otherwwise, it should be strictly commented
+var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces,GameIsPaused} = require ("./TestConstants");
 
 let put, erase;
 
@@ -15,7 +19,10 @@ function init_Functions() {
   erase = _erase;
 }
 
-//diffrent objects used in the game are defined here
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 class GameObject {
     constructor(r, c) {
@@ -23,17 +30,28 @@ class GameObject {
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
+        this.mind = 0 // to store the intervals when animated 
+		this.can_move=true;
     }
 
     moveto(r, c, G) {
         //only works for plants and zombies
-        erase(this, G);
-        this.r = r;
-        this.c = c;
-        put(this, G);
-    }
-}
+		//can't move unless the animation is finished
+		if (this.can_move){
+			this.can_move=false;
+			erase(this, G);
+			this.r = r;
+			this.c = c;
+			put(this, G);
+			setTimeout(make_move.bind(null,this), 2000);
+		}
 
+    }
+	
+}
+function make_move(object){
+		object.can_move=true;
+}
 class Zombie extends GameObject {
     constructor(level, r, c) {
         // 0 <= level <= 2
@@ -43,6 +61,8 @@ class Zombie extends GameObject {
         this.speed = ZSpeed[level];
         this.life = ZLives[level];
         this.attack = ZAttacks[level];
+        this.reward = ZRewards[level];
+
 
         // constructing the face tag 
         this.face = document.createElement("img");
@@ -74,48 +94,60 @@ class Zombie extends GameObject {
             this.moveto(nextStep[0], nextStep[1], grid);
         }
     }
-}
 
-//Bullet class
-class Bullet {
-	constructor (level,x,y,dad){
-		this.x = x;
-		this.y = y;
-		this.dad=dad;
-		this.level = level;
-		this.attack=Attacks[level];
-		this.alive=true; //useless?
-		
-		// constructing face
-		this.face = document.createElement("img");
-		this.face.className = "BImage";
-		this.face.setAttribute('src',Bullets[0]);
-		this.face.style.maxWidth = size/2+"px";
-		this.face.style.left=this.x+size+"px";
-		this.face.style.top=this.y+size/2+"px";
-		
-	}
-	collision(zombies){
-		if (!this.alive){ return (false);}
-		for (let i=0;i<zombies.length;i++){
-			//collision with zombie is still unclear, the coordinates are sometimes not refreshed correctly?
-			if ( (zombies[i].x-this.x<=5 && zombies[i].x-this.x>=0) &&  (-size/2<=this.y - zombies[i].y<=size) ) {
-				zombies[i].life -= this.attack;
-				return (true);
-			}
-		}
-	}
-	refresh(grid,zombies){
-		//refreshing the bullet state, shooting another bullet directly after this one dies, maybe have a cooldown ? 
-		if (this.collision(zombies) || this.x == grid.face.clientWidth){
-			this.alive=false;
-			grid.face.removeChild(this.face);
-			console.log("either touched a zombie or went out of grid")
-			this.dad.can_shoot=true;
-			this.dad.shoot(grid);
-		}
-	}
+    range(grid) {
+        let L0 = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+        let L1 = [[1, 1], [1, -1], [-1, -1], [-1, 1]].concat(L0);
+        let L2 = [[2, 0], [0, 2], [-2, 0], [0, -2]].concat(L1);
+        let L = [L0, L1, L2];
+        let R = [];
 
+        for (let i = 0; i < L[this.level].length; i++) {
+            let r = this.r + L[this.level][i][0];
+            let c = this.c + L[this.level][i][1];
+            if (r >= 0 && r < grid.nRows && c >= 0 && c < grid.nColumns) {
+                R.push([r, c]);
+            }
+        }
+        return (R);
+    }
+
+    hit(grid) {
+        let R = this.range(grid);
+        if (R.length != 0) {
+            for (let i = 0; i < R.length; i++) {
+                let r = R[i][0];
+                let c = R[i][1];
+                if (Names.includes(grid.body[r][c].name)) {
+
+                    grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
+                    grid.body[r][c].life -= 1;
+                    if (grid.body[r][c].name == "King") {
+                        healthBarRefresh(grid);
+                    }
+                    if (grid.body[r][c].life == 0) {
+
+                        if (grid.body[r][c].name == "King") {
+                            EndGame();
+                        }
+                        else {
+                            clearInterval(grid.body[r][c].mind);
+                            erase(grid.body[r][c], grid);
+                        }
+
+                    }
+
+                    setTimeout(function () {
+                        grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = gridItemColor;
+                    }, 500)
+
+
+                }
+            }
+
+        }
+
+    }
 }
 
 class Plant extends GameObject {
@@ -133,22 +165,46 @@ class Plant extends GameObject {
         this.face.setAttribute('src', Pieces[level]);
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
-		//bullet
-		this.can_shoot=true;
     }
-	shoot(G){
-		//creating and shooting the straight bullet
-		if (this.can_shoot){
-			
-			this.bullet=new Bullet(this.level,this.x,this.y,this);
-			G.face.appendChild(this.bullet.face);
-			this.bullet.face.style.left = G.face.clientWidth+'px';
-			this.can_shoot=false;
-		}
-	}
 	
+    hit(grid, statBar) {
 
+        let R = this.range(grid);
+        if (R.length != 0) {
+            for (let i = 0; i < R.length; i++) {
+                let r = R[i][0];
+                let c = R[i][1];
+                if (ZNames.includes(grid.body[r][c].name)) {
+                    //animation
+                    let bullet = document.createElement("img");
+                    bullet.className = "Bullet";
+                    bullet.setAttribute('src', 'pieces/Bullet.png');
+                    bullet.setAttribute('height', "10px");
+                    bullet.setAttribute('width', "10px");
+                    grid.face.childNodes[this.r * grid.nColumns + this.c].appendChild(bullet);
+                    bullet.style.top = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop + size / 2 + 'px';
+                    bullet.style.left = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft + size / 2 + 'px';
+                    //transition
+                    bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size / 2 - 5 + 'px';
+                    bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size / 2 - 5 + 'px';
+                    setTimeout(function (plant) {
+                        grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(bullet);
+                        grid.body[r][c].life -= 1;
+                        if (grid.body[r][c].life == 0) {
+                            statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
+                            clearInterval(grid.body[r][c].mind);
+                            erase(grid.body[r][c], grid);
+                        }
+
+                    }, 500, this);
+                }
+            }
+
+        }
+
+    }
 }
+
 
 //Game Basic plant pieces
 class Pawn extends Plant {
@@ -162,6 +218,17 @@ class Pawn extends Plant {
         else {
             return ([]);
         }
+    }
+
+    range(G) {
+
+        if (this.c + 1 >= 0 && this.c + 1 < G.nColumns) {
+            return ([[this.r, this.c + 1]]);
+        }
+        else {
+            return ([]);
+        }
+
     }
 }
 
@@ -180,6 +247,19 @@ class Knight extends Plant {
         }
         return (L);
     }
+
+    range(G) {
+        let L = [];
+        for (let i = 0; i < Moves_L.length; i++) {
+            let r = this.r + Moves_L[i][0];
+            let c = this.c + Moves_L[i][1];
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns) {
+                L.push([r, c]);
+            }
+        }
+        return (L);
+    }
+
 
 }
 
@@ -230,6 +310,44 @@ class Bishop extends Plant {
         }
         return (L);
     }
+
+    range(G) {
+        let L = [];
+
+        let r = this.r;
+        let c = this.c;
+        while (r + 1 < G.nRows && c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+            r += 1;
+            c += 1;
+        }
+        if (r != this.r || c != this.c) { L.push([r, c]); };
+
+        r = this.r;
+        c = this.c;
+        while (r - 1 >= 0 && c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+            r -= 1;
+            c += 1;
+        }
+        if (r != this.r || c != this.c) { L.push([r, c]); };
+
+        r = this.r;
+        c = this.c;
+        while (r - 1 >= 0 && c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
+            r -= 1;
+            c -= 1;
+        }
+        if (r != this.r || c != this.c) { L.push([r, c]); };
+
+        r = this.r;
+        c = this.c;
+        while (r + 1 < G.nRows && c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
+            r += 1;
+            c -= 1;
+        }
+        if (r != this.r || c != this.c) { L.push([r, c]); };
+
+        return (L);
+    }
 }
 
 class Rook extends Plant {
@@ -278,6 +396,37 @@ class Rook extends Plant {
         }
         return (L);
     }
+
+    range(G) {
+        let L = [];
+
+        let r = this.r;
+        let c = this.c;
+        while (r + 1 < G.nRows && !ZNames.includes(G.body[r][c].name)) {
+            r += 1;
+        }
+        if (r != this.r) { L.push([r, c]); };
+
+        r = this.r;
+        while (r - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
+            r -= 1;
+        }
+        if (r != this.r) { L.push([r, c]); };
+
+        r = this.r;
+        while (c - 1 >= 0 && !ZNames.includes(G.body[r][c].name)) {
+            c -= 1;
+        }
+        if (c != this.c) { L.push([r, c]); };
+
+        c = this.c;
+        while (c + 1 < G.nColumns && !ZNames.includes(G.body[r][c].name)) {
+            c += 1;
+        }
+        if (c != this.c) { L.push([r, c]); };
+
+        return (L);
+    }
 }
 
 class Queen extends Plant {
@@ -288,6 +437,12 @@ class Queen extends Plant {
         let bi = new Bishop(this.r, this.c);
         let ro = new Rook(this.r, this.c);
         return (bi.moves(G).concat(ro.moves(G)));
+    }
+
+    range(G) {
+        let bi = new Bishop(this.r, this.c);
+        let ro = new Rook(this.r, this.c);
+        return (bi.range(G).concat(ro.range(G)));
     }
 }
 
@@ -306,9 +461,19 @@ class King extends Plant {
         }
         return (L);
     }
+
+    range(G) {
+        let L = [];
+        for (let i = 0; i < Moves_C.length; i++) {
+            let r = this.r + Moves_C[i][0];
+            let c = this.c + Moves_C[i][1];
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns) {
+                L.push([r, c]);
+            }
+        }
+        return (L);
+    }
 }
 
-
-module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,Bullet,GameObject,init_Functions};
-
+module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
 

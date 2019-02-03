@@ -10,9 +10,132 @@
 </head>
 
 <body>
-    <h1>PLANTS VS ZOMBIES</h1>
-    <h2> Chess Mode</h2>
-    <div id="start"></div>
+    <div id="head_section">
+        <img src="pieces/PLANTS VS ZOMBIES.png">
+        <button class="rules-button" onclick="showRules()">Game description</button>
+    </div>
+
+
+    <div id = "dc" class="description-container1">
+        <div class="rules"> put rules and game desctiption here </div>
+
+        <div class="card-container">
+            <div class="card">
+                <img src="pieces/Pawn.png" class="card-img">
+                <div class="description">
+                    <center> Pawn </center>
+                    <ul>
+                        <li> price : 10</li>
+                        <li> attack frequency : 2s</li>
+                        <li> endurence : 2 hits</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="pieces/Knight.png" class="card-img">
+                <div class="description">
+                    <center> Knight </center>
+                    <ul>
+                        <li> price : 20</li>
+                        <li> attack frequency : 2s</li>
+                        <li> endurence : 3 hits</li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="pieces/Bishop.png" class="card-img">
+                <div class="description">
+                    <center> Bishop </center>
+                    <ul>
+                        <li> price : 30</li>
+                        <li> attack frequency : 3s</li>
+                        <li> endurence : 4 hits</li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="pieces/Rook.png" class="card-img">
+                <div class="description">
+                    <center> Rook </center>
+                    <ul>
+                        <li> price : 40</li>
+                        <li> attack frequency : 4s</li>
+                        <li> endurence : 4 hits</li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="pieces/Queen.png" class="card-img">
+                <div class="description">
+                    <center> Queen </center>
+                    <ul>
+                        <li> price : 50</li>
+                        <li> attack frequency : 4s</li>
+                        <li> endurence : 5 hits</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="card">
+                <img src="pieces/King.png" class="card-img">
+                <div class="description">
+                    <center> King </center>
+                    <ul>
+                        <li> price : can't buy</li>
+                        <li> attack frequency : 2s</li>
+                        <li> endurence : 5 hits</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="card">
+                <img src="pieces/Zombie1.png" class="card-img">
+                <div class="description">
+                    <center> Zombie 1 </center>
+                    <ul>
+                        <li> reward money : 10</li>
+                        <li> attack frequency : 2s</li>
+                        <li> endurence : 3 hits</li>
+                        <li> speed : square/3s </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <img src="pieces/Zombie2.png" class="card-img">
+                <div class="description">
+                    <center> Zombie 2 </center>
+                    <ul>
+                        <li> reward money : 20</li>
+                        <li> attack frequency : 3s</li>
+                        <li> endurence : 5 hits</li>
+                        <li> speed : square/5s </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <img src="pieces/Zombie3.png" class="card-img">
+                <div class="description">
+                    <center> Zombie 3 </center>
+                    <ul>
+                        <li> reward money : 30</li>
+                        <li> attack frequency : 5s</li>
+                        <li> endurence : 7 hits</li>
+                        <li> speed : square/7s </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
 <script src="GameConstants.js" type="text/javascript"></script>
 <script src="GameObjects.js" type="text/javascript"></script>
@@ -20,5 +143,6 @@
 <script src="Functions.js" type="text/javascript"></script>
 <script src="GameEngine.js" type="text/javascript"></script>
 <script src="ScriptTest.js" type="text/javascript"></script>
+
 
 </html>
