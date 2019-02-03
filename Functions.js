@@ -5,9 +5,11 @@
 //To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
 
-var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names,movesColor,sellingFactor,nColumns0} = require ("./TestConstants");
-var {GameObject,Zombie} = require ("./GameObjects.js");
 
+// var { GridItemSize, gridItemColor, size, ZNames, border, effectiveBorder, Names, movesColor, sellingFactor, nColumns0 } = require("./TestConstants");
+// var { GameObject, Zombie } = require("./GameObjects.js");
+
+// 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -17,7 +19,7 @@ function make_game_zone(bar, grid) {
 	game.appendChild(bar.face);
 	game.appendChild(grid.face);
 	document.body.appendChild(game);
-	grid.statBar=bar;
+	grid.statBar = bar;
 }
 
 function put(object, grid) {
@@ -35,15 +37,15 @@ function put(object, grid) {
 }
 
 function erase(object, grid) {
-		
+
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
 	//delete object;
 	clear_grid(grid); //clearing the grid in case the object is clicked on
-	
-	
-	
+
+
+
 	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
 }
 
@@ -51,19 +53,19 @@ function show_moves(object, grid, color) {
 	//don't show moves when you can't move
 	if (!object.can_move)
 		return
-	
+
 	let L = object.moves(grid);
 	// pour l'instant, on utilise la variable globale du statusbar, car sinon il faut modifier les attributs de plusieurs fonctions - à redesign ? 
-	grid.statBar.sellButton.disabled=false;
-	grid.statBar.sellButton.style.backgroundColor='rgb(255, 215, 0)';
-	grid.statBar.sellButton.onclick=function(){
-		if (onlyOneButtonShouldBeClicked){
-			sellPlant(object,grid,grid.statBar);
+	grid.statBar.sellButton.disabled = false;
+	grid.statBar.sellButton.style.backgroundColor = 'rgb(255, 215, 0)';
+	grid.statBar.sellButton.onclick = function () {
+		if (onlyOneButtonShouldBeClicked) {
+			sellPlant(object, grid, grid.statBar);
 		}
-		grid.statBar.sellButton.disabled=true;
-		grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+		grid.statBar.sellButton.disabled = true;
+		grid.statBar.sellButton.style.backgroundColor = 'rgb(220,220,220)'
 	}
-	
+
 	for (let i = 0; i < L.length; i++) {
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].style.backgroundColor = color;
 		grid.face.childNodes[L[i][0] * grid.nColumns + L[i][1]].onclick =
@@ -71,12 +73,12 @@ function show_moves(object, grid, color) {
 				if (!GameIsPaused) {
 					clear_grid(grid);
 					object.moveto(L[i][0], L[i][1], grid);
-					grid.statBar.sellButton.disabled=true;
-					grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)'
+					grid.statBar.sellButton.disabled = true;
+					grid.statBar.sellButton.style.backgroundColor = 'rgb(220,220,220)'
 				}
 			}
 	}
-	
+
 	//showing the sell button and 
 }
 
@@ -101,13 +103,13 @@ function clicked(object, grid) {
 		if (!GameIsPaused) {
 			clear_grid(grid);
 			pause = true; //pausing zombies
-			if (object.can_move){
+			if (object.can_move) {
 				show_moves(object, grid, movesColor);
 				grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
 					if (!GameIsPaused) {
 						clear_grid(grid);
-						grid.statBar.sellButton.disabled=true;
-						grid.statBar.sellButton.style.backgroundColor='rgb(220,220,220)';
+						grid.statBar.sellButton.disabled = true;
+						grid.statBar.sellButton.style.backgroundColor = 'rgb(220,220,220)';
 						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
 					}
 				}
@@ -171,28 +173,31 @@ function showRules() {
 }
 
 function sellPlant(plant, grid, statBar) {
-	if (plant.price!=Infinity){
+	if (plant.price != Infinity) {
 		statBar.updateMoney(statBar.getMoney() + plant.price * sellingFactor);
 		window.clearInterval(plant.mind) // deleting the shooting interval
-		erase(plant,grid);
-	}else{
+		erase(plant, grid);
+	} else {
 		alert("You can't sell this piece");
 	}
 }
 
-function healthBarRefresh(grid){
-	let percentage= 100/Lives[5];
+function healthBarRefresh(grid) {
+	let percentage = 100 / Lives[5];
 	grid.statBar.healthBar.life -= 1; //every hit causes 1 dammage
 	let newPercentage = grid.statBar.healthBar.life * percentage
 	grid.statBar.healthBar.bar.style.width = newPercentage + "%";
 	grid.statBar.healthBar.bar.hit.style.width = percentage + "%";
 
-	setTimeout(function(){
+	setTimeout(function () {
 		grid.statBar.healthBar.bar.hit.style.width = "0%";
 		grid.statBar.healthBar.bar.style.width = newPercentage + "%";
-	  }, 500);
+	}, 500);
 
 }
 
 
-module.exports = {sign,put,erase,clear_grid,show_moves,clicked,sellPlant,GenerateNewZombie}
+module.exports = {
+	sign, put, erase, clear_grid, show_moves, clicked, sellPlant, GenerateNewZombie,
+	showRules, make_game_zone
+}

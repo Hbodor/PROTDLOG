@@ -1,12 +1,14 @@
 // all the test should be in this file
-var { sign, put, erase, clear_grid, show_moves, clicked, sellPlant, GenerateNewZombie } = require("./Functions.js");
+var { sign, put, erase, clear_grid, show_moves, clicked, sellPlant, 
+  GenerateNewZombie, showRules} = require("./Functions.js");
 //var GameObject = require ("./GameObjects.js")
-const { GridItemSize, gridItemColor, size, ZNames, GameIsPaused, sellingFactor } = require("./TestConstants");
+var { GridItemSize, gridItemColor, size, ZNames, sellingFactor, 
+  pause,ButtonHaveEffect,GameIsPaused,Prices, ButtonHaveEffect } = require("./TestConstants");
 var { Zombie } = require("./GameObjects.js");
 var { Plant } = require("./GameObjects.js");
 var { GameObject, init_Functions } = require("./GameObjects.js");
 var { Grid } = require("./Graphics.js");
-var { generateNewPiece, selectedPosition, buy } = require("./Graphics.js");
+var { generateNewPiece, selectedPosition, buy, generateNewPiece } = require("./Graphics.js");
 var { status_bar } = require("./Graphics.js");
 var { Bullet, King } = require("./GameObjects.js");
 var { Pawn, Queen } = require("./GameObjects.js");
@@ -82,13 +84,18 @@ test("Test gennerate new zombie", () => {
 
 })
 
+test("Test PLant generator", () => {
+  let pawn= generateNewPiece(0,1,1);
+  expect(pawn.name).toEqual("Pawn");
+  expect(pawn.r).toBe(1);
+  expect(pawn.c).toBe(1);
 
+})
 
-
-
-
-
-
+test("Update Money", () => {
+  s.updateMoney(80);
+  expect(parseInt(s.money.childNodes[1].innerHTML)).toBe(80);
+})
 
 
 //Integration Tests
@@ -115,11 +122,11 @@ test("Test hitting a zombie by a plant ", () => {
   Z.face = document.createElement('Zombie');
   //expect(Z.c).toBe(3);
   let zlife = Z.life;
-  expect(Z.life).toEqual(zlife);
+  expect(Z.life).toEqual(zlife); //brfore the hit
   put(Q, grid);
   put(Z, grid);
   Q.hit(grid, s);
-  expect(Z.life).toEqual(zlife - 1);
+  expect(Z.life).toEqual(zlife-1); //after the hit
 
 })
 
@@ -128,11 +135,11 @@ test("Test hitting a plant by a zombie ", () => {
   var Z = new Zombie(1, 1, 3); //near the pawn
   Z.face = document.createElement('Zombie');
   let Plife = P.life;
-  expect(P.life).toEqual(Plife);
+  expect(P.life).toEqual(Plife); // beffor the hit
   put(Q, grid);
   put(Z, grid);
   Z.hit(grid);
-  expect(P.life).toEqual(Plife - 1);
+  expect(P.life).toEqual(Plife-1);// after the hit
 
 })
 
@@ -150,6 +157,19 @@ test("Test of sellPlant ", () => {
   expect(parseInt(s.money.childNodes[1].innerHTML)).toBe(parseInt(money) + price * sellingFactor); //the reward from selling tha plant has been gathered
 
 })
+
+
+test("Test fonctionalities of buy", () => {
+  let i=2;
+  ButtonHaveEffect=true; // so as buy has an effect
+  let money = parseInt(s.money.childNodes[1].innerHTML);
+  buy(i,s,grid);
+  expect(parseInt(s.money.childNodes[1].innerHTML)).toBe(money-Prices[i]);
+
+
+})
+
+
 
 
 

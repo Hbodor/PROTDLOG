@@ -5,10 +5,12 @@
 
 // To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
-var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,StatusBarHeight,ButtonHeight,font_size,
-    Pieces,Prices,Lives} = require ("./TestConstants");
-var {GameObject} = require ("./GameObjects.js");
-var {King,Pawn,Queen,Bishop,Knight,Rook,Plants,Zombie,Bullet} = require ("./GameObjects.js");
+
+// var { GridItemSize, gridItemColor, size, ZNames, border, effectiveBorder, StatusBarHeight, ButtonHeight, font_size,
+//     Pieces, Prices, Lives,  ButtonHaveEffect } = require("./TestConstants");
+// var { GameObject } = require("./GameObjects.js");
+// var { King, Pawn, Queen, Bishop, Knight, Rook, Plants, Zombie, Bullet } = require("./GameObjects.js");
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -135,10 +137,10 @@ class status_bar {
         StartButton.className = 'game-button';
         StartButton.innerHTML = 'Start';
         StartButton.addEventListener("click", function () {
-                StartButton.innerHTML = 'Restart';
-                StartGame(GameLevel);
-                PauseButton.style.backgroundColor = "rgb(0, 98, 122)";
-                PauseButton.innerHTML = 'Pause';
+            StartButton.innerHTML = 'Restart';
+            StartGame(GameLevel);
+            PauseButton.style.backgroundColor = "rgb(0, 98, 122)";
+            PauseButton.innerHTML = 'Pause';
 
         });
 
@@ -146,22 +148,22 @@ class status_bar {
         this.GameButtons.className = 'controls';
 
         this.GameButtons.appendChild(StartButton);
-        this.GameButtons.appendChild(PauseButton);		
-		
+        this.GameButtons.appendChild(PauseButton);
+
         this.face.appendChild(this.GameButtons);
 
         this.timer = document.createElement("div");
         this.timer.innerHTML = "timer : 0"
-        
-       
-		
-		this.sellButton = document.createElement("button");
-		this.sellButton.className = 'sell-button';
-		this.sellButton.innerHTML = 'Sell';
-		this.sellButton.style.backgroundColor='rgb(220,220,220)'
-		this.sellButton.disabled=true;
+
+
+
+        this.sellButton = document.createElement("button");
+        this.sellButton.className = 'sell-button';
+        this.sellButton.innerHTML = 'Sell';
+        this.sellButton.style.backgroundColor = 'rgb(220,220,220)'
+        this.sellButton.disabled = true;
         this.face.appendChild(this.sellButton);
-        
+
         this.healthBar = document.createElement("div");
         this.healthBar.className = 'health-bar';
         //this.healthBar.id = 'kingBar';
@@ -171,10 +173,10 @@ class status_bar {
         this.healthBar.bar.hit.className = 'hit';
         this.healthBar.life = Lives[5]; //
         this.healthBar.bar.appendChild(this.healthBar.bar.hit);
-        this.healthBar.appendChild(this.healthBar.bar);  
+        this.healthBar.appendChild(this.healthBar.bar);
 
-		
-        
+
+
     }
 
     getMoney() {
@@ -258,4 +260,4 @@ function generateNewPiece(i, r, c) {
 }
 
 
-module.exports= {generateNewPiece,selectedPosition,buy,Grid,status_bar};
+module.exports = { generateNewPiece, selectedPosition, buy, Grid, status_bar, buy , generateNewPiece};

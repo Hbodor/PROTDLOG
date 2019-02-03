@@ -3,21 +3,26 @@
 
 
 // To test This file we uncomment the following block, otherwwise, it should be strictly commented
-var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces,GameIsPaused} = require ("./TestConstants");
 
-let put, erase;
+// let put, erase;
 
-function init_Functions() {
-  let _put, _erase;
-  function aux() {
-    var {put,erase} = require("./Functions.js");
-    _put = put;
-    _erase = erase;
-  }
-  aux();
-  put = _put;
-  erase = _erase;
-}
+// function init_Functions() {
+//     let _put, _erase;
+//     function aux() {
+//         var { put, erase } = require("./Functions.js");
+//         _put = put;
+//         _erase = erase;
+//     }
+//     aux();
+//     put = _put;
+//     erase = _erase;
+// }
+
+
+// var { GridItemSize, gridItemColor, ZRewards, size, ZNames, border, effectiveBorder, ZSpeed, ZLives, ZAttacks, ZPieces, Attacks, Bullets, Names, Prices, Lives, Pieces, GameIsPaused } = require("./TestConstants");
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,26 +36,26 @@ class GameObject {
         this.r = r; //row
         this.c = c; //colmum
         this.mind = 0 // to store the intervals when animated 
-		this.can_move=true;
+        this.can_move = true;
     }
 
     moveto(r, c, G) {
         //only works for plants and zombies
-		//can't move unless the animation is finished
-		if (this.can_move){
-			this.can_move=false;
-			erase(this, G);
-			this.r = r;
-			this.c = c;
-			put(this, G);
-			setTimeout(make_move.bind(null,this), 2000);
-		}
+        //can't move unless the animation is finished
+        if (this.can_move) {
+            this.can_move = false;
+            erase(this, G);
+            this.r = r;
+            this.c = c;
+            put(this, G);
+            setTimeout(make_move.bind(null, this), 2000);
+        }
 
     }
-	
+
 }
-function make_move(object){
-		object.can_move=true;
+function make_move(object) {
+    object.can_move = true;
 }
 class Zombie extends GameObject {
     constructor(level, r, c) {
@@ -166,7 +171,7 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-	
+
     hit(grid, statBar) {
 
         let R = this.range(grid);
@@ -475,5 +480,5 @@ class King extends Plant {
     }
 }
 
-module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
+module.exports = { Plant, Zombie, King, Pawn, Queen, Bishop, Knight, Rook, GameObject, init_Functions };
 

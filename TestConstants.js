@@ -43,5 +43,5 @@ let GameStarted = false; // indicates whether the game started or not
 module.exports = {
     GridItemSize, gridItemColor, ZNames, nRows0, nColumns0, Names, size, ZSpeed, ZLives, ZAttacks,
     ZPieces, Attacks, Names, Prices, Lives, Pieces, movesColor,ZRewards,GameIsPaused,
-    StatusBarHeight,ButtonHeight,font_size,Prices,sellingFactor
+    StatusBarHeight,ButtonHeight,font_size,Prices,sellingFactor,pause,ButtonHaveEffect
 };
