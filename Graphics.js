@@ -199,7 +199,6 @@ function buy(i, bar, grid) {
                 onlyOneButtonShouldBeClicked = false;
                 if (m - Prices[i] >= 0) {
                     pause = true;
-                    bar.updateMoney(m - Prices[i]);
                     selectedPosition(i, grid, bar);
                 }
                 else {
@@ -268,6 +267,8 @@ function selectedPosition(i, grid, bar) {
                         clear_grid(grid);
                         let newPiece = generateNewPiece(i, r, c);
                         put(newPiece, grid);
+                        m = bar.getMoney();
+                        bar.updateMoney(m - Prices[i]);
                         AutoAttack(newPiece, grid, bar);
                         onlyOneButtonShouldBeClicked = true;
                     };
@@ -298,4 +299,4 @@ function generateNewPiece(i, r, c) {
     }
 }
 
-module.exports = {selectedPosition, buy, Grid, status_bar, buy , generateNewPiece,sell};
+module.exports = {selectedPosition, Grid, status_bar, buy , generateNewPiece,sell};
