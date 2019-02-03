@@ -13,6 +13,7 @@ function PauseGame() {
     ButtonHaveEffect = false;
     pause = true;
     GameIsPaused = true;
+
 }
 
 
@@ -30,12 +31,12 @@ function StartGame(level) {
     put(k, grid);
     AutoAttack(k, grid, s);
 
-    s.healthBar.life=Lives[5];
+    s.healthBar.life = Lives[5];
     s.healthBar.bar.style.width = 100 + "%";
     s.face.appendChild(s.healthBar);
-    
 
-    zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1)*5) * 1000);
+
+    zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1) * 5) * 1000);
 }
 
 function EndGame() {

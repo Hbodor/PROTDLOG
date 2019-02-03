@@ -5,9 +5,10 @@
 
 // // To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
-// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder} = require ("./TestConstants");
-// var {GameObject} = require ("./GameObjects.js");
-// var {King,Pawn,Queen,Bishop,Knight,Rook,Plants,Zombie,Bullet} = require ("./GameObjects.js");
+// var { GridItemSize, gridItemColor, size, ZNames, border, effectiveBorder, StatusBarHeight, ButtonHeight, font_size,
+//     Pieces, Prices, Lives,  ButtonHaveEffect } = require("./TestConstants");
+// var { GameObject } = require("./GameObjects.js");
+// var { King, Pawn, Queen, Bishop, Knight, Rook, Plants, Zombie, Bullet } = require("./GameObjects.js");
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -297,5 +298,4 @@ function generateNewPiece(i, r, c) {
     }
 }
 
-
-//module.exports= {generateNewPiece,selectedPosition,buy,Grid};
+module.exports = {selectedPosition, buy, Grid, status_bar, buy , generateNewPiece,sell};

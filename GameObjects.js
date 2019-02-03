@@ -2,9 +2,7 @@
 
 
 
-// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
-// var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces} = require ("./TestConstants");
-
+// To test This file we uncomment the following block, otherwwise, it should be strictly commented
 // let put, erase;
 
 // function init_Functions() {
@@ -19,7 +17,13 @@
 //   erase = _erase;
 // }
 
-// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+// var { GridItemSize, gridItemColor, ZRewards, size, ZNames, border, effectiveBorder, ZSpeed, ZLives, ZAttacks, ZPieces, Attacks, Bullets, Names, Prices, Lives, Pieces, GameIsPaused } = require("./TestConstants");
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 class GameObject {
     constructor(r, c) {
@@ -481,4 +485,4 @@ class King extends Plant {
     }
 }
 
-//module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
+module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};

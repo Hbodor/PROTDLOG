@@ -5,8 +5,8 @@
 // //To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
 
-// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder,Names,movesColor} = require ("./TestConstants");
-// var {GameObject} = require ("./GameObjects.js");
+// var { GridItemSize, gridItemColor, size, ZNames, border, effectiveBorder, Names, movesColor, sellingFactor, nColumns0 } = require("./TestConstants");
+// var { GameObject, Zombie } = require("./GameObjects.js");
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,4 +188,7 @@ function healthBarRefresh(statBar){
 }
 
 
-//module.exports = {sign,put,erase,clear_grid,show_moves,clicked}
+module.exports = {
+	sign, put, erase, clear_grid, show_moves, clicked, GenerateNewZombie,
+	showRules, make_game_zone
+}
