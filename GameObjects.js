@@ -173,7 +173,8 @@ class Plant extends GameObject {
             for (let i = 0; i < R.length; i++) {
                 let r = R[i][0];
                 let c = R[i][1];
-                if (ZNames.includes(grid.body[r][c].name)) {
+				// the target is a living zombie (we ensure that bullets don't go if the zombie is gonna be dead before they arrive)
+                if (ZNames.includes(grid.body[r][c].name) && grid.body[r][c].life>0 ) {
                     //animation
                     let bullet = document.createElement("img");
                     bullet.className = "Bullet";
@@ -181,21 +182,26 @@ class Plant extends GameObject {
                     bullet.setAttribute('height', "10px");
                     bullet.setAttribute('width', "10px");
                     grid.face.childNodes[this.r * grid.nColumns + this.c].appendChild(bullet);
-                    bullet.style.top = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop + size / 2 + 'px';
-                    bullet.style.left = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft + size / 2 + 'px';
+                    bullet.style.top = this.face.offsetTop + size / 2 + 'px';
+                    bullet.style.left = this.face.offsetLeft + size / 2 + 'px';
+
                     //transition
-                    bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size / 2 - 5 + 'px';
-                    bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size / 2 - 5 + 'px';
+					let target = grid.body[r][c] // the zombie attacked
+                    bullet.style.top = target.face.offsetTop + size / 2 - 5 + 'px';
+                    bullet.style.left = target.face.offsetLeft + size / 2 - 5 + 'px';
+					target.life -= 1;
+
                     setTimeout(function (plant) {
                         grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(bullet);
-                        grid.body[r][c].life -= 1;
-                        if (grid.body[r][c].life == 0) {
-                            statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
-                            clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid);
+                        if (target.life == 0) {
+                            statBar.updateMoney(statBar.getMoney() + target.reward);
+                            clearInterval(target.mind);
+                            erase(target, grid); // parfois, si deux plantes lancent le bullet au même moment et que le zombie meurt du premier, le deuxième essaie d'erase le zombie -> on rajoute la condition dans erase
+							
                         }
 
                     }, 500, this);
+					return true
                 }
             }
 

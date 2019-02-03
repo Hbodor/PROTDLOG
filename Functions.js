@@ -33,9 +33,13 @@ function put(object, grid) {
 }
 
 function erase(object, grid) {
+
+	
 	let o = new GameObject(object.r, object.c);
 	grid.body[o.r][o.c] = o;
-	grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
+	if (object.face.parentNode == grid.face.childNodes[o.r * grid.nColumns + o.c]){
+		grid.face.childNodes[o.r * grid.nColumns + o.c].removeChild(object.face);
+	}
 	//delete object;
 	grid.face.childNodes[o.r * grid.nColumns + o.c].onclick = function clear() { if (!GameIsPaused) { clear_grid(grid) } };
 }
@@ -111,16 +115,22 @@ function randInt(n) {
 }
 
 function animateZombie(zombie, king, grid, statBar) {
-	let counter = 0;
-
+	let moveCounter = 0;
+	let attackCounter = 0;
 	zombie.mind = setInterval(function () {
-		counter += 1;
-		if (counter % zombie.speed == 0 && !pause) {
-			zombie.moveOneStep(king, grid);
+		if (!pause){
+			moveCounter+=1;
+			if (moveCounter % zombie.speed == 0) {
+				zombie.moveOneStep(king, grid);
+			}
+			if (!GameIsPaused){
+				attackCounter+=1
+				if (attackCounter % zombie.attack == 0 ) {
+					zombie.hit(grid,statBar);
+				}
+			}
 		}
-		if (counter % zombie.attack == 0 && !GameIsPaused && !pause) {
-			zombie.hit(grid,statBar);
-		}
+
 
 	}, 1000);
 }
@@ -135,7 +145,20 @@ function GenerateNewZombie(king, grid, statBar) {
 }
 
 function AutoAttack(plant, grid, statBar) {
-	plant.mind = setInterval(function () { if (!GameIsPaused && !pause) { plant.hit(grid, statBar); } }, plant.attack * 1000)
+	let attackCounter = 0 ;
+	plant.mind = setInterval(function () { 
+		
+		if (!GameIsPaused && !pause) {
+			attackCounter+=1;
+			if (attackCounter>=plant.attack && plant.can_move){
+				if (plant.hit(grid, statBar)){
+					attackCounter=0;
+				}
+			}
+			
+		} 
+		
+	}, 1000)
 }
 
 
