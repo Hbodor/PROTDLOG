@@ -167,7 +167,7 @@ class Plant extends GameObject {
     }
 
     hit(grid, statBar) {
-
+		let hit = false; // if the plant can hit a zombie
         let R = this.range(grid);
         if (R.length != 0) {
             for (let i = 0; i < R.length; i++) {
@@ -201,11 +201,12 @@ class Plant extends GameObject {
                         }
 
                     }, 500, this);
-					return true
+					hit = true;
                 }
             }
 
         }
+		return hit;
 
     }
 }
