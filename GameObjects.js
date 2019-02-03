@@ -28,15 +28,25 @@ class GameObject {
         this.r = r; //row
         this.c = c; //colmum
         this.mind = 0 ;// to store the intervals when animated 
+		this.can_move=true; // so we can't move before the animation finishes
     }
 
     moveto(r, c, G) {
         //only works for plants and zombies
-        erase(this, G);
-        this.r = r;
-        this.c = c;
-        put(this, G);
+		//can't move unless the animation is finished
+		if (this.can_move){
+			this.can_move=false;
+			erase(this, G);
+			this.r = r;
+			this.c = c;
+			put(this, G);
+			setTimeout(make_move.bind(null,this), 2000);
+		}
     }
+}
+
+function make_move(object){
+		object.can_move=true;
 }
 
 class Zombie extends GameObject {

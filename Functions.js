@@ -41,6 +41,10 @@ function erase(object, grid) {
 }
 
 function show_moves(object, grid, color) {
+	//don't show moves when you can't move
+	if (!object.can_move)
+		return
+	
 	let L = object.moves(grid);
 
 	for (let i = 0; i < L.length; i++) {
@@ -77,13 +81,16 @@ function clicked(object, grid) {
 		if (!GameIsPaused) {
 			clear_grid(grid);
 			pause = true; //pausing zombies
-			show_moves(object, grid, movesColor);
-			grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
-				if (!GameIsPaused) {
-					clear_grid(grid);
-					grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
+			if (object.can_move){
+				show_moves(object, grid, movesColor);
+				grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = function click2() {
+					if (!GameIsPaused) {
+						clear_grid(grid);
+						grid.face.childNodes[object.r * grid.nColumns + object.c].onclick = click1;
+					}
 				}
 			}
+
 		}
 	}
 	return click1;
