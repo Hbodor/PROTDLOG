@@ -16,6 +16,15 @@ function PauseGame() {
 
 }
 
+function Resume() {
+    clear_grid(grid);
+    ButtonHaveEffect = true;
+    pause = true;
+    GameIsPaused = true;
+    onlyOneButtonShouldBeClicked=true;
+
+}
+
 
 function StartGame(level) {
     EndGame();

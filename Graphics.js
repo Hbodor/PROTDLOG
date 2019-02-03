@@ -130,7 +130,7 @@ class status_bar {
                 }
                 else {
                     PauseButton.innerHTML = 'Resume';
-                    PauseGame();
+                    Resume();
                     PauseButton.style.backgroundColor = "rgb(192, 0, 0)";
                 }
             }
