@@ -151,7 +151,7 @@ test("Test of sellPlant ", () => {
   put(q, grid);
   let price = q.price;
   let money = s.money.childNodes[1].innerHTML;
-  q.sell(grid, s);
+  sell(q,grid, s);
   let o = new GameObject(5, 6);
   expect(grid.body[5][6]).toEqual(o); // the plant has been erased
   expect(parseInt(s.money.childNodes[1].innerHTML)).toBe(parseInt(money) + price * sellingFactor); //the reward from selling tha plant has been gathered

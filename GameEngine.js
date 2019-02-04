@@ -27,6 +27,7 @@ function Resume() {
 
 
 function StartGame(level) {
+    clear_grid(grid);
     EndGame();
     GameStarted = true;
     ButtonHaveEffect = true;
