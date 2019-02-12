@@ -35,12 +35,13 @@ let onlyOneButtonShouldBeClicked = true;
 let pause = false; // to pause the movment of zombies when inserting and moving pieces
 let GameLevel = 1;
 let ButtonHaveEffect = false;
-let GameIsPaused = false; // indicates wheather the game is paused or not
-let GameStarted = false; // indicates wheather the game started or not 
+let GameIsPaused = false; // indicates whether the game is paused or not
+let GameStarted = false; // indicates whether the game started or not 
 
 
 
 module.exports = {
     GridItemSize, gridItemColor, ZNames, nRows0, nColumns0, Names, size, ZSpeed, ZLives, ZAttacks,
-    ZPieces, Attacks, Names, Prices, Lives, Pieces, movesColor,ZRewards
+    ZPieces, Attacks, Names, Prices, Lives, Pieces, movesColor,ZRewards,GameIsPaused,
+    StatusBarHeight,ButtonHeight,font_size,Prices,sellingFactor,pause,ButtonHaveEffect
 };

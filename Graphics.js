@@ -5,12 +5,12 @@
 
 // // To test This file we uncomment the following block, otherwwise, it should be strictly commented
 
-// var {GridItemSize,gridItemColor,size,ZNames,border,effectiveBorder} = require ("./TestConstants");
-// var {GameObject} = require ("./GameObjects.js");
-// var {King,Pawn,Queen,Bishop,Knight,Rook,Plants,Zombie,Bullet} = require ("./GameObjects.js");
+// var { GridItemSize, gridItemColor, size, ZNames, border, effectiveBorder, StatusBarHeight, ButtonHeight, font_size,
+//     Pieces, Prices, Lives,  ButtonHaveEffect } = require("./TestConstants");
+// var { GameObject } = require("./GameObjects.js");
+// var { King, Pawn, Queen, Bishop, Knight, Rook, Plants, Zombie, Bullet } = require("./GameObjects.js");
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 class Grid {
     constructor(nRows, nColumns) {
@@ -109,6 +109,13 @@ class status_bar {
         this.face.appendChild(this.shop);
 
 
+        var SellButton = document.createElement("button");
+        SellButton.className = 'sell-button';
+        SellButton.innerHTML = 'Sell';
+        SellButton.addEventListener("click", sell(this, grid));
+        this.face.appendChild(SellButton);
+
+
         var PauseButton = document.createElement("button");
         PauseButton.className = 'game-button';
         PauseButton.innerHTML = 'Pause';
@@ -123,7 +130,7 @@ class status_bar {
                 }
                 else {
                     PauseButton.innerHTML = 'Resume';
-                    PauseGame();
+                    Resume();
                     PauseButton.style.backgroundColor = "rgb(192, 0, 0)";
                 }
             }
@@ -134,10 +141,10 @@ class status_bar {
         StartButton.className = 'game-button';
         StartButton.innerHTML = 'Start';
         StartButton.addEventListener("click", function () {
-                StartButton.innerHTML = 'Restart';
-                StartGame(GameLevel);
-                PauseButton.style.backgroundColor = "rgb(0, 98, 122)";
-                PauseButton.innerHTML = 'Pause';
+            StartButton.innerHTML = 'Restart';
+            StartGame(GameLevel);
+            PauseButton.style.backgroundColor = "rgb(0, 98, 122)";
+            PauseButton.innerHTML = 'Pause';
 
         });
 
@@ -145,35 +152,28 @@ class status_bar {
         this.GameButtons.className = 'controls';
 
         this.GameButtons.appendChild(StartButton);
-        this.GameButtons.appendChild(PauseButton);		
-		
+        this.GameButtons.appendChild(PauseButton);
+
         this.face.appendChild(this.GameButtons);
 
         this.timer = document.createElement("div");
         this.timer.innerHTML = "timer : 0"
-        
-       
-		
-		this.sellButton = document.createElement("button");
-		this.sellButton.className = 'sell-button';
-		this.sellButton.innerHTML = 'Sell';
-		this.sellButton.style.backgroundColor='rgb(220,220,220)'
-		this.sellButton.disabled=true;
-        this.face.appendChild(this.sellButton);
-        
+
+        this.face.appendChild(this.GameButtons);
+
+
         this.healthBar = document.createElement("div");
         this.healthBar.className = 'health-bar';
-        //this.healthBar.id = 'kingBar';
         this.healthBar.bar = document.createElement("div");
         this.healthBar.bar.className = 'bar';
         this.healthBar.bar.hit = document.createElement("div");
         this.healthBar.bar.hit.className = 'hit';
-        this.healthBar.life = Lives[5]; //
+        this.healthBar.life = 0; 
         this.healthBar.bar.appendChild(this.healthBar.bar.hit);
-        this.healthBar.appendChild(this.healthBar.bar);  
+        this.healthBar.appendChild(this.healthBar.bar);
 
-		
-        
+
+
     }
 
     getMoney() {
@@ -194,16 +194,11 @@ class status_bar {
 function buy(i, bar, grid) {
     function clicked() {
         if (ButtonHaveEffect) {
-			// We disable the sell button
-			bar.sellButton.style.backgroundColor='rgb(220,220,220)'
-			bar.sellButton.disabled=true;
-			
             m = bar.getMoney();
             if (onlyOneButtonShouldBeClicked) {
                 onlyOneButtonShouldBeClicked = false;
                 if (m - Prices[i] >= 0) {
                     pause = true;
-                    bar.updateMoney(m - Prices[i]);
                     selectedPosition(i, grid, bar);
                 }
                 else {
@@ -212,12 +207,54 @@ function buy(i, bar, grid) {
                 }
             }
             else {
-                alert("You need to put the piece you have just bought on the grid first ! ")
+                alert("Sorry you can't buy now ! ")
             }
         }
-
     }
     return clicked;
+}
+
+function sell(bar, grid) {
+    return function () {
+        if (ButtonHaveEffect) {
+            if (onlyOneButtonShouldBeClicked) {
+                for (let r = 0; r < grid.nRows; r++) {
+                    for (let c = 0; c < grid.nColumns; c++) {
+                        let Piece = grid.body[r][c];
+                        if (Names.includes(Piece.name) && Piece.name != 'King') {
+
+                            onlyOneButtonShouldBeClicked = false;
+                            pause = true;
+                            GameIsPaused = true;
+
+                            grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
+                            grid.face.childNodes[r * grid.nColumns + c].onclick =
+                                function () {
+                                    bar.updateMoney(bar.getMoney() + Math.floor(Piece.price * Piece.life / Lives[Piece.level]));
+                                    clearInterval(Piece.mind);
+                                    erase(Piece, grid);
+                                    clear_grid(grid);
+                                    onlyOneButtonShouldBeClicked = true;
+                                    pause = false;
+                                    GameIsPaused = false;
+                                };
+                        }
+                        else if (Piece.name == 'King'){
+                            grid.face.childNodes[r * grid.nColumns + c].onclick = clicked(Piece,grid);
+                        }
+                        else {
+                            grid.face.childNodes[r * grid.nColumns + c].onclick = "";
+                        }
+                    }
+                }
+            }
+            else {
+                alert("Sorry you can't sell now ! ")
+            }
+
+        }
+
+    };
 }
 
 function selectedPosition(i, grid, bar) {
@@ -227,9 +264,11 @@ function selectedPosition(i, grid, bar) {
                 grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
                 grid.face.childNodes[r * grid.nColumns + c].onclick =
                     function clic() {
-                        clear_grid(grid, bar);
+                        clear_grid(grid);
                         let newPiece = generateNewPiece(i, r, c);
-                        put(newPiece, grid, bar);
+                        put(newPiece, grid);
+                        m = bar.getMoney();
+                        bar.updateMoney(m - Prices[i]);
                         AutoAttack(newPiece, grid, bar);
                         onlyOneButtonShouldBeClicked = true;
                     };
@@ -260,5 +299,4 @@ function generateNewPiece(i, r, c) {
     }
 }
 
-
-module.exports= {generateNewPiece,selectedPosition,buy,Grid};
+module.exports = {selectedPosition, Grid, status_bar, buy , generateNewPiece,sell};

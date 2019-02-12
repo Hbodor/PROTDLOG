@@ -9,7 +9,6 @@ let Prices = [10, 20, 30, 40, 50, Infinity];
 let MAX_Pieces = [8, 2, 2, 2, 1, 1];
 let Moves_L = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]];
 let Moves_C = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
-let sellingFactor = 0.5
 //For Zombies
 let ZPieces = ['pieces/Zombie1.png', 'pieces/Zombie2.png', 'pieces/Zombie3.png'];
 let ZNames = ['Zombie1', 'Zombie2', 'Zombie3'];

@@ -2,9 +2,7 @@
 
 
 
-// // To test This file we uncomment the following block, otherwwise, it should be strictly commented
-// var {GridItemSize,gridItemColor,ZRewards,size,ZNames,border,effectiveBorder,ZSpeed,ZLives,ZAttacks,ZPieces,Attacks,Bullets,Names,Prices,Lives,Pieces} = require ("./TestConstants");
-
+// To test This file we uncomment the following block, otherwwise, it should be strictly commented
 // let put, erase;
 
 // function init_Functions() {
@@ -19,10 +17,13 @@
 //   erase = _erase;
 // }
 
-// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+// var { GridItemSize, gridItemColor, ZRewards, size, ZNames, border, effectiveBorder, ZSpeed, ZLives, ZAttacks, ZPieces, Attacks, Bullets, Names, Prices, Lives, Pieces, GameIsPaused } = require("./TestConstants");
 
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 class GameObject {
     constructor(r, c) {
@@ -30,28 +31,28 @@ class GameObject {
         this.face = "";
         this.r = r; //row
         this.c = c; //colmum
-        this.mind = 0 // to store the intervals when animated 
-		this.can_move=true;
+        this.mind = 0 ;// to store the intervals when animated 
+		this.can_move=true; // so we can't move before the animation finishes
     }
 
-    moveto(r, c, G, statBar) {
+    moveto(r, c, G) {
         //only works for plants and zombies
 		//can't move unless the animation is finished
 		if (this.can_move){
 			this.can_move=false;
-			erase(this, G, statBar);
+			erase(this, G);
 			this.r = r;
 			this.c = c;
-			put(this, G, statBar);
+			put(this, G);
 			setTimeout(make_move.bind(null,this), 2000);
 		}
-
     }
-	
 }
+
 function make_move(object){
 		object.can_move=true;
 }
+
 class Zombie extends GameObject {
     constructor(level, r, c) {
         // 0 <= level <= 2
@@ -88,10 +89,10 @@ class Zombie extends GameObject {
         return [r, c];
     }
 
-    moveOneStep(king, grid, statBar) {
+    moveOneStep(king, grid) {
         let nextStep = this.stepToKing(king);
         if (grid.body[nextStep[0]][nextStep[1]].name == "GameObject") {
-            this.moveto(nextStep[0], nextStep[1], grid, statBar);
+            this.moveto(nextStep[0], nextStep[1], grid);
         }
     }
 
@@ -112,7 +113,7 @@ class Zombie extends GameObject {
         return (R);
     }
 
-    hit(grid, statBar) {
+    hit(grid,statBar) {
         let R = this.range(grid);
         if (R.length != 0) {
             for (let i = 0; i < R.length; i++) {
@@ -122,9 +123,11 @@ class Zombie extends GameObject {
 
                     grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = 'black';
                     grid.body[r][c].life -= 1;
+
                     if (grid.body[r][c].name == "King") {
-                        healthBarRefresh(grid,statBar);
+                        healthBarRefresh(statBar);
                     }
+
                     if (grid.body[r][c].life == 0) {
 
                         if (grid.body[r][c].name == "King") {
@@ -132,7 +135,7 @@ class Zombie extends GameObject {
                         }
                         else {
                             clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid, statBar);
+                            erase(grid.body[r][c], grid);
                         }
 
                     }
@@ -166,15 +169,16 @@ class Plant extends GameObject {
         this.face.setAttribute('height', GridItemSize);
         this.face.setAttribute('width', GridItemSize);
     }
-	
-    hit(grid, statBar) {
 
+    hit(grid, statBar) {
+		let hit = false; // if the plant can hit a zombie
         let R = this.range(grid);
         if (R.length != 0) {
             for (let i = 0; i < R.length; i++) {
                 let r = R[i][0];
                 let c = R[i][1];
-                if (ZNames.includes(grid.body[r][c].name)) {
+				// the target is a living zombie (we ensure that bullets don't go if the zombie is gonna be dead before they arrive)
+                if (ZNames.includes(grid.body[r][c].name) && grid.body[r][c].life>0 ) {
                     //animation
                     let bullet = document.createElement("img");
                     bullet.className = "Bullet";
@@ -182,25 +186,31 @@ class Plant extends GameObject {
                     bullet.setAttribute('height', "10px");
                     bullet.setAttribute('width', "10px");
                     grid.face.childNodes[this.r * grid.nColumns + this.c].appendChild(bullet);
-                    bullet.style.top = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetTop + size / 2 + 'px';
-                    bullet.style.left = grid.face.childNodes[this.r * grid.nColumns + this.c].offsetLeft + size / 2 + 'px';
+                    bullet.style.top = this.face.offsetTop + size / 2 + 'px';
+                    bullet.style.left = this.face.offsetLeft + size / 2 + 'px';
+
                     //transition
-                    bullet.style.top = grid.face.childNodes[r * grid.nColumns + c].offsetTop + size / 2 - 5 + 'px';
-                    bullet.style.left = grid.face.childNodes[r * grid.nColumns + c].offsetLeft + size / 2 - 5 + 'px';
+					let target = grid.body[r][c] // the zombie attacked
+                    bullet.style.top = target.face.offsetTop + size / 2 - 5 + 'px';
+                    bullet.style.left = target.face.offsetLeft + size / 2 - 5 + 'px';
+					target.life -= 1;
+
                     setTimeout(function (plant) {
                         grid.face.childNodes[plant.r * grid.nColumns + plant.c].removeChild(bullet);
-                        grid.body[r][c].life -= 1;
-                        if (grid.body[r][c].life == 0) {
-                            statBar.updateMoney(statBar.getMoney() + grid.body[r][c].reward);
-                            clearInterval(grid.body[r][c].mind);
-                            erase(grid.body[r][c], grid, statBar);
+                        if (target.life == 0) {
+                            statBar.updateMoney(statBar.getMoney() + target.reward);
+                            clearInterval(target.mind);
+                            erase(target, grid); // parfois, si deux plantes lancent le bullet au même moment et que le zombie meurt du premier, le deuxième essaie d'erase le zombie -> on rajoute la condition dans erase
+							
                         }
 
                     }, 500, this);
+					hit = true;
                 }
             }
 
         }
+		return hit;
 
     }
 }
@@ -476,4 +486,3 @@ class King extends Plant {
 }
 
 module.exports= {Plant,Zombie,King,Pawn,Queen,Bishop,Knight,Rook,GameObject,init_Functions};
-
