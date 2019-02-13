@@ -52,6 +52,7 @@ body {
   row-gap: 10px;
   height: max-content;
   box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2), -5px 10px 20px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
 .Money{
@@ -297,3 +298,15 @@ body {
   top: 70px;
 }
 
+.timer{
+  color: white;
+  text-align: center;
+  display: inline-block;
+  grid-column: 4;
+  /hide long score
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden
+  width: 200px; 
+
+}

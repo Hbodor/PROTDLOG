@@ -5,6 +5,7 @@ var s = new status_bar(100, grid);
 //showing them inside the page
 make_game_zone(s, grid);
 let zombieGenerater = 0 // to store the interval that generats zombies
+let timer = 0; // Updating the time elapsed in the game
 
 
 
@@ -37,6 +38,7 @@ function StartGame(level) {
 
     s.updateMoney(100);
 
+
     k = new King(2, 0);
     put(k, grid);
     AutoAttack(k, grid, s);
@@ -47,6 +49,11 @@ function StartGame(level) {
 
 
     zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1) * 5) * 1000);
+	
+	s.updateTimer(-s.time);
+	s.face.appendChild(s.timer)
+	timer = setInterval( function() { if (!pause) {s.updateTimer(1)} } , 1000);
+	
 }
 
 function EndGame() {
@@ -60,5 +67,6 @@ function EndGame() {
         }
     }
     clearInterval(zombieGenerater);
+	clearInterval(timer);
     GameStarted = false;
 }

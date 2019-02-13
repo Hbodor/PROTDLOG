@@ -156,10 +156,6 @@ class status_bar {
 
         this.face.appendChild(this.GameButtons);
 
-        this.timer = document.createElement("div");
-        this.timer.innerHTML = "timer : 0"
-
-        this.face.appendChild(this.GameButtons);
 
 
         this.healthBar = document.createElement("div");
@@ -172,6 +168,10 @@ class status_bar {
         this.healthBar.bar.appendChild(this.healthBar.bar.hit);
         this.healthBar.appendChild(this.healthBar.bar);
 
+		this.time=0
+        this.timer = document.createElement("div");
+		this.timer.className='timer';
+        this.timer.innerHTML = "Timer : "+this.time+ " s";
 
 
     }
@@ -183,6 +183,11 @@ class status_bar {
     updateMoney(newsum) {
         this.money.childNodes[1].innerHTML = newsum;
     }
+	
+	updateTimer(seconds){
+		this.time+=seconds;
+		this.timer.innerHTML = "Timer : "+this.time+ " s";
+	}
 
     show() {
         document.body.appendChild(this.face);
