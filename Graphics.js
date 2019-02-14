@@ -237,8 +237,7 @@ function sell(bar, grid) {
 
                             onlyOneButtonShouldBeClicked = false;
                             pause = true;
-                            GameIsPaused = true;
-
+                            
                             grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
                             grid.face.childNodes[r * grid.nColumns + c].onclick =
                                 function () {
@@ -248,7 +247,6 @@ function sell(bar, grid) {
                                     clear_grid(grid);
                                     onlyOneButtonShouldBeClicked = true;
                                     pause = false;
-                                    GameIsPaused = false;
                                 };
                         }
                         else if (Piece.name == 'King') {
