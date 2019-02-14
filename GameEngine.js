@@ -1,35 +1,27 @@
-// this is where the game is set up 
+// This is where the game is set up 
 
-var grid = new Grid(nRows0, nColumns0);
-var s = new status_bar(100, grid);
-//showing them inside the page
-make_game_zone(s, grid);
+
+var grid = new Grid(nRows0, nColumns0); //the game grid
+var s = new status_bar(100, grid); // the game status bar 
+
+make_game_zone(s, grid); //showing  inside the page
+
 let zombieGenerater = 0 // to store the interval that generats zombies
 let timer = 0; // Updating the time elapsed in the game
 
-
-
-
 function PauseGame() {
+    //Pauses the game 
     ButtonHaveEffect = false;
     pause = true;
     GameIsPaused = true;
-
 }
-
-function Resume() {
-    clear_grid(grid);
-    ButtonHaveEffect = true;
-    pause = true;
-    GameIsPaused = true;
-    onlyOneButtonShouldBeClicked=true;
-
-}
-
 
 function StartGame(level) {
-    clear_grid(grid);
-    EndGame();
+    //Starts the game 
+
+    clear_grid(grid);//some clean up
+    EndGame();//clean up
+
     GameStarted = true;
     ButtonHaveEffect = true;
     onlyOneButtonShouldBeClicked = true;
@@ -38,25 +30,36 @@ function StartGame(level) {
 
     s.updateMoney(100);
 
-
+    //the game only king
     k = new King(2, 0);
     put(k, grid);
     AutoAttack(k, grid, s);
 
-    s.healthBar.life = Lives[5];
+
+    s.healthBar.life = k.life;
     s.healthBar.bar.style.width = 100 + "%";
     s.face.appendChild(s.healthBar);
 
+    //generating Zombies (checkers)
+    let zcounter = 0;
+    zombieGenerater = setInterval(function () {
+        if (!pause) {
+            zcounter += 1;
+            if (zcounter % f(zcounter,level)  == 0) { // the zombie generation frequency is getting bigger as time passes
+                GenerateNewZombie(k, grid, s); 
+            }
+        }
+    }, 1000);
 
-    zombieGenerater = setInterval(function () { if (!pause) { GenerateNewZombie(k, grid, s) } }, (15 - (level - 1) * 5) * 1000);
-	
-	s.updateTimer(-s.time);
-	s.face.appendChild(s.timer)
-	timer = setInterval( function() { if (!pause) {s.updateTimer(1)} } , 1000);
-	
+    //updating the timer 
+    s.updateTimer(-s.time);
+    s.face.appendChild(s.timer)
+    timer = setInterval(function () { if (!pause) { s.updateTimer(1) } }, 1000);
+
 }
 
 function EndGame() {
+    //clears the grid and all intervals
     PauseGame();
     for (let r = 0; r < grid.nRows; r++) {
         for (let c = 0; c < grid.nColumns; c++) {
@@ -67,6 +70,6 @@ function EndGame() {
         }
     }
     clearInterval(zombieGenerater);
-	clearInterval(timer);
+    clearInterval(timer);
     GameStarted = false;
 }
