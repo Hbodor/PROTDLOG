@@ -358,3 +358,7 @@ body {
 .description:hover{
   top: 70px;
 }
+
+.card-img:hover + .description{
+	top: 70px;
+}

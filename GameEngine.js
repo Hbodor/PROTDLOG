@@ -71,5 +71,6 @@ function EndGame() {
     }
     clearInterval(zombieGenerater);
     clearInterval(timer);
+    
     GameStarted = false;
 }
