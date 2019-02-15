@@ -218,7 +218,7 @@ class Pawn extends Plant {
     }
     moves(G) {
         // all possible moves on the grid G
-        if (this.c + 1 >= 0 && this.c + 1 < G.nColumns && G.body[this.r][this.c + 1].name == "GameObject") {
+        if (this.c + 1 >= 0 && this.c + 1 < G.nColumns-1 && G.body[this.r][this.c + 1].name == "GameObject") {
             return ([[this.r, this.c + 1]]);
         }
         else {
@@ -248,7 +248,7 @@ class Knight extends Plant {
             //using the global variable Moves_L for movments variation
             let r = this.r + Moves_L[i][0];
             let c = this.c + Moves_L[i][1];
-            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns && G.body[r][c].name == "GameObject") {
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns-1 && G.body[r][c].name == "GameObject") {
                 L.push([r, c]);
             }
         }
@@ -287,28 +287,28 @@ class Bishop extends Plant {
             let c1 = this.c + i;
             let c2 = this.c - i;
 
-            if (direction1 && r1 >= 0 && r1 < G.nRows && c1 >= 0 && c1 < G.nColumns && G.body[r1][c1].name == "GameObject") {
+            if (direction1 && r1 >= 0 && r1 < G.nRows && c1 >= 0 && c1 < G.nColumns-1 && G.body[r1][c1].name == "GameObject") {
                 L.push([r1, c1]);
             }
             else {
                 direction1 = false;
             }
 
-            if (direction2 && r1 >= 0 && r1 < G.nRows && c2 >= 0 && c2 < G.nColumns && G.body[r1][c2].name == "GameObject") {
+            if (direction2 && r1 >= 0 && r1 < G.nRows && c2 >= 0 && c2 < G.nColumns-1 && G.body[r1][c2].name == "GameObject") {
                 L.push([r1, c2]);
             }
             else {
                 direction2 = false;
             }
 
-            if (direction3 && r2 >= 0 && r2 < G.nRows && c1 >= 0 && c1 < G.nColumns && G.body[r2][c1].name == "GameObject") {
+            if (direction3 && r2 >= 0 && r2 < G.nRows && c1 >= 0 && c1 < G.nColumns-1 && G.body[r2][c1].name == "GameObject") {
                 L.push([r2, c1]);
             }
             else {
                 direction3 = false;
             }
 
-            if (direction4 && r2 >= 0 && r2 < G.nRows && c2 >= 0 && c2 < G.nColumns && G.body[r2][c2].name == "GameObject") {
+            if (direction4 && r2 >= 0 && r2 < G.nRows && c2 >= 0 && c2 < G.nColumns-1 && G.body[r2][c2].name == "GameObject") {
                 L.push([r2, c2]);
             }
             else {
@@ -387,14 +387,14 @@ class Rook extends Plant {
                 direction2 = false;
             }
 
-            if (direction3 && c1 >= 0 && c1 < G.nColumns && G.body[this.r][c1].name == "GameObject") {
+            if (direction3 && c1 >= 0 && c1 < G.nColumns-1 && G.body[this.r][c1].name == "GameObject") {
                 L.push([this.r, c1]);
             }
             else {
                 direction3 = false;
             }
 
-            if (direction4 && c2 >= 0 && c2 < G.nColumns && G.body[this.r][c2].name == "GameObject") {
+            if (direction4 && c2 >= 0 && c2 < G.nColumns-1 && G.body[this.r][c2].name == "GameObject") {
                 L.push([this.r, c2]);
             }
             else {
@@ -462,8 +462,8 @@ class King extends Plant {
         for (let i = 0; i < Moves_C.length; i++) {
             let r = this.r + Moves_C[i][0];
             let c = this.c + Moves_C[i][1];
-            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns && G.body[r][c].name == "GameObject") {
-                L.push([r, c]);
+            if (r >= 0 && r < G.nRows && c >= 0 && c < G.nColumns-1 && G.body[r][c].name == "GameObject") {
+                    L.push([r, c]); 
             }
         }
         return (L);

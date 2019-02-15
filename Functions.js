@@ -74,7 +74,7 @@ function clear_grid(G) {
 	//gets the grid to initial playing conditions 
 
 	for (let r = 0; r < G.nRows; r++) {
-		for (let c = 0; c < G.nColumns; c++) {
+		for (let c = 0; c < G.nColumns-1; c++) {
 			if (G.body[r][c].name == "GameObject" || ZNames.includes(G.body[r][c].name)) {
 				G.face.childNodes[r * G.nColumns + c].style.backgroundColor = gridItemColor;
 				G.face.childNodes[r * G.nColumns + c].onclick = function clear() { if (!GameIsPaused) { clear_grid(G) } };

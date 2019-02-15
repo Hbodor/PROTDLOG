@@ -251,7 +251,7 @@ function sell(bar, grid) {
                                     pause = false;
                                 };
                         }
-			else if (Piece.name == 'King') {
+                        else if (Piece.name == 'King') {
                             grid.face.childNodes[r * grid.nColumns + c].onclick = function(){clear_grid(grid);};
                         }
                         else {
@@ -270,7 +270,7 @@ function sell(bar, grid) {
 function selectedPosition(i, grid, bar) {
     // mmakes the grid ready to accept a new piece
     for (let r = 0; r < grid.nRows; r++) {
-        for (let c = 0; c < grid.nColumns; c++) {
+        for (let c = 0; c < grid.nColumns-1; c++) {
             if (grid.body[r][c].name == "GameObject") {
                 grid.face.childNodes[r * grid.nColumns + c].style.backgroundColor = waitingColor;
                 grid.face.childNodes[r * grid.nColumns + c].onclick =
