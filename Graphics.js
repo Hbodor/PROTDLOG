@@ -63,7 +63,7 @@ class status_bar {
 
         let img = document.createElement("div");
         img.className = "img";
-        img.innerHTML = "<img src ='Pieces/Money.png' width=" + GridItemSize + " />";
+        img.innerHTML = "<img src ='pieces/Money.png' width=" + GridItemSize + " />";
         this.money.appendChild(img);
 
         let rect = document.createElement("div");
