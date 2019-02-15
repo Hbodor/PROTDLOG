@@ -252,7 +252,8 @@ function sell(bar, grid) {
                                 };
                         }
                         else if (Piece.name == 'King') {
-                            grid.face.childNodes[r * grid.nColumns + c].onclick = function(){clear_grid(grid);};
+                            grid.face.childNodes[r * grid.nColumns + c].onclick = function(){onlyOneButtonShouldBeClicked = true;
+											     clear_grid(grid);};
                         }
                         else {
                             grid.face.childNodes[r * grid.nColumns + c].onclick = "";
