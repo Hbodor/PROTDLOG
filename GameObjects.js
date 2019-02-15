@@ -133,7 +133,7 @@ class Zombie extends GameObject {
 
                         if (grid.body[r][c].name == "King") {
                             setTimeout(function(){
-                                alert("You lost ! your score is " + s.time +" . Press restart to play again, you can do better ;) .");
+                                alert("You lost! Your score is " + s.time +" . Press restart to play again, you can do better ;) .");
                                  }, 510)
                             EndGame();
                         }
