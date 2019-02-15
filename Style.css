@@ -1,9 +1,12 @@
 /* Style Sheet */
 
+@font-face {
+  font-family: alsina;
+  src: url("Alsina Ultrajada.TTF");
+}
+
 body {
-  background-image: radial-gradient(circle at top left, grey, black);
-  background-repeat: no-repeat;
-  height: 1500px;
+  background-color: rgb(100, 100, 100);
 }
 
 
@@ -21,7 +24,7 @@ body {
 	background-repeat: no-repeat; 
 	background-size: cover; 
 	box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.5),0px  10px 30px 0px rgba(0, 0, 0, 0.2);
-  z-index: 2;
+  z-index: 3;
 }
 
 
@@ -69,8 +72,8 @@ body {
 
 
 .text{
-  background-color: rgb(0, 128, 11);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: rgb(0,121,85);
+  font-family: alsina;
   text-align: center;
   font-weight: bold;
 }
@@ -93,7 +96,7 @@ body {
 
 .game-zone{
   position: relative;
-  top: 150px;
+  transform: translate(0,-700px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto;
@@ -105,13 +108,13 @@ body {
 
 
 .button {
-  background-color: rgb(192, 0, 0); 
+  background-color: rgb(100,120,0); 
   color: white;
   border: none;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-family: cursive;
+  font-family: alsina;
   transition-duration: 0.5s;
   cursor: pointer;
 }
@@ -130,10 +133,11 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 15px;
+  font-size: 20px;
   border-radius: 0px;
   box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
   transition-duration: 0.5s;
+  font-family: alsina;
 }
 
 
@@ -151,15 +155,16 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 15px;
+  font-size: 20px;
   box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
   transition-duration: 0.5s;
+  font-family: alsina;
 }
 
 
 .sell-button:hover{
   background-color: rgb(90, 128, 0);
-  font-size: 25px;
+  font-size: 30px;
 }
 
 
@@ -230,7 +235,7 @@ body {
 
 
 .timer{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: alsina;
   color: white;
   text-align: center;
   display: inline-block;
@@ -248,32 +253,31 @@ body {
 /* Game Description Style */
 .description-container1{
   position: relative;
-  top: 100px;
+  transform: translate(0,-850px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows:auto auto;
   row-gap: 20px;
   width: max-content;
-  height: 0px;
-  overflow: hidden;
-  transition-property: height;
-  transition-duration: 1.5s;
+  height: max-content;
+  transition-duration: 1s;
+  z-index: 2;
 }
 
 
 .description-container2{
   position: relative;
-  top: 100px;
+  transform: translate(0,+620px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows:auto auto;
   row-gap: 20px;
   width: max-content;
-  height: 850px;
-  transition-property: all;
-  transition-duration: 1.5s;
+  height: max-content;
+  transition-duration: 1s;
+  z-index: 2;
 }
 
 
@@ -284,12 +288,13 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 15px;
+  font-size: 20px;
   border-radius: 0px;
   box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
   transition-duration: 0.5s;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
+  font-family: alsina;
 }
 
 
@@ -299,7 +304,7 @@ body {
 
 
 .rules{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: alsina;
   text-align: justify;
   font-weight: 10px;
   font-size: 15px;
@@ -323,6 +328,7 @@ body {
 
 .card{
   position: relative;
+  background-color: rgb(80, 80, 80);
   height: 200px;
   width: 200px;
   box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.7),-5px -5px 20px 0px rgba(0, 0, 0, 0.2);
@@ -336,7 +342,7 @@ body {
 
 
 .description{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: alsina;
   text-align: left;
   font-size: 15px;
   display: inline-block;

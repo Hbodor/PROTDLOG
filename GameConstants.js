@@ -6,7 +6,7 @@ let Pieces = ['pieces/Pawn.png', 'pieces/Knight.png', 'pieces/Bishop.png',
 let Names = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"];
 let Attacks = [2, 2, 3, 4, 4, 2]; // attack frequency
 let Lives = [2, 3, 4, 4, 5, 5];
-let Prices = [10, 20, 30, 40, 50, Infinity];
+let Prices = [20, 50, 70, 100, 150, Infinity];
 let MAX_Pieces = [8, 2, 2, 2, 1, 1];
 let Moves_L = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]];
 let Moves_C = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
@@ -15,7 +15,7 @@ let Moves_C = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, 
 let ZPieces = ['pieces/Zombie1.png', 'pieces/Zombie2.png', 'pieces/Zombie3.png'];
 let ZNames = ['Zombie1', 'Zombie2', 'Zombie3'];
 let ZAttacks = [2, 3, 5];
-let ZRewards = [10,20,30];
+let ZRewards = [10,20,50];
 let ZLives = [3, 5, 7];
 let ZSpeed = [3, 5, 7]; //number of seconds in every step the zombie makes
 
