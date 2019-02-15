@@ -173,6 +173,7 @@ class status_bar {
         this.timer = document.createElement("div");
         this.timer.className = 'timer';
         this.timer.innerHTML = "Timer : " + this.time + " s";
+		this.timer.title = this.time;
 
 
     }
@@ -191,6 +192,7 @@ class status_bar {
         //updates the timer to a new time
         this.time += seconds;
         this.timer.innerHTML = "Timer : " + this.time + " s";
+		this.timer.title = this.time;
     }
 
     show() {
