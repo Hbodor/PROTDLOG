@@ -205,7 +205,7 @@ function healthBarRefresh(statBar){
 function f(k,level){
 	//returns the number of seconds to wait before generating another zombie
 	//k in the number of times we execute the interval generating the zombies 
-	let n = Math.floor(k/61);
+	let n = Math.floor(k/41);
 	let r =  (20 - (level-1)*2)-3*n;
 	if(r>0){
 		return r;
