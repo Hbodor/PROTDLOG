@@ -90,7 +90,7 @@ function clear_grid(G) {
 
 function clicked(object, grid) {
 	//returns a function that can be assosiated with a piece to show its moves when clicked
-	return function () {
+	return function click1() {
 		if (!GameIsPaused) {
 			clear_grid(grid);
 			pause = true; //pausing zombies
